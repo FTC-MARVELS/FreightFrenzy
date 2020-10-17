@@ -111,13 +111,12 @@ for (int i = 0; i < 3; i++)     // move forward then back, 3 times
 
         leftMotor.setTargetPosition(0);
         rightMotor.setTargetPosition(0);
-        middleMotor.setTargetPosition(0);
 
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         middleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        // Power sign matters again as we are running without encoder.
+        // Power sign matters again as we are running without encoder
         leftMotor.setPower(0.25);
         rightMotor.setPower(0.25);
 
@@ -130,7 +129,8 @@ for (int i = 0; i < 3; i++)     // move forward then back, 3 times
             idle();
         }
 
-        middleMotor.setPower(0.25);
+    middleMotor.setTargetPosition(0);
+    middleMotor.setPower(0.25);
         
        while (opModeIsActive() && middleMotor.getCurrentPosition() > middleMotor.getTargetPosition())
         {
