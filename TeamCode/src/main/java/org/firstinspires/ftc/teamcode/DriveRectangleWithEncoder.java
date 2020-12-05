@@ -160,7 +160,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // wait while opmode is active and motor is busy running to position.
 
-        while (opModeIsActive() && middleMotor.isBusy())   //middleMotor.getCurrentPosition() < middleMotor.getTargetPosition())
+        while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {
             telemetry.addData("encoder-bck-left", leftMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
             telemetry.addData("encoder-bck-right", rightMotor.getCurrentPosition() + "  busy=" + rightMotor.isBusy());
