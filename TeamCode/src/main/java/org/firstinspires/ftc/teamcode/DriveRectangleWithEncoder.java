@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -19,24 +20,24 @@ import org.firstinspires.ftc.teamcode.WorkerClasses.AutonomousWorkerMethods;
 public class DriveRectangleWithEncoder extends LinearOpMode
 {
     // declare our motors
-    DcMotor leftMotor;
-    DcMotor rightMotor;
-    DcMotor middleMotor;
+    DcMotorEx leftMotor;
+    DcMotorEx rightMotor;
+    DcMotorEx middleMotor;
 
     // this OpMode will use the FtcDashboard;
     // FtcDashboard dashboard;
 
     // create PID variables for drive motors
-    PIDCoefficients fwdbckPID = new PIDCoefficients(0,0,0);
+    PIDCoefficients fwdbckPID = new PIDCoefficients(0,0,0);     // TODO will one set of coefficients work for both fwd & bck motors, or will they each need individual coefficients?
     PIDCoefficients lftrtPID = new PIDCoefficients(0,0,0);
     ElapsedTime drivePIDTimer = new ElapsedTime();
     double drivePIDIntegral = 0;
 
     @Override
     public void runOpMode() {
-        leftMotor = hardwareMap.dcMotor.get("LeftDrive");
-        rightMotor = hardwareMap.dcMotor.get("RightDrive");
-        middleMotor = hardwareMap.dcMotor.get("MiddleDrive");
+        leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
+        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
+        middleMotor = hardwareMap.get(DcMotorEx.class,"MiddleDrive");
 
         // declare worker class(es)
         AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
@@ -68,8 +69,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        // predefine some variables
+
         boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
-        double motorpower = 0.25;           // range 0.0 - 1.0
+
+        // motor power is used for running without encoders, motor velocity is used for running WITH encooders
+        //  double motorpower = 0.25;           // range 0.0 - 1.0
+            double motorVelocity = 125;          // units is ticks/second
 
     // Clockwise
     // Rectangle side cw1
@@ -82,9 +88,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Set motors to appropriate power levels, movement will start. Sign of power is
         //  ignored since sign of target encoder position controls direction when
         //  running to position.
-        leftMotor.setPower(motorpower);
-        rightMotor.setPower(motorpower);
-        middleMotor.setPower(0.0);          // will setting this above zero help to immobilize left/right motion?
+        leftMotor.setVelocity(motorVelocity);
+        rightMotor.setVelocity(motorVelocity);
+        middleMotor.setVelocity(0.0);          // TODO will setting this above zero help to immobilize left/right motion?
 
         // wait while opmode is active and motor is busy running to position
         while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -117,9 +123,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Set motors to appropriate power levels, movement will start. Sign of power is
         //  ignored since sign of target encoder position controls direction when
         //  running to position.
-        leftMotor.setPower(0.0);            // will setting these above zero help to immobilize forward/back motion?
-        rightMotor.setPower(0.0);
-        middleMotor.setPower(motorpower);
+        leftMotor.setVelocity(0.0);            // TODO will setting these above zero help to immobilize forward/back motion?
+        rightMotor.setVelocity(0.0);
+        middleMotor.setVelocity(motorVelocity);
 
         // wait while opmode is active and motor is busy running to position.
         while (opModeIsActive() && middleMotor.isBusy())   //middleMotor.getCurrentPosition() < middleMotor.getTargetPosition())
@@ -144,9 +150,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Set motors to appropriate power levels, movement will start. Sign of power is
         //  ignored since sign of target encoder position controls direction when
         //  running to position.
-        leftMotor.setPower(0.0);            // will setting these above zero help to immobilize forward/back motion?
-        rightMotor.setPower(0.0);
-        middleMotor.setPower(motorpower);
+        leftMotor.setVelocity(motorVelocity);
+        rightMotor.setVelocity(motorVelocity);
+        middleMotor.setVelocity(0.0);
 
         // wait while opmode is active and motor is busy running to position
         while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -171,9 +177,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Set motors to appropriate power levels, movement will start. Sign of power is
         //  ignored since sign of target encoder position controls direction when
         //  running to position.
-        leftMotor.setPower(0.0);            // will setting these above zero help to immobilize forward/back motion?
-        rightMotor.setPower(0.0);
-        middleMotor.setPower(motorpower);
+        leftMotor.setVelocity(0.0);
+        rightMotor.setVelocity(0.0);
+        middleMotor.setVelocity(motorVelocity);
 
         // wait while opmode is active and motor is busy running to position.
         while (opModeIsActive() && middleMotor.isBusy())   //middleMotor.getCurrentPosition() < middleMotor.getTargetPosition())
