@@ -54,7 +54,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // initialize an instance of FtcDashboard
         // dashboard = FtcDashboard.getInstance();
-        
+
+        // predefine some variables
+        boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
+        // motor power is used for running without encoders, motor VELOCITY is used for running WITH encooders
+        //  double motorpower = 0.25;       // range 0.0 - 1.0
+        double motorVelocity = 125;         // units is ticks/second
+
         telemetry.addData("Mode", "waiting");
         telemetry.update();
 
@@ -68,14 +74,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        // predefine some variables
-
-        boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
-
-        // motor power is used for running without encoders, motor velocity is used for running WITH encooders
-        //  double motorpower = 0.25;           // range 0.0 - 1.0
-            double motorVelocity = 125;          // units is ticks/second
 
     // Clockwise
     // Rectangle side cw1
