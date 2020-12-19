@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.WorkerClasses.AutonomousWorkerMethods;
 
@@ -28,10 +26,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // FtcDashboard dashboard;
 
     // create PID variables for drive motors
-    PIDCoefficients fwdbckPID = new PIDCoefficients(0,0,0);     // TODO will one set of coefficients work for both fwd & bck motors, or will they each need individual coefficients?
-    PIDCoefficients lftrtPID = new PIDCoefficients(0,0,0);
-    ElapsedTime drivePIDTimer = new ElapsedTime();
-    double drivePIDIntegral = 0;
+    // PIDCoefficients fwdbckPID = new PIDCoefficients(0,0,0);     // TODO will one set of coefficients work for both fwd & bck motors, or will they each need individual coefficients?
+    // PIDCoefficients lftrtPID = new PIDCoefficients(0,0,0);
+    // ElapsedTime drivePIDTimer = new ElapsedTime();
+    // double drivePIDIntegral = 0;
 
     @Override
     public void runOpMode() {
