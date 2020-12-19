@@ -25,20 +25,28 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // this OpMode will use the FtcDashboard;
     // FtcDashboard dashboard;
 
-    // create PID variables for drive motors
-    // PIDCoefficients fwdbckPID = new PIDCoefficients(0,0,0);     // TODO will one set of coefficients work for both fwd & bck motors, or will they each need individual coefficients?
-    // PIDCoefficients lftrtPID = new PIDCoefficients(0,0,0);
-    // ElapsedTime drivePIDTimer = new ElapsedTime();
-    // double drivePIDIntegral = 0;
-
     @Override
     public void runOpMode() {
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
         middleMotor = hardwareMap.get(DcMotorEx.class,"MiddleDrive");
 
-        // declare worker class(es)
-        AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
+        // predefine some variable constants
+        boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
+        boolean useCustomPIDF = false;      // set to true to use custom PIDF control
+        // motor power is used for running without encoders, motor VELOCITY is used for running WITH encooders
+        //  double motorpower = 0.25;       // range 0.0 - 1.0
+        double motorVelocity = 125;         // units is ticks/second
+
+        // unless disabled, set PIDF coefficients for drive motors
+        if (useCustomPIDF) {
+            leftMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
+            rightMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
+            middleMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
+            leftMotor.setPositionPIDFCoefficients(0);
+            rightMotor.setPositionPIDFCoefficients(0);
+            middleMotor.setPositionPIDFCoefficients(0);
+        }
 
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
@@ -50,14 +58,11 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         middleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        // declare worker class(es)
+        AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
+
         // initialize an instance of FtcDashboard
         // dashboard = FtcDashboard.getInstance();
-
-        // predefine some variables
-        boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
-        // motor power is used for running without encoders, motor VELOCITY is used for running WITH encooders
-        //  double motorpower = 0.25;       // range 0.0 - 1.0
-        double motorVelocity = 125;         // units is ticks/second
 
         telemetry.addData("Mode", "waiting");
         telemetry.update();
