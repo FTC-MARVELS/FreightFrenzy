@@ -7,13 +7,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.WorkerClasses.AutonomousWorkerMethods;
 
+@Config
 @Autonomous(name="Drive Rectangle", group="Templates")
 //@Disabled
 public class DriveRectangleWithEncoder extends LinearOpMode
@@ -23,19 +26,26 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     DcMotorEx rightMotor;
     DcMotorEx middleMotor;
 
-    // attach to FtcDashboard;
+    // define an instance of FtcDashboard;
     FtcDashboard dashboard;
 
-    // predefine some variable constants
+    // predefine some variables for dashboard configuration
     public static boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
     //  double motorpower = 0.25;       // range 0.0 - 1.0
     public static double motorVelocity = 125;         // units is ticks/second
+    public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients dashPID_Vmiddle = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients dashPID_Pright = new PIDFCoefficients(0,0,0,0);
+    public static PIDFCoefficients dashPID_Pmiddle = new PIDFCoefficients(0,0,0,0);
 
     // called when init button is pressed
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException
+    {
         // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
@@ -44,12 +54,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
             // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
-            leftMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
-            rightMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
-            middleMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
-            leftMotor.setPositionPIDFCoefficients(0);
-            rightMotor.setPositionPIDFCoefficients(0);
-            middleMotor.setPositionPIDFCoefficients(0);
+            leftMotor.setVelocityPIDFCoefficients(dashPID_Vleft.p, dashPID_Vleft.i, dashPID_Vleft.d, dashPID_Vleft.f);
+            rightMotor.setVelocityPIDFCoefficients(dashPID_Vright.p, dashPID_Vright.i, dashPID_Vright.d, dashPID_Vright.f);
+            middleMotor.setVelocityPIDFCoefficients(dashPID_Vmiddle.p, dashPID_Vmiddle.i, dashPID_Vmiddle.d, dashPID_Vmiddle.f);
+            leftMotor.setPositionPIDFCoefficients(dashPID_Pleft.p);
+            rightMotor.setPositionPIDFCoefficients(dashPID_Pright.p);
+            middleMotor.setPositionPIDFCoefficients(dashPID_Pmiddle.p);
         }
 
         // You will need to set this based on your robot's
@@ -65,7 +75,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // declare worker class(es)
         AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
 
-        // initialize an instance of FtcDashboard
+        // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
 
         telemetry.addData("Mode", "waiting");
