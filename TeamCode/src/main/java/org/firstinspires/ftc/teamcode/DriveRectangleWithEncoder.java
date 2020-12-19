@@ -40,6 +40,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
+            // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
             leftMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
             rightMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
             middleMotor.setVelocityPIDFCoefficients(0, 0, 0, 0);
