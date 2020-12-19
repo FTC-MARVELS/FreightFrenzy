@@ -6,6 +6,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,21 +23,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     DcMotorEx rightMotor;
     DcMotorEx middleMotor;
 
-    // this OpMode will use the FtcDashboard;
-    // FtcDashboard dashboard;
+    // attach to FtcDashboard;
+    FtcDashboard dashboard;
 
+    // predefine some variable constants
+    public static boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
+    public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
+    // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
+    //  double motorpower = 0.25;       // range 0.0 - 1.0
+    public static double motorVelocity = 125;         // units is ticks/second
+
+    // called when init button is pressed
     @Override
     public void runOpMode() {
+        // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
         middleMotor = hardwareMap.get(DcMotorEx.class,"MiddleDrive");
-
-        // predefine some variable constants
-        boolean pauseateachcorner = true;   // set to false if pausing at each corner is not desired
-        boolean useCustomPIDF = false;      // set to true to use custom PIDF control
-        // motor power is used for running without encoders, motor VELOCITY is used for running WITH encooders
-        //  double motorpower = 0.25;       // range 0.0 - 1.0
-        double motorVelocity = 125;         // units is ticks/second
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
@@ -63,7 +66,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
 
         // initialize an instance of FtcDashboard
-        // dashboard = FtcDashboard.getInstance();
+        dashboard = FtcDashboard.getInstance();
 
         telemetry.addData("Mode", "waiting");
         telemetry.update();
