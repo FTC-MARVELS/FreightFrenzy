@@ -22,10 +22,10 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     // declare our servos
     Servo gate;
     Servo feeder;
+
     // called when init button is pressed
     @Override
-    public void runOpMode() throws InterruptedException
-    {
+    public void runOpMode() {
         leftMotor = hardwareMap.get(DcMotorEx.class, "LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
         middleMotor = hardwareMap.get(DcMotorEx.class, "MiddleDrive");
@@ -34,6 +34,21 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         roller = hardwareMap.get(DcMotorEx.class, "Roller");
         gate = hardwareMap.get(Servo.class, "Gate");
         feeder = hardwareMap.get(Servo.class, "Feeder");
+    }
+
+    public void mainloop() {
+        rightMotor.setPower(gamepad1.right_stick_y);
+        leftMotor.setPower(-gamepad1.left_stick_y);
+        middleMotor.setPower(gamepad1.left_stick_x);
+
+        if(gamepad2.x) {
+            if (shooter.getPower() == 0.0) {
+                shooter.setPower(1.0);
+            } else {
+                shooter.setPower(0.0);
+            }
+        }
+
     }
 
 }
