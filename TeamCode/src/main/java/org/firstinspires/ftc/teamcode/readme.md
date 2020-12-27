@@ -5,7 +5,7 @@ Welcome to the TeamCode module for team 14571, the MARVELS!
 This module, TeamCode, is the place where we will write/paste the code for our team's
 robot controller App. This module started off empty (a clean slate) but we have since written 
 some OpModes to make our robot perform tasks.  The process for adding even more OpModes is 
-straightforward.
+straightforward.  We have also modified our copy of the SDK code to enable us to use the FTC Dashboard tool, created by ACME Robotics.
 
 ## Creating your own OpModes
 
