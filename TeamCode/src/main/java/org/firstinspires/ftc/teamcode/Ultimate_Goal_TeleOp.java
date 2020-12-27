@@ -41,12 +41,12 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         super.waitForStart();
     }
 
-    public void mainloop() {
+    while (opModeIsActive()) {
         rightMotor.setPower(gamepad1.right_stick_y);
         leftMotor.setPower(-gamepad1.left_stick_y);
         middleMotor.setPower(gamepad1.left_stick_x);
 
-        if(gamepad2.x) {
+        if (gamepad2.x) {
             if (shooter.getPower() == 0.0) {
                 shooter.setPower(1.0);
             } else {
@@ -55,5 +55,4 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         }
 
     }
-
 }
