@@ -36,6 +36,11 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         feeder = hardwareMap.get(Servo.class, "Feeder");
     }
 
+    @Override
+    public void waitForStart() {
+        super.waitForStart();
+    }
+
     public void mainloop() {
         rightMotor.setPower(gamepad1.right_stick_y);
         leftMotor.setPower(-gamepad1.left_stick_y);
