@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 @TeleOp(name = "Ultimate Goal TeleOp")
 
 public class Ultimate_Goal_TeleOp extends LinearOpMode{
@@ -34,25 +32,30 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         roller = hardwareMap.get(DcMotorEx.class, "Roller");
         gate = hardwareMap.get(Servo.class, "Gate");
         feeder = hardwareMap.get(Servo.class, "Feeder");
-    }
 
-    @Override
-    public void waitForStart() {
-        super.waitForStart();
-    }
+        // The motor on one side must be reversed to drive forward
+        // Reverse the motor that runs backwards when connected directly to the battery
+        // This eliminates the need to negate one of the setPower commands on left/right motor control
+        leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorEx.Direction.FORWARD);
 
-    while (opModeIsActive()) {
-        rightMotor.setPower(gamepad1.right_stick_y);
-        leftMotor.setPower(-gamepad1.left_stick_y);
-        middleMotor.setPower(gamepad1.left_stick_x);
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
 
-        if (gamepad2.x) {
-            if (shooter.getPower() == 0.0) {
-                shooter.setPower(1.0);
-            } else {
-                shooter.setPower(0.0);
+        // run until the end of the match (driver presses STOP)
+        while (opModeIsActive()) {
+            rightMotor.setPower(gamepad1.right_stick_y);
+            leftMotor.setPower(gamepad1.left_stick_y);
+            middleMotor.setPower(gamepad1.left_stick_x);
+
+            if (gamepad2.x) {
+                if (shooter.getPower() == 0.0) {
+                    shooter.setPower(1.0);
+                } else {
+                    shooter.setPower(0.0);
+                }
             }
-        }
 
+        }
     }
 }
