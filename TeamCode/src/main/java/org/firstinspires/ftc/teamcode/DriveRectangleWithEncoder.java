@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.WorkerClasses.AutonomousWorkerMethods;
 
@@ -25,6 +26,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     DcMotorEx leftMotor;
     DcMotorEx rightMotor;
     DcMotorEx middleMotor;
+    DcMotorEx shooter;
+    DcMotorEx intake;
+    DcMotorEx roller;
+
+    // declare our servos
+    Servo gate;
+    Servo feeder;
 
     // define an instance of FtcDashboard;
     FtcDashboard dashboard;
@@ -50,6 +58,11 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
         middleMotor = hardwareMap.get(DcMotorEx.class,"MiddleDrive");
+        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
+        intake = hardwareMap.get(DcMotorEx.class,"Intake");
+        roller = hardwareMap.get(DcMotorEx.class,"Roller");
+        gate = hardwareMap.get(Servo.class,"Gate");
+        feeder = hardwareMap.get(Servo.class,"Feeder");
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
