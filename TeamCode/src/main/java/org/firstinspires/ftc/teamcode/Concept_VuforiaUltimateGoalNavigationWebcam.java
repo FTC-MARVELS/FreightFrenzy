@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -131,6 +132,9 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
     private float phoneXRotate    = 0;
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
+
+    // define an instance of FtcDashboard;
+    FtcDashboard dashboard;
 
     @Override public void runOpMode() {
         /*
@@ -258,6 +262,12 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
 
+        // initialize FtcDashboard
+        dashboard = FtcDashboard.getInstance();
+
+        // declare dashboard telelmetry
+        TelemetryPacket packet = new TelemetryPacket();
+
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
         // WARNING:
@@ -265,6 +275,13 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
         // This sequence is used to enable the new remote DS Camera Preview feature to be used with this sample.
         // CONSEQUENTLY do not put any driving commands in this loop.
         // To restore the normal opmode structure, just un-comment the following line:
+
+        // send telemetry to Driver Station using standard SDK interface
+        telemetry.addData("Mode", "proceeding");
+        telemetry.update();
+        // send same telemetry to dashboard using packet interface
+        packet.put("Mode", "proceeding");
+        dashboard.sendTelemetryPacket(packet);
 
         // waitForStart();
 

@@ -8,6 +8,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -139,10 +140,17 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
 
+        // declare dashboard telelmetry
+        TelemetryPacket packet = new TelemetryPacket();
+
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
+        // send telemetry to Driver Station using standard SDK interface
         telemetry.addData("Mode", "waiting");
         telemetry.update();
+        // send same telemetry to dashboard using packet interface
+        packet.put("Mode", "waiting");
+        dashboard.sendTelemetryPacket(packet);
 
         // wait for start button to be pressed
         waitForStart();
