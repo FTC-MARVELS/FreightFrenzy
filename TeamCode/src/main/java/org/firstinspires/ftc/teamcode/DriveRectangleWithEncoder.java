@@ -157,6 +157,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         telemetry.addData("Mode", "running");
         telemetry.update();
+        // send same telemetry to dashboard using packet interface
+        packet.put("Mode", "running");
+        dashboard.sendTelemetryPacket(packet);
 
         // reset encoder counts kept by motors.
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

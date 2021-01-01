@@ -5,7 +5,6 @@
 package org.firstinspires.ftc.teamcode.WorkerClasses;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class AutonomousWorkerMethods extends LinearOpMode {
 
@@ -18,15 +17,15 @@ public class AutonomousWorkerMethods extends LinearOpMode {
     public void runOpMode() {
     }
 
-    DcMotor leftMotor = hardwareMap.dcMotor.get("LeftDrive");
-    DcMotor rightMotor = hardwareMap.dcMotor.get("RightDrive");
-    DcMotor middleMotor = hardwareMap.dcMotor.get("MiddleDrive");
+//d    DcMotor leftMotor = hardwareMap.dcMotor.get("LeftDrive");
+//d    DcMotor rightMotor = hardwareMap.dcMotor.get("RightDrive");
+//d    DcMotor middleMotor = hardwareMap.dcMotor.get("MiddleDrive");
 
     public void telemeterEncoderPositions() {
         // Display via telemetry all current encoder positions and busy statuses
-        telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
-        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + "  busy=" + rightMotor.isBusy());
-        telemetry.addData("encoder-middle", middleMotor.getCurrentPosition() + "  busy=" + middleMotor.isBusy());
+//d        telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
+//d        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + "  busy=" + rightMotor.isBusy());
+//d        telemetry.addData("encoder-middle", middleMotor.getCurrentPosition() + "  busy=" + middleMotor.isBusy());
         telemetry.update();
         idle();
     }
