@@ -325,7 +325,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // wait while opmode is active and motor is busy running to position
         while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
 
         // set motor power to zero to turn off motors. The motors stop on their own but
@@ -340,7 +340,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         resetStartTime();
         while (pauseateachcorner && opModeIsActive() && getRuntime() < 5)
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
 
     // Rectangle side cw2
@@ -359,14 +359,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // wait while opmode is active and motor is busy running to position.
         while (opModeIsActive() && middleMotor.isBusy())   //middleMotor.getCurrentPosition() < middleMotor.getTargetPosition())
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
 
         // unless disabled, wait 5 sec so you can observe the final encoder position
         resetStartTime();
         while (pauseateachcorner && opModeIsActive() && getRuntime() < 5)
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
 
     // Rectangle side cw3
@@ -386,14 +386,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // wait while opmode is active and motor is busy running to position
         while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
 
         // unless disabled, wait 5 sec so you can observe the final encoder position
         resetStartTime();
         while (pauseateachcorner && opModeIsActive() && getRuntime() < 5)
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
 
     // Rectangle side cw4
@@ -412,15 +412,32 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // wait while opmode is active and motor is busy running to position.
         while (opModeIsActive() && middleMotor.isBusy())   //middleMotor.getCurrentPosition() < middleMotor.getTargetPosition())
-        {
-            workers.telemeterEncoderPositions();
+
+            {
+            telemeterEncoderPositions();
         }
 
         // unless disabled, wait 5 sec so you can observe the final encoder position
         resetStartTime();
         while (pauseateachcorner && opModeIsActive() && getRuntime() < 5)
         {
-            workers.telemeterEncoderPositions();
+            telemeterEncoderPositions();
         }
+    }
+
+    // internal methods
+    public void telemeterEncoderPositions() {
+        // Display to SDK telemetry all current encoder positions and busy statuses
+        telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
+        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + "  busy=" + rightMotor.isBusy());
+        telemetry.addData("encoder-middle", middleMotor.getCurrentPosition() + "  busy=" + middleMotor.isBusy());
+        telemetry.update();
+        // Also display same to dashboard telemetry
+//d        TelemetryPacket packet;
+//d        packet.put("encoder-left", leftMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
+//d        packet.put("encoder-right", rightMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
+//d        packet.put("encoder-middle", middleMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
+//d        dashboard.sendTelemetryPacket(packet);
+        idle();
     }
 }
