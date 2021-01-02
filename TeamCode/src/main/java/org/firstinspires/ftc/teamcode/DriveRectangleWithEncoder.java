@@ -119,23 +119,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     {
         // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
-//d        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
-//d        middleMotor = hardwareMap.get(DcMotorEx.class,"MiddleDrive");
-//d        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
-//d        intake = hardwareMap.get(DcMotorEx.class,"Intake");
-//d        roller = hardwareMap.get(DcMotorEx.class,"Roller");
-//d        gate = hardwareMap.get(Servo.class,"Gate");
-//d        feeder = hardwareMap.get(Servo.class,"Feeder");
+        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
+        middleMotor = hardwareMap.get(DcMotorEx.class,"MiddleDrive");
+        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
+        intake = hardwareMap.get(DcMotorEx.class,"Intake");
+        roller = hardwareMap.get(DcMotorEx.class,"Roller");
+        gate = hardwareMap.get(Servo.class,"Gate");
+        feeder = hardwareMap.get(Servo.class,"Feeder");
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
             // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
             leftMotor.setVelocityPIDFCoefficients(dashPID_Vleft.p, dashPID_Vleft.i, dashPID_Vleft.d, dashPID_Vleft.f);
-//d            rightMotor.setVelocityPIDFCoefficients(dashPID_Vright.p, dashPID_Vright.i, dashPID_Vright.d, dashPID_Vright.f);
-//d            middleMotor.setVelocityPIDFCoefficients(dashPID_Vmiddle.p, dashPID_Vmiddle.i, dashPID_Vmiddle.d, dashPID_Vmiddle.f);
-//d            leftMotor.setPositionPIDFCoefficients(dashPID_Pleft.p);
-//d            rightMotor.setPositionPIDFCoefficients(dashPID_Pright.p);
-//d            middleMotor.setPositionPIDFCoefficients(dashPID_Pmiddle.p);
+            rightMotor.setVelocityPIDFCoefficients(dashPID_Vright.p, dashPID_Vright.i, dashPID_Vright.d, dashPID_Vright.f);
+            middleMotor.setVelocityPIDFCoefficients(dashPID_Vmiddle.p, dashPID_Vmiddle.i, dashPID_Vmiddle.d, dashPID_Vmiddle.f);
+            leftMotor.setPositionPIDFCoefficients(dashPID_Pleft.p);
+            rightMotor.setPositionPIDFCoefficients(dashPID_Pright.p);
+            middleMotor.setPositionPIDFCoefficients(dashPID_Pmiddle.p);
         }
 
         // You will need to set this based on your robot's
@@ -145,12 +145,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // set all encoder counts to zero (target position must be set before RUN_TO_POSITION mode can be set)
         leftMotor.setTargetPosition(0);
-//d        rightMotor.setTargetPosition(0);
-//d        middleMotor.setTargetPosition(0);
+        rightMotor.setTargetPosition(0);
+        middleMotor.setTargetPosition(0);
         // set motors to run to target encoder position and stop with brakes on
         leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//d        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//d        middleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        middleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // declare worker class(es)
         AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
@@ -306,23 +306,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // reset encoder counts kept by motors.
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//d        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//d        middleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        middleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     // Clockwise
     // Rectangle side cw1
 
         // send robot forward to specified encoder counts
         leftMotor.setTargetPosition(1500);
-//d        rightMotor.setTargetPosition(1500);
-//d        middleMotor.setTargetPosition(0);
+        rightMotor.setTargetPosition(1500);
+        middleMotor.setTargetPosition(0);
 
         // Set motors to appropriate power levels, movement will start. Sign of power is
         //  ignored since sign of target encoder position controls direction when
         //  running to position.
         leftMotor.setVelocity(motorVelocity);
-//d        rightMotor.setVelocity(motorVelocity);
-//d        middleMotor.setVelocity(0.0);          // TODO will setting this above zero help to immobilize left/right motion?
+        rightMotor.setVelocity(motorVelocity);
+        middleMotor.setVelocity(0.0);          // TODO will setting this above zero help to immobilize left/right motion?
 
         // wait while opmode is active and motor is busy running to position
         while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -346,7 +346,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         }
 
     // Rectangle side cw2
-/*d
         // send robot right to specified encoder counts
         leftMotor.setTargetPosition(1500);
         rightMotor.setTargetPosition(1500);
@@ -424,6 +423,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         while (pauseateachcorner && opModeIsActive() && getRuntime() < 5)
         {
             workers.telemeterEncoderPositions();
-        }*/
+        }
     }
 }
