@@ -26,8 +26,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-import org.firstinspires.ftc.teamcode.WorkerClasses.AutonomousWorkerMethods;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +151,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         middleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // declare worker class(es)
-        AutonomousWorkerMethods workers = new AutonomousWorkerMethods();
+        org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
 
         // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
