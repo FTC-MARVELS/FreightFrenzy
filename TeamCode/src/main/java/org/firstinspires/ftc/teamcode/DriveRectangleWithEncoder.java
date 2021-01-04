@@ -419,7 +419,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Also display same to dashboard telemetry
         TelemetryPacket eppacket = new TelemetryPacket();
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
-        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + "  busy=" + leftMotor.isBusy());
+        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + "  busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
         idle();
     }
