@@ -62,10 +62,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static double motorVelocity = 125;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
-    public static PIDFCoefficients dashPID_Vmiddle = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pright = new PIDFCoefficients(0,0,0,0);
-    public static PIDFCoefficients dashPID_Pmiddle = new PIDFCoefficients(0,0,0,0);
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -123,13 +121,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //d        gate = hardwareMap.get(Servo.class,"Gate");
 //d        feeder = hardwareMap.get(Servo.class,"Feeder");
 
+        // discover current (default) PIDF coefficients
+        leftMotor.getPIDFCoefficients();
+
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
             // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
-            leftMotor.setVelocityPIDFCoefficients(dashPID_Vleft.p, dashPID_Vleft.i, dashPID_Vleft.d, dashPID_Vleft.f);
-//d            rightMotor.setVelocityPIDFCoefficients(dashPID_Vright.p, dashPID_Vright.i, dashPID_Vright.d, dashPID_Vright.f);
-            leftMotor.setPositionPIDFCoefficients(dashPID_Pleft.p);
-//d            rightMotor.setPositionPIDFCoefficients(dashPID_Pright.p);
+            leftMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vleft);
+//d            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
         }
 
         // You will need to set this based on your robot's
@@ -141,8 +140,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         leftMotor.setTargetPosition(0);
 //d        rightMotor.setTargetPosition(0);
         // set motors to run to target encoder position and stop with brakes on
-        leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//d        rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+//d        rightMotor.setMode(DcMotor.RunMode.DcMotorEx.RunMode.RUN_TO_POSITION);
 
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
