@@ -271,18 +271,18 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
-        // WARNING:
-        // In this sample, we do not wait for PLAY to be pressed.  Target Tracking is started immediately when INIT is pressed.
-        // This sequence is used to enable the new remote DS Camera Preview feature to be used with this sample.
-        // CONSEQUENTLY do not put any driving commands in this loop.
-        // To restore the normal opmode structure, just un-comment the following line:
-
         // send telemetry to Driver Station using standard SDK interface
         telemetry.addData("Mode", "proceeding");
         telemetry.update();
         // send same telemetry to dashboard using packet interface
         packet.put("Mode", "proceeding");
         dashboard.sendTelemetryPacket(packet);
+
+        // WARNING:
+        // In this sample, we do not wait for PLAY to be pressed.  Target Tracking is started immediately when INIT is pressed.
+        // This sequence is used to enable the new remote DS Camera Preview feature to be used with this sample.
+        // CONSEQUENTLY do not put any driving commands in this loop.
+        // To restore the normal opmode structure, just un-comment the following line:
 
         // waitForStart();
 
