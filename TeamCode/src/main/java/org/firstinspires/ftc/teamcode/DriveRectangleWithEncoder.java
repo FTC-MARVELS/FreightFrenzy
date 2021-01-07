@@ -6,6 +6,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.annotation.SuppressLint;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -109,6 +111,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     private float phoneZRotate    = 0;
 
     // called when init button is pressed
+    @SuppressLint("DefaultLocale")
     @Override
     public void runOpMode() throws InterruptedException
     {
@@ -324,13 +327,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 VectorF translation = lastLocation.getTranslation();
                 telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                         translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+                packet.put("Pos (in)", String.format("{X, Y, Z} = %.1f, %.1f, %.1f", translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch));
 
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                packet.put("Rot (deg)", String.format("{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle));
             }
             else {
                 telemetry.addData("Visible Target", "none");
+                packet.put("Visible Target", "none");
             }
             telemetry.update();
             dashboard.sendTelemetryPacket(packet);
