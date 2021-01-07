@@ -126,8 +126,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // discover current (default) PIDF coefficients
         PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
+        telemetry.addData("default PIDF (Vleft)", readPidfVleft);
         packet.put("default PIDF (Vleft)", readPidfVleft);
-        dashboard.sendTelemetryPacket(packet);
+//t        dashboard.sendTelemetryPacket(packet);
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
