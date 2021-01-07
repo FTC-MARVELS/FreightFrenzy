@@ -121,8 +121,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //d        gate = hardwareMap.get(Servo.class,"Gate");
 //d        feeder = hardwareMap.get(Servo.class,"Feeder");
 
+        // declare dashboard telelmetry
+        TelemetryPacket packet = new TelemetryPacket();
+
         // discover current (default) PIDF coefficients
-        leftMotor.getPIDFCoefficients();
+        PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
+        packet.put("default PIDF (Vleft)", readPidfVleft);
+        dashboard.sendTelemetryPacket(packet);
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
@@ -148,9 +153,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
-
-        // declare dashboard telelmetry
-        TelemetryPacket packet = new TelemetryPacket();
 
         /*
          * Retrieve the camera we are to use.
