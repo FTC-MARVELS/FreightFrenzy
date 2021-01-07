@@ -6,8 +6,6 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import android.annotation.SuppressLint;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -111,7 +109,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     private float phoneZRotate    = 0;
 
     // called when init button is pressed
-    @SuppressLint("DefaultLocale")
     @Override
     public void runOpMode() throws InterruptedException
     {
