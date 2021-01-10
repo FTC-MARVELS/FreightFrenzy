@@ -125,13 +125,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         dashboard = FtcDashboard.getInstance();
 
         // declare dashboard telelmetry
-        TelemetryPacket packet = new TelemetryPacket();
+        TelemetryPacket pidfpacket = new TelemetryPacket();
+        TelemetryPacket modepacket = new TelemetryPacket();
 
         // discover current (default) PIDF coefficients
         PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
         telemetry.addData("default PIDF (Vleft)", readPidfVleft);
-        packet.put("default PIDF (Vleft)", readPidfVleft);
-        dashboard.sendTelemetryPacket(packet);
+        pidfpacket.put("default PIDF (Vleft)", readPidfVleft);
+        dashboard.sendTelemetryPacket(pidfpacket);
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
@@ -281,8 +282,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         telemetry.addData("Mode", "waiting");
         telemetry.update();
         // send same telemetry to dashboard using packet interface
-        packet.put("Mode", "waiting");
-        dashboard.sendTelemetryPacket(packet);
+        modepacket.put("Mode", "waiting");
+        dashboard.sendTelemetryPacket(modepacket);
 
         // wait for start button to be pressed
         waitForStart();
@@ -290,8 +291,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         telemetry.addData("Mode", "running");
         telemetry.update();
         // send same telemetry to dashboard using packet interface
-        packet.put("Mode", "running");
-        dashboard.sendTelemetryPacket(packet);
+        modepacket.put("Mode", "running");
+        dashboard.sendTelemetryPacket(modepacket);
 
         targetsUltimateGoal.activate();
         while (!isStopRequested()) {
