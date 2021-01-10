@@ -416,14 +416,15 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
 // internal methods below here
 
-    TelemetryPacket vuforiapacket = new TelemetryPacket();
     public void trackAndTelemeter(List<VuforiaTrackable> trackables) {
+
         // Display to SDK telemetry all current encoder positions and busy statuses
         telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
 //dhw        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         telemetry.update();
         // Also display same to dashboard telemetry
         TelemetryPacket eppacket = new TelemetryPacket();
+        TelemetryPacket vuforiapacket = new TelemetryPacket();
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
 //dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
