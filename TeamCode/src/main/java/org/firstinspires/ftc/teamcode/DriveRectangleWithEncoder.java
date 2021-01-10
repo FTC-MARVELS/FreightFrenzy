@@ -121,6 +121,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        gate = hardwareMap.get(Servo.class,"Gate");
 //dhw        feeder = hardwareMap.get(Servo.class,"Feeder");
 
+        // initialize FtcDashboard
+        dashboard = FtcDashboard.getInstance();
+
         // declare dashboard telelmetry
         TelemetryPacket packet = new TelemetryPacket();
 
@@ -128,7 +131,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
         telemetry.addData("default PIDF (Vleft)", readPidfVleft);
         packet.put("default PIDF (Vleft)", readPidfVleft);
-//t        dashboard.sendTelemetryPacket(packet);
+        dashboard.sendTelemetryPacket(packet);
 
         // unless disabled, set PIDF coefficients for drive motors
         if (useCustomPIDF) {
@@ -152,12 +155,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
 
-        // initialize FtcDashboard
-        dashboard = FtcDashboard.getInstance();
-
-        /*
-         * Retrieve the camera we are to use.
-         */
+        // Retrieve the camera we are to use
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         /*
@@ -167,14 +165,11 @@ public class DriveRectangleWithEncoder extends LinearOpMode
          */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
 
-        /**
-         * We also indicate which camera on the RC we wish to use.
-         */
+        // We also indicate which camera on the RC we wish to use
         parameters.cameraName = webcamName;
 
         // Make sure extended tracking is disabled for this example.
