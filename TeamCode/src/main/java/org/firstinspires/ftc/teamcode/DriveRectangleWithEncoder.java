@@ -114,12 +114,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     {
         // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
-//d        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
-//d        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
-//d        intake = hardwareMap.get(DcMotorEx.class,"Intake");
-//d        roller = hardwareMap.get(DcMotorEx.class,"Roller");
-//d        gate = hardwareMap.get(Servo.class,"Gate");
-//d        feeder = hardwareMap.get(Servo.class,"Feeder");
+//dhw        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
+//dhw        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
+//dhw        intake = hardwareMap.get(DcMotorEx.class,"Intake");
+//dhw        roller = hardwareMap.get(DcMotorEx.class,"Roller");
+//dhw        gate = hardwareMap.get(Servo.class,"Gate");
+//dhw        feeder = hardwareMap.get(Servo.class,"Feeder");
 
         // declare dashboard telelmetry
         TelemetryPacket packet = new TelemetryPacket();
@@ -134,7 +134,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         if (useCustomPIDF) {
             // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
             leftMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vleft);
-//d            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
+//dhw            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
         }
 
         // You will need to set this based on your robot's
@@ -144,10 +144,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // set all encoder counts to zero (target position must be set before RUN_TO_POSITION mode can be set)
         leftMotor.setTargetPosition(0);
-//d        rightMotor.setTargetPosition(0);
+//dhw        rightMotor.setTargetPosition(0);
         // set motors to run to target encoder position and stop with brakes on
         leftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//d        rightMotor.setMode(DcMotor.RunMode.DcMotorEx.RunMode.RUN_TO_POSITION);
+//dhw        rightMotor.setMode(DcMotor.RunMode.DcMotorEx.RunMode.RUN_TO_POSITION);
 
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
@@ -275,7 +275,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES, phoneYRotate, phoneZRotate, phoneXRotate));
 
-        /**  Let all the trackable listeners know where the phone is.  */
+        //  Let all the trackable listeners know where the camera is
         for (VuforiaTrackable trackable : allTrackables) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
@@ -301,65 +301,27 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         targetsUltimateGoal.activate();
         while (!isStopRequested()) {
 
-            // check all the trackable targets to see which one (if any) is visible.
-            targetVisible = false;
-            for (VuforiaTrackable trackable : allTrackables) {
-                if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
-                    telemetry.addData("Visible Target", trackable.getName());
-                    packet.put("Visible Target", trackable.getName());
-                    targetVisible = true;
-
-                    // getUpdatedRobotLocation() will return null if no new information is available since
-                    // the last time that call was made, or if the trackable is not currently visible.
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                    if (robotLocationTransform != null) {
-                        lastLocation = robotLocationTransform;
-                    }
-                    break;
-                }
-            }
-
-            // Provide feedback as to where the robot is located (if we know).
-            if (targetVisible) {
-                // express position (translation) of robot in inches.
-                VectorF translation = lastLocation.getTranslation();
-                telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
-                packet.put("Pos (in)", String.format("{X, Y, Z} = %.1f, %.1f, %.1f", translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch));
-
-                // express the rotation of the robot in degrees.
-                Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-                telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                packet.put("Rot (deg)", String.format("{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle));
-            }
-            else {
-                telemetry.addData("Visible Target", "none");
-                packet.put("Visible Target", "none");
-            }
-            telemetry.update();
-            dashboard.sendTelemetryPacket(packet);
-
             // reset encoder counts kept by motors.
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //d        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//dhw        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Clockwise
         // Rectangle side cw1
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
-    //d        rightMotor.setTargetPosition(1500);
+//dhw        rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels, movement will start. Sign of power is
             //  ignored since sign of target encoder position controls direction when
             //  running to position.
             leftMotor.setVelocity(motorVelocity);
-    //d        rightMotor.setVelocity(motorVelocity);
+//dhw        rightMotor.setVelocity(motorVelocity);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
             // set motor power to zero to turn off motors. The motors stop on their own but
@@ -368,88 +330,88 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // Commands to set power to zero are now commented out,
             //  because this prevented breaking action and allowed the robot to coast.
             // leftMotor.setPower(0.0);
-    //d        // rightMotor.setPower(0.0);
+//dhw        // rightMotor.setPower(0.0);
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
         // Rectangle side cw2
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1500);
-    //d        rightMotor.setTargetPosition(1500);
+//dhw        rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels, movement will start. Sign of power is
             //  ignored since sign of target encoder position controls direction when
             //  running to position.
             leftMotor.setVelocity(0.0);            // TODO will setting these above zero help to immobilize forward/back motion?
-    //d        rightMotor.setVelocity(0.0);
+//dhw        rightMotor.setVelocity(0.0);
 
             // wait while opmode is active and motor is busy running to position.
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
         // Rectangle side cw3
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(0);
-    //d        rightMotor.setTargetPosition(0);
+//dhw        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels, movement will start. Sign of power is
             //  ignored since sign of target encoder position controls direction when
             //  running to position.
             leftMotor.setVelocity(motorVelocity);
-    //d        rightMotor.setVelocity(motorVelocity);
+//dhw        rightMotor.setVelocity(motorVelocity);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
         // Rectangle side cw4
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(0);
-    //d        rightMotor.setTargetPosition(0);
+//dhw        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels, movement will start. Sign of power is
             //  ignored since sign of target encoder position controls direction when
             //  running to position.
             leftMotor.setVelocity(0.0);
-    //d        rightMotor.setVelocity(0.0);
+//dhw        rightMotor.setVelocity(0.0);
 
             // wait while opmode is active and motor is busy running to position.
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
 
                 {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                telemeterEncoderPositions();
+                trackAndTelemeter(allTrackables);
             }
         }
 
@@ -457,17 +419,57 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         targetsUltimateGoal.deactivate();
     }
 
-    // internal methods
-    public void telemeterEncoderPositions() {
+// internal methods below here
+
+    TelemetryPacket vuforiapacket = new TelemetryPacket();
+    public void trackAndTelemeter(List<VuforiaTrackable> trackables) {
         // Display to SDK telemetry all current encoder positions and busy statuses
         telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
-//d        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
+//dhw        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         telemetry.update();
         // Also display same to dashboard telemetry
         TelemetryPacket eppacket = new TelemetryPacket();
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
-//d        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
+//dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
+
+        // check all the trackable targets to see which one (if any) is visible.
+        targetVisible = false;
+        for (VuforiaTrackable trackable : trackables) {
+            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+                telemetry.addData("Visible Target", trackable.getName());
+                vuforiapacket.put("Visible Target", trackable.getName());
+                targetVisible = true;
+
+                // getUpdatedRobotLocation() will return null if no new information is available since
+                // the last time that call was made, or if the trackable is not currently visible.
+                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                if (robotLocationTransform != null) {
+                    lastLocation = robotLocationTransform;
+                }
+                break;
+            }
+        }
+
+        // Provide feedback as to where the robot is located (if we know).
+        if (targetVisible) {
+            // express position (translation) of robot in inches.
+            VectorF translation = lastLocation.getTranslation();
+            telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                    translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+            vuforiapacket.put("Pos (in)", String.format("{X, Y, Z} = %.1f, %.1f, %.1f", translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch));
+
+            // express the rotation of the robot in degrees.
+            Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+            telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+            vuforiapacket.put("Rot (deg)", String.format("{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle));
+        }
+        else {
+            telemetry.addData("Visible Target", "none");
+            vuforiapacket.put("Visible Target", "none");
+        }
+        telemetry.update();
+        dashboard.sendTelemetryPacket(vuforiapacket);
         idle();
     }
 }
