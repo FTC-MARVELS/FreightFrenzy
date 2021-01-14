@@ -317,7 +317,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "forward");
             }
 
             // set motor power to zero to turn off motors. The motors stop on their own but
@@ -332,7 +332,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "forward complete");
             }
 
         // Rectangle side cw2
@@ -349,14 +349,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // wait while opmode is active and motor is busy running to position.
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "right");
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "right complete");
             }
 
         // Rectangle side cw3
@@ -374,14 +374,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "back");
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "back complete");
             }
 
         // Rectangle side cw4
@@ -400,14 +400,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
 
                 {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "left");
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
             while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables);
+                trackAndTelemeter(allTrackables, "left complete");
             }
         }
 
@@ -417,15 +417,17 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
 // internal methods below here
 
-    public void trackAndTelemeter(List<VuforiaTrackable> trackables) {
+    public void trackAndTelemeter(List<VuforiaTrackable> trackables, String direction) {
+        TelemetryPacket eppacket = new TelemetryPacket();
+        TelemetryPacket vuforiapacket = new TelemetryPacket();
 
         // Display to SDK telemetry all current encoder positions and busy statuses
+        telemetry.addData("Direction", direction);
         telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
 //dhw        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         telemetry.update();
         // Also display same to dashboard telemetry
-        TelemetryPacket eppacket = new TelemetryPacket();
-        TelemetryPacket vuforiapacket = new TelemetryPacket();
+        eppacket.put("Direction", direction);
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
 //dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
