@@ -59,7 +59,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
     //  double motorpower = 0.25;       // range 0.0 - 1.0
-    public static double motorVelocity = 125;         // units is ticks/second
+    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
@@ -144,14 +144,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
         // forward motion.
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-
-        // set all encoder counts to zero (target position must be set before RUN_TO_POSITION mode can be set)
-        leftMotor.setTargetPosition(0);
-//dhw        rightMotor.setTargetPosition(0);
-        // set motors to run to target encoder position and stop with brakes on
-        leftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//dhw        rightMotor.setMode(DcMotor.RunMode.DcMotorEx.RunMode.RUN_TO_POSITION);
+        leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
@@ -298,117 +291,124 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         while (!isStopRequested()) {
 
             // reset encoder counts kept by motors.
-            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//dhw        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//dhw        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        // Clockwise
-        // Rectangle side cw1
+            // Move in a clockwise rectangle
+
+            // Rectangle side cw1
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
 //dhw        rightMotor.setTargetPosition(1500);
 
-            // Set motors to appropriate power levels, movement will start. Sign of power is
-            //  ignored since sign of target encoder position controls direction when
-            //  running to position.
-            leftMotor.setVelocity(motorVelocity);
-//dhw        rightMotor.setVelocity(motorVelocity);
+
+            // Set motors to appropriate power levels
+            leftMotor.setPower(0.25);
+//dhw        rightMotor.setPower(0.25);
+
+            // set motors to run to target encoder position and stop with brakes on
+            // movement will start here
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                trackAndTelemeter(allTrackables, "forward");
+                trackAndTelemeter(allTrackables,"forward motion");
             }
-
-            // set motor power to zero to turn off motors. The motors stop on their own but
-            //  power is still applied so we turn off the power.
-
-            // Commands to set power to zero are now commented out,
-            //  because this prevented breaking action and allowed the robot to coast.
-            // leftMotor.setPower(0.0);
-//dhw        // rightMotor.setPower(0.0);
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
+            while (opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables, "forward complete");
+                trackAndTelemeter(allTrackables,"forward complete");
             }
 
-        // Rectangle side cw2
+            // Rectangle side cw2
+
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1500);
 //dhw        rightMotor.setTargetPosition(1500);
 
-            // Set motors to appropriate power levels, movement will start. Sign of power is
-            //  ignored since sign of target encoder position controls direction when
-            //  running to position.
-            leftMotor.setVelocity(0.0);            // TODO will setting these above zero help to immobilize forward/back motion?
-//dhw        rightMotor.setVelocity(0.0);
+            // Set motors to appropriate power levels
+            leftMotor.setPower(0.25);
+//dhw            rightMotor.setPower(0.25);
+
+            // set motors to run to target encoder position and stop with brakes on
+            // movement will start here
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position.
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                trackAndTelemeter(allTrackables, "right");
+                trackAndTelemeter(allTrackables,"right motion");
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
+            while (opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables, "right complete");
+                trackAndTelemeter(allTrackables,"right complete");
             }
 
-        // Rectangle side cw3
+            // Rectangle side cw3
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(0);
 //dhw        rightMotor.setTargetPosition(0);
 
-            // Set motors to appropriate power levels, movement will start. Sign of power is
-            //  ignored since sign of target encoder position controls direction when
-            //  running to position.
-            leftMotor.setVelocity(motorVelocity);
-//dhw        rightMotor.setVelocity(motorVelocity);
+            // Set motors to appropriate power levels
+            leftMotor.setPower(0.25);
+//dhw            rightMotor.setPower(0.25);
 
-            // wait while opmode is active and motor is busy running to position
+            // set motors to run to target encoder position and stop with brakes on
+            // movement will start here
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // wait while opmode is active and motor is busy running to position.
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
-                trackAndTelemeter(allTrackables, "back");
+                trackAndTelemeter(allTrackables,"back motion");
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
+            while (opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables, "back complete");
+                trackAndTelemeter(allTrackables,"back complete");
             }
 
-        // Rectangle side cw4
+            // Rectangle side cw4
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(0);
 //dhw        rightMotor.setTargetPosition(0);
 
-            // Set motors to appropriate power levels, movement will start. Sign of power is
-            //  ignored since sign of target encoder position controls direction when
-            //  running to position.
-            leftMotor.setVelocity(0.0);
-//dhw        rightMotor.setVelocity(0.0);
+            // Set motors to appropriate power levels
+            leftMotor.setPower(0.0);
+//dhw            rightMotor.setPower(0.0);
+
+            // set motors to run to target encoder position and stop with brakes on
+            // movement will start here
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position.
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
-
-                {
-                trackAndTelemeter(allTrackables, "left");
+            {
+                trackAndTelemeter(allTrackables,"left motion");
             }
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5)
+            while (opModeIsActive() && getRuntime() < 5)
             {
-                trackAndTelemeter(allTrackables, "left complete");
+                trackAndTelemeter(allTrackables,"left complete");
             }
+
         }
 
         // Disable Tracking when OpMode is complete;
@@ -421,13 +421,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         TelemetryPacket eppacket = new TelemetryPacket();
         TelemetryPacket vuforiapacket = new TelemetryPacket();
 
-        // Display to SDK telemetry all current encoder positions and busy statuses
-        telemetry.addData("Direction", direction);
+        // Display to SDK telemetry all drive encoder positions and busy statuses
+        telemetry.addData("direction", direction);
         telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
 //dhw        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         telemetry.update();
         // Also display same to dashboard telemetry
-        eppacket.put("Direction", direction);
+        eppacket.put("direction", direction);
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
 //dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
