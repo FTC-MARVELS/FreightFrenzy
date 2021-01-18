@@ -58,7 +58,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
-    double motorpower = 0.25;       // range 0.0 - 1.0
+    double drivepower = 0.25;       // range 0.0 - 1.0
 //d    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
@@ -304,8 +304,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw        rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+//dhw        rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
@@ -325,6 +325,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"forward complete");
             }
 
+            // Turn cw 90 degrees
+            // We are in a corner of the rectangle, insert method call here to turn the corner
+
             // Rectangle side cw2
 
             // send robot right to specified encoder counts
@@ -332,8 +335,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+//dhw            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
@@ -353,6 +356,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"right complete");
             }
 
+            // Turn cw 90 degrees
+            // We are in a corner of the rectangle, insert method call here to turn the corner
+
             // Rectangle side cw3
 
             // send robot back to specified encoder counts
@@ -360,8 +366,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+//dhw            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
@@ -381,6 +387,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"back complete");
             }
 
+            // Turn cw 90 degrees
+            // We are in a corner of the rectangle, insert method call here to turn the corner
+
             // Rectangle side cw4
 
             // send robot left to specified encoder counts
@@ -388,8 +397,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+//dhw            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
