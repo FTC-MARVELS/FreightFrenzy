@@ -58,8 +58,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
-    //  double motorpower = 0.25;       // range 0.0 - 1.0
-    public static double motorVelocity = 125.0;         // units is ticks/second
+    double motorpower = 0.25;       // range 0.0 - 1.0
+//d    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
@@ -173,7 +173,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
         // Load the data sets for the trackable objects. These particular data
-        // sets are stored in the 'assets' part of our application.
+        //  sets are stored in the 'assets' part of our application.
         VuforiaTrackables targetsUltimateGoal = this.vuforia.loadTrackablesFromAsset("UltimateGoal");
         VuforiaTrackable blueTowerGoalTarget = targetsUltimateGoal.get(0);
         blueTowerGoalTarget.setName("Blue Tower Goal Target");
@@ -220,7 +220,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 .translation(-halfField, 0, mmTargetHeight)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , 90)));
 
-        // The tower goal targets are located a quarter field length from the ends of the back perimeter wall.
+        // The tower goal targets are located a quarter field length from the ends of the back perimeter wall
         blueTowerGoalTarget.setLocation(OpenGLMatrix
                 .translation(halfField, quadField, mmTargetHeight)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , -90)));
@@ -304,8 +304,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(0.25);
-//dhw        rightMotor.setPower(0.25);
+            leftMotor.setPower(motorpower);
+//dhw        rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
@@ -332,15 +332,15 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(0.25);
-//dhw            rightMotor.setPower(0.25);
+            leftMotor.setPower(motorpower);
+//dhw            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // wait while opmode is active and motor is busy running to position.
+            // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
                 trackAndTelemeter(allTrackables,"right motion");
@@ -360,15 +360,15 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(0.25);
-//dhw            rightMotor.setPower(0.25);
+            leftMotor.setPower(motorpower);
+//dhw            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // wait while opmode is active and motor is busy running to position.
+            // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
                 trackAndTelemeter(allTrackables,"back motion");
@@ -388,15 +388,15 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(0.0);
-//dhw            rightMotor.setPower(0.0);
+            leftMotor.setPower(motorpower);
+//dhw            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // wait while opmode is active and motor is busy running to position.
+            // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
             {
                 trackAndTelemeter(allTrackables,"left motion");
@@ -432,7 +432,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 //dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
 
-        // check all the trackable targets to see which one (if any) is visible.
+        // check all the trackable targets to see which one (if any) is visible
         targetVisible = false;
         for (VuforiaTrackable trackable : trackables) {
             if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
@@ -441,7 +441,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 targetVisible = true;
 
                 // getUpdatedRobotLocation() will return null if no new information is available since
-                // the last time that call was made, or if the trackable is not currently visible.
+                //  the last time that call was made, or if the trackable is not currently visible.
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null) {
                     lastLocation = robotLocationTransform;
@@ -450,15 +450,15 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             }
         }
 
-        // Provide feedback as to where the robot is located (if we know).
+        // provide feedback as to where the robot is located (if we know)
         if (targetVisible) {
-            // express position (translation) of robot in inches.
+            // express position (translation) of robot in inches
             VectorF translation = lastLocation.getTranslation();
             telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                     translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
             vuforiapacket.put("Pos (in)", String.format("{X, Y, Z} = %.1f, %.1f, %.1f", translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch));
 
-            // express the rotation of the robot in degrees.
+            // express the rotation of the robot in degrees
             Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
             telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
             vuforiapacket.put("Rot (deg)", String.format("{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle));
