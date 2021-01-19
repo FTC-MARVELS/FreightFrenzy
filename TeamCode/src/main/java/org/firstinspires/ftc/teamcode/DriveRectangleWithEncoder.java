@@ -328,6 +328,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // Turn cw 90 degrees
             // We are in a corner of the rectangle, insert method call here to turn the corner
 
+
             // Rectangle side cw2
 
             // send robot right to specified encoder counts
@@ -358,6 +359,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // Turn cw 90 degrees
             // We are in a corner of the rectangle, insert method call here to turn the corner
+
 
             // Rectangle side cw3
 
@@ -390,6 +392,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // Turn cw 90 degrees
             // We are in a corner of the rectangle, insert method call here to turn the corner
 
+
             // Rectangle side cw4
 
             // send robot left to specified encoder counts
@@ -417,6 +420,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             {
                 trackAndTelemeter(allTrackables,"left complete");
             }
+
+            // Turn cw 180 degrees
+            // We are in the starting corner of the rectangle, insert method call here to turn completely around
+
 
         }
 
