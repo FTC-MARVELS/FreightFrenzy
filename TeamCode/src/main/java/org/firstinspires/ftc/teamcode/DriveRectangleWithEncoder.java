@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -51,6 +52,11 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     Servo gate;
     Servo feeder;
 
+    // declare IMU
+    BNO055IMU imu;
+    Orientation             lastAngles = new Orientation();
+    double                  globalAngle, power = .30, correction;
+
     // define an instance of FtcDashboard;
     FtcDashboard dashboard;
 
@@ -65,13 +71,14 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pright = new PIDFCoefficients(0,0,0,0);
 
+    // initializeVuforia
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
+     * 'vparameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
      * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
      * web site at https://developer.vuforia.com/license-manager.
      *
@@ -146,9 +153,37 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // forward motion.
         leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//dhw            rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        BNO055IMU.Parameters imuparameters = new BNO055IMU.Parameters();
+
+        imuparameters.mode                = BNO055IMU.SensorMode.IMU;
+        imuparameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        imuparameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        imuparameters.loggingEnabled      = false;
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(imuparameters);
+
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        // make sure the imu gyro is calibrated before continuing.
+        while (!isStopRequested() && !imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+        }
+
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
 
+        //executeVuforia
         // Retrieve the camera we are to use
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -158,19 +193,19 @@ public class DriveRectangleWithEncoder extends LinearOpMode
          * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
          */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        // VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
 
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
 
         // We also indicate which camera on the RC we wish to use
-        parameters.cameraName = webcamName;
+        vparameters.cameraName = webcamName;
 
         // Make sure extended tracking is disabled for this example.
-        parameters.useExtendedTracking = false;
+        vparameters.useExtendedTracking = false;
 
         //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
 
         // Load the data sets for the trackable objects. These particular data
         //  sets are stored in the 'assets' part of our application.
@@ -266,16 +301,17 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         //  Let all the trackable listeners know where the camera is
         for (VuforiaTrackable trackable : allTrackables) {
-            ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
+            ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, vparameters.cameraDirection);
         }
 
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
         // send telemetry to Driver Station using standard SDK interface
-        telemetry.addData("Mode", "waiting");
+        telemetry.addData("Mode", "waiting for start");
+        telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
         // send same telemetry to dashboard using packet interface
-        modepacket.put("Mode", "waiting");
+        modepacket.put("Mode", "waiting for start");
         dashboard.sendTelemetryPacket(modepacket);
 
         // wait for start button to be pressed
