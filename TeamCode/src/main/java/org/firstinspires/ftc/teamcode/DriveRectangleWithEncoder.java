@@ -292,7 +292,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // reset encoder counts kept by motors.
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
             // Move in a clockwise rectangle
 
@@ -300,12 +300,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
-        rightMotor.setTargetPosition(1500);
+            rightMotor.setTargetPosition(1500);
 
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
-        rightMotor.setPower(motorpower);
+            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
@@ -329,7 +329,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1500);
-        rightMotor.setTargetPosition(1500);
+            rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
@@ -357,7 +357,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(0);
-        rightMotor.setTargetPosition(0);
+            rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
@@ -385,7 +385,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(0);
-        rightMotor.setTargetPosition(0);
+            rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
