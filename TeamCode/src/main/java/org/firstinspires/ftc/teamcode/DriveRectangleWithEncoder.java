@@ -114,7 +114,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     {
         // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
-//dhw        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
+        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
 //dhw        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
 //dhw        intake = hardwareMap.get(DcMotorEx.class,"Intake");
 //dhw        roller = hardwareMap.get(DcMotorEx.class,"Roller");
@@ -138,7 +138,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         if (useCustomPIDF) {
             // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
             leftMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vleft);
-//dhw            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
+            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
         }
 
         // You will need to set this based on your robot's
@@ -292,7 +292,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // reset encoder counts kept by motors.
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//dhw        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
             // Move in a clockwise rectangle
 
@@ -300,17 +300,17 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
-//dhw        rightMotor.setTargetPosition(1500);
+        rightMotor.setTargetPosition(1500);
 
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
-//dhw        rightMotor.setPower(motorpower);
+        rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -329,16 +329,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1500);
-//dhw        rightMotor.setTargetPosition(1500);
+        rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -357,16 +357,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(0);
-//dhw        rightMotor.setTargetPosition(0);
+        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -385,16 +385,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(0);
-//dhw        rightMotor.setTargetPosition(0);
+        rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            rightMotor.setPower(motorpower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -424,12 +424,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Display to SDK telemetry all drive encoder positions and busy statuses
         telemetry.addData("direction", direction);
         telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
-//dhw        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
+        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         telemetry.update();
         // Also display same to dashboard telemetry
         eppacket.put("direction", direction);
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
-//dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
+        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
 
         // check all the trackable targets to see which one (if any) is visible
