@@ -36,12 +36,12 @@ public class DriveImu extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         leftMotor = hardwareMap.dcMotor.get("LeftDrive");
-//dhw            rightMotor = hardwareMap.dcMotor.get("RightDrive");
+        rightMotor = hardwareMap.dcMotor.get("RightDrive");
 
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//dhw            rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
@@ -93,7 +93,7 @@ public class DriveImu extends LinearOpMode
             telemetry.update();
 
             leftMotor.setPower(power - correction);
-//d                rightMotor.setPower(power + correction);
+            rightMotor.setPower(power + correction);
 
             // We record the sensor values because we will test them in more than
             // one place with time passing between those places. See the lesson on
@@ -106,13 +106,13 @@ public class DriveImu extends LinearOpMode
             {
                 // backup.
                 leftMotor.setPower(power);
-//d                    rightMotor.setPower(power);
+                rightMotor.setPower(power);
 
                 sleep(500);
 
                 // stop.
                 leftMotor.setPower(0);
-//d                    rightMotor.setPower(0);
+                rightMotor.setPower(0);
 
                 // turn 90 degrees right.
                 if (aButton) rotate(-90, power);
@@ -123,7 +123,7 @@ public class DriveImu extends LinearOpMode
         }
 
         // turn the motors off.
-//d            rightMotor.setPower(0);
+        rightMotor.setPower(0);
         leftMotor.setPower(0);
     }
 
@@ -215,7 +215,7 @@ public class DriveImu extends LinearOpMode
 
         // set power to rotate.
         leftMotor.setPower(leftPower);
-//d            rightMotor.setPower(rightPower);
+        rightMotor.setPower(rightPower);
 
         // rotate until turn is completed.
         if (degrees < 0)
@@ -229,7 +229,7 @@ public class DriveImu extends LinearOpMode
             while (opModeIsActive() && getAngle() < degrees) {}
 
         // turn the motors off.
-//d            rightMotor.setPower(0);
+        rightMotor.setPower(0);
         leftMotor.setPower(0);
 
         // wait for rotation to stop.
