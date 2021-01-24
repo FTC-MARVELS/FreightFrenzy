@@ -344,17 +344,17 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
-//dhw            rightMotor.setTargetPosition(1500);
+            rightMotor.setTargetPosition(1500);
 
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
-//dhw            rightMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -369,24 +369,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"forward complete");
             }
 
-            // Turn cw 90 degrees
-            // We are in a corner of the rectangle, insert method call here to turn the corner
+            // We are in a corner of the rectangle, turn cw 90 degrees
             rotate(-90, drivepower);
 
             // Rectangle side cw2
 
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1500);
-//dhw            rightMotor.setTargetPosition(1500);
+            rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
-//dhw            rightMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -401,24 +400,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"right complete");
             }
 
-            // Turn cw 90 degrees
-            // We are in a corner of the rectangle, insert method call here to turn the corner
+            // We are in a corner of the rectangle, turn cw 90 degrees
             rotate(-90, drivepower);
 
             // Rectangle side cw3
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(0);
-//dhw            rightMotor.setTargetPosition(0);
+            rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
-//dhw            rightMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -433,24 +431,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"back complete");
             }
 
-            // Turn cw 90 degrees
-            // We are in a corner of the rectangle, insert method call here to turn the corner
+            // We are in a corner of the rectangle, turn cw 90 degrees
             rotate(-90, drivepower);
 
             // Rectangle side cw4
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(0);
-//dhw            rightMotor.setTargetPosition(0);
+            rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
-//dhw            rightMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -465,8 +462,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"left complete");
             }
 
-            // Turn cw 180 degrees
-            // We are in the starting corner of the rectangle, insert method call here to turn completely around
+            // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
             rotate(180, drivepower);
         }
 

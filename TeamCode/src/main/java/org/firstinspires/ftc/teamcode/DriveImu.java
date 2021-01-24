@@ -11,6 +11,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -43,6 +45,12 @@ public class DriveImu extends LinearOpMode
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        // define an instance of FtcDashboard;
+        FtcDashboard dashboard;
+
+        // initialize FtcDashboard
+        dashboard = FtcDashboard.getInstance();
+
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
         parameters.mode                = BNO055IMU.SensorMode.IMU;
@@ -71,11 +79,19 @@ public class DriveImu extends LinearOpMode
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
 
-        // wait for start button.
+        TelemetryPacket imupacket = new TelemetryPacket();
+        imupacket.put("imu calib status", imu.getCalibrationStatus().toString());
+        dashboard.sendTelemetryPacket(imupacket);
 
+        // wait for start button.
         waitForStart();
 
         telemetry.addData("Mode", "running");
+        telemetry.update();
+
+        telemetry.addData("1 imu heading", lastAngles.firstAngle);
+        telemetry.addData("2 global heading", globalAngle);
+        telemetry.addData("3 correction", correction);
         telemetry.update();
 
         sleep(1000);
