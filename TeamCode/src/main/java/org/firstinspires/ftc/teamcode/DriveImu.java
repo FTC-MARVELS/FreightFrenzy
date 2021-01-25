@@ -85,15 +85,6 @@ public class DriveImu extends LinearOpMode
 
         // wait for start button.
         waitForStart();
-
-        telemetry.addData("Mode", "running");
-        telemetry.update();
-
-        telemetry.addData("1 imu heading", lastAngles.firstAngle);
-        telemetry.addData("2 global heading", globalAngle);
-        telemetry.addData("3 correction", correction);
-        telemetry.update();
-
         sleep(1000);
 
         // drive until end of period.
@@ -107,6 +98,10 @@ public class DriveImu extends LinearOpMode
             telemetry.addData("2 global heading", globalAngle);
             telemetry.addData("3 correction", correction);
             telemetry.update();
+            imupacket.put("1 imu heading", lastAngles.firstAngle);
+            imupacket.put("2 global heading", globalAngle);
+            imupacket.put("3 correction", correction);
+            dashboard.sendTelemetryPacket(imupacket);
 
             leftMotor.setPower(power - correction);
             rightMotor.setPower(power + correction);
@@ -115,14 +110,21 @@ public class DriveImu extends LinearOpMode
             // one place with time passing between those places. See the lesson on
             // Timing Considerations to know why.
 
-            aButton = gamepad1.a;
-            bButton = gamepad1.b;
+//d            aButton = gamepad1.a;
+//d            bButton = gamepad1.b;
 
-            if (aButton || bButton)
+            aButton = bButton = false;
+            resetStartTime();
+            if (getRuntime() > 5){
+                aButton = true;
+                resetStartTime();
+            }
+
+                if (aButton || bButton)
             {
                 // backup.
-                leftMotor.setPower(power);
-                rightMotor.setPower(power);
+                leftMotor.setPower(-power);
+                rightMotor.setPower(-power);
 
                 sleep(500);
 
@@ -135,6 +137,8 @@ public class DriveImu extends LinearOpMode
 
                 // turn 90 degrees left.
                 if (bButton) rotate(90, power);
+
+                aButton = bButton = false;
             }
         }
 
@@ -148,7 +152,7 @@ public class DriveImu extends LinearOpMode
      */
     private void resetAngle()
     {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
         globalAngle = 0;
     }
@@ -159,12 +163,15 @@ public class DriveImu extends LinearOpMode
      */
     private double getAngle()
     {
-        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We (Marvels) experimentally determined that the X axis is the axis we want to use for
+        //  heading angle, for our robot designed during the Ultimate Goal season.  Our REV hubs
+        //  are mounted with the USB ports toward the ground and ceiling.
+        //  We are therefore using AxesOrder.XYZ rather than AxesOrder.ZYX per the example code.
         // We have to process the angle because the imu works in euler angles so the Z axis is
-        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
-        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+        //  returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        //  180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
