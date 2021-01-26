@@ -65,8 +65,13 @@ public class DriveImu extends LinearOpMode
 
         imu.initialize(parameters);
 
-        telemetry.addData("Mode", "calibrating...");
+        TelemetryPacket imupacket = new TelemetryPacket();
+        TelemetryPacket motionpacket = new TelemetryPacket();
+
+        telemetry.addData("Mode", "imu calibrating...");
         telemetry.update();
+        imupacket.put("Mode", "imu calibrating...");
+        dashboard.sendTelemetryPacket(imupacket);
 
         // make sure the imu gyro is calibrated before continuing.
         while (!isStopRequested() && !imu.isGyroCalibrated())
@@ -75,19 +80,22 @@ public class DriveImu extends LinearOpMode
             idle();
         }
 
-        telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
-        telemetry.update();
-
-        TelemetryPacket imupacket = new TelemetryPacket();
         imupacket.put("imu calib status", imu.getCalibrationStatus().toString());
+        telemetry.addData("a turn will occur", "every 5 seconds");
+        motionpacket.put("a turn will occur", "every 5 seconds");
+        telemetry.addData("Mode", "waiting for start");
+        motionpacket.put("Mode", "waiting for start");
         dashboard.sendTelemetryPacket(imupacket);
+        dashboard.sendTelemetryPacket(motionpacket);
 
         // wait for start button.
         waitForStart();
         sleep(1000);
 
         // drive until end of period.
+
+        resetStartTime();
 
         while (opModeIsActive())
         {
@@ -114,8 +122,16 @@ public class DriveImu extends LinearOpMode
 //d            bButton = gamepad1.b;
 
             aButton = bButton = false;
-            resetStartTime();
+            telemetry.addData("runtime", getRuntime());
+            telemetry.update();
+            motionpacket.put("runtime", getRuntime());
+            dashboard.sendTelemetryPacket(motionpacket);
+
             if (getRuntime() > 5){
+                telemetry.addData("runtime +5", getRuntime());
+                telemetry.update();
+                motionpacket.put("runtime +5", getRuntime());
+                dashboard.sendTelemetryPacket(motionpacket);
                 aButton = true;
                 resetStartTime();
             }
@@ -123,22 +139,46 @@ public class DriveImu extends LinearOpMode
                 if (aButton || bButton)
             {
                 // backup.
+                telemetry.addData("motion", "backing up");
+                telemetry.update();
+                motionpacket.put("motion", "backing up");
+                dashboard.sendTelemetryPacket(motionpacket);
                 leftMotor.setPower(-power);
                 rightMotor.setPower(-power);
 
-                sleep(500);
+                sleep(1500);
 
                 // stop.
+                telemetry.addData("motion", "stopping");
+                telemetry.update();
+                motionpacket.put("motion", "stopping");
+                dashboard.sendTelemetryPacket(motionpacket);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
 
                 // turn 90 degrees right.
-                if (aButton) rotate(-90, power);
+                if (aButton){
+                    telemetry.addData("motion", "rotating -90 degrees");
+                    telemetry.update();
+                    motionpacket.put("motion", "rotating -90 degrees");
+                    dashboard.sendTelemetryPacket(motionpacket);
+                    rotate(-90, power);
+                }
 
                 // turn 90 degrees left.
-                if (bButton) rotate(90, power);
+                if (bButton){
+                    telemetry.addData("motion", "rotating +90 degrees");
+                    telemetry.update();
+                    motionpacket.put("motion", "rotating +90 degrees");
+                    dashboard.sendTelemetryPacket(motionpacket);
+                    rotate(90, power);
+                }
 
                 aButton = bButton = false;
+                telemetry.addData("motion", "rotation complete");
+                telemetry.update();
+                motionpacket.put("motion", "rotation complete");
+                dashboard.sendTelemetryPacket(motionpacket);
             }
         }
 
@@ -226,6 +266,7 @@ public class DriveImu extends LinearOpMode
 
         if (degrees < 0)
         {   // turn right.
+
             leftPower = power;
             rightPower = -power;
         }
