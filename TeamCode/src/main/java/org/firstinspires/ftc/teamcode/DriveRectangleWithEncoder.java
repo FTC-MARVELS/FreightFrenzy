@@ -8,6 +8,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -58,7 +59,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // declare IMU
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    double                  globalAngle, power = .30, correction;
+    double                  globalAngle, correction;
 
     // define an instance of FtcDashboard;
     FtcDashboard dashboard;
@@ -67,7 +68,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
-    double drivepower = 0.25;       // range 0.0 - 1.0
+    public static double drivepower = 0.20;       // range 0.0 - 1.0
+    public static double turnpower = 0.15;       // range 0.0 - 1.0
 //d    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
@@ -370,7 +372,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             }
 
             // We are in a corner of the rectangle, turn cw 90 degrees
-            rotate(-90, drivepower);
+            rotate(-90, turnpower);
 
             // Rectangle side cw2
 
@@ -401,7 +403,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             }
 
             // We are in a corner of the rectangle, turn cw 90 degrees
-            rotate(-90, drivepower);
+            rotate(-90, turnpower);
 
             // Rectangle side cw3
 
@@ -432,7 +434,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             }
 
             // We are in a corner of the rectangle, turn cw 90 degrees
-            rotate(-90, drivepower);
+            rotate(-90, turnpower);
 
             // Rectangle side cw4
 
@@ -463,7 +465,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             }
 
             // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
-            rotate(180, drivepower);
+            rotate(180, turnpower);
         }
 
         // Disable Tracking when OpMode is complete;
@@ -472,6 +474,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
 // internal methods below here
 
+    // display vuforia trackables and drive motor status via telemetry
     public void trackAndTelemeter(List<VuforiaTrackable> trackables, String direction) {
         TelemetryPacket eppacket = new TelemetryPacket();
         TelemetryPacket vuforiapacket = new TelemetryPacket();
@@ -578,7 +581,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     }
 
      // rotate left or right the number of degrees. Does not support turning more than 180 degrees
-     //  @param degrees Degrees to turn, + is left - is right
+     //  @param degrees Degrees to turn, + for left (ccw), - for right (cw)
     private void rotate(int degrees, double power)
     {
         double  leftPower, rightPower;
@@ -623,6 +626,18 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         // reset angle tracking on new heading.
         resetAngle();
+    }
+
+    // display telemetry to both SDK and dashboard
+    public class MultiTelemetry
+    {
+        public void init() {
+            telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+            // ...
+        }
+
+        // ...
     }
 
 }
