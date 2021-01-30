@@ -8,7 +8,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,6 +22,9 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
@@ -51,6 +56,11 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     Servo gate;
     Servo feeder;
 
+    // declare IMU
+    BNO055IMU imu;
+    Orientation             lastAngles = new Orientation();
+    double                  globalAngle, correction;
+
     // define an instance of FtcDashboard;
     FtcDashboard dashboard;
 
@@ -58,20 +68,22 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
-    double motorpower = 0.25;       // range 0.0 - 1.0
+    public static double drivepower = 0.20;       // range 0.0 - 1.0
+    public static double turnpower = 0.15;       // range 0.0 - 1.0
 //d    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pright = new PIDFCoefficients(0,0,0,0);
 
+    // initializeVuforia
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
+     * 'vparameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
      * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
      * web site at https://developer.vuforia.com/license-manager.
      *
@@ -114,7 +126,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     {
         // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
-//dhw        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
+        rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
 //dhw        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
 //dhw        intake = hardwareMap.get(DcMotorEx.class,"Intake");
 //dhw        roller = hardwareMap.get(DcMotorEx.class,"Roller");
@@ -127,6 +139,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // declare dashboard telelmetry
         TelemetryPacket pidfpacket = new TelemetryPacket();
         TelemetryPacket modepacket = new TelemetryPacket();
+        TelemetryPacket imupacket = new TelemetryPacket();
 
         // discover current (default) PIDF coefficients
         PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -138,17 +151,47 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         if (useCustomPIDF) {
             // these values were calculated using a maximum velocity value of XXXX, as measured on mm/dd/yyyy
             leftMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vleft);
-//dhw            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
+            rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
         }
 
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
         // forward motion.
-        leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        BNO055IMU.Parameters imuparameters = new BNO055IMU.Parameters();
+
+        imuparameters.mode                = BNO055IMU.SensorMode.IMU;
+        imuparameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        imuparameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        imuparameters.loggingEnabled      = false;
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(imuparameters);
+
+        telemetry.addData("IMU Status", "calibrating...");
+        telemetry.update();
+        imupacket.put("IMU Status", "calibrating...");
+        dashboard.sendTelemetryPacket(imupacket);
+
+        // make sure the imu gyro is calibrated before continuing.
+        while (!isStopRequested() && !imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+        }
 
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
 
+        //executeVuforia
         // Retrieve the camera we are to use
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -158,19 +201,19 @@ public class DriveRectangleWithEncoder extends LinearOpMode
          * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
          */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        // VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
 
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
 
         // We also indicate which camera on the RC we wish to use
-        parameters.cameraName = webcamName;
+        vparameters.cameraName = webcamName;
 
         // Make sure extended tracking is disabled for this example.
-        parameters.useExtendedTracking = false;
+        vparameters.useExtendedTracking = false;
 
         //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
 
         // Load the data sets for the trackable objects. These particular data
         //  sets are stored in the 'assets' part of our application.
@@ -266,16 +309,19 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         //  Let all the trackable listeners know where the camera is
         for (VuforiaTrackable trackable : allTrackables) {
-            ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
+            ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, vparameters.cameraDirection);
         }
 
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
         // send telemetry to Driver Station using standard SDK interface
-        telemetry.addData("Mode", "waiting");
+        telemetry.addData("Mode", "waiting for start");
+        telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
         // send same telemetry to dashboard using packet interface
-        modepacket.put("Mode", "waiting");
+        imupacket.put("imu calib status", imu.getCalibrationStatus().toString());
+        dashboard.sendTelemetryPacket(imupacket);
+        modepacket.put("Mode", "waiting for start");
         dashboard.sendTelemetryPacket(modepacket);
 
         // wait for start button to be pressed
@@ -292,7 +338,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // reset encoder counts kept by motors.
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//dhw        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
             // Move in a clockwise rectangle
 
@@ -300,17 +346,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
-//dhw        rightMotor.setTargetPosition(1500);
-
+            rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw        rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -325,20 +370,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"forward complete");
             }
 
+            // We are in a corner of the rectangle, turn cw 90 degrees
+            rotate(-90, turnpower);
+
             // Rectangle side cw2
 
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1500);
-//dhw        rightMotor.setTargetPosition(1500);
+            rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -353,20 +401,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"right complete");
             }
 
+            // We are in a corner of the rectangle, turn cw 90 degrees
+            rotate(-90, turnpower);
+
             // Rectangle side cw3
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(0);
-//dhw        rightMotor.setTargetPosition(0);
+            rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -381,20 +432,23 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"back complete");
             }
 
+            // We are in a corner of the rectangle, turn cw 90 degrees
+            rotate(-90, turnpower);
+
             // Rectangle side cw4
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(0);
-//dhw        rightMotor.setTargetPosition(0);
+            rightMotor.setTargetPosition(0);
 
             // Set motors to appropriate power levels
-            leftMotor.setPower(motorpower);
-//dhw            rightMotor.setPower(motorpower);
+            leftMotor.setPower(drivepower);
+            rightMotor.setPower(drivepower);
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//dhw            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -409,6 +463,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"left complete");
             }
 
+            // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
+            rotate(180, turnpower);
         }
 
         // Disable Tracking when OpMode is complete;
@@ -417,6 +473,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
 // internal methods below here
 
+    // display vuforia trackables and drive motor status via telemetry
     public void trackAndTelemeter(List<VuforiaTrackable> trackables, String direction) {
         TelemetryPacket eppacket = new TelemetryPacket();
         TelemetryPacket vuforiapacket = new TelemetryPacket();
@@ -424,12 +481,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // Display to SDK telemetry all drive encoder positions and busy statuses
         telemetry.addData("direction", direction);
         telemetry.addData("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
-//dhw        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
+        telemetry.addData("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         telemetry.update();
         // Also display same to dashboard telemetry
         eppacket.put("direction", direction);
         eppacket.put("encoder-left", leftMotor.getCurrentPosition() + ", busy=" + leftMotor.isBusy());
-//dhw        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
+        eppacket.put("encoder-right", rightMotor.getCurrentPosition() + ", busy=" + rightMotor.isBusy());
         dashboard.sendTelemetryPacket(eppacket);
 
         // check all the trackable targets to see which one (if any) is visible
@@ -471,4 +528,115 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         dashboard.sendTelemetryPacket(vuforiapacket);
         idle();
     }
+
+    // reset the cumulative angle tracking to zero
+    private void resetAngle()
+    {
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        globalAngle = 0;
+    }
+
+    // get current cumulative angle rotation from last reset
+    // @return Angle in degrees. + = left, - = right
+    private double getAngle()
+    {
+        // We (Marvels) experimentally determined that the X axis is the axis we want to use for
+        //  heading angle, for our robot designed during the Ultimate Goal season.  Our REV hubs
+        //  are mounted with the USB ports toward the ground and ceiling.
+        //  We are therefore using AxesOrder.XYZ rather than AxesOrder.ZYX per the example code.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+        lastAngles = angles;
+        return globalAngle;
+    }
+
+     // See if we are moving in a straight line and if not return a power correction value.
+     //  @return Power adjustment, + is adjust left - is adjust right
+    private double checkDirection()
+    {
+        // The gain value determines how sensitive the correction is to direction changes.
+        // You will have to experiment with your robot to get small smooth direction changes
+        // to stay on a straight line.
+        double correction, angle, gain = .10;
+        angle = getAngle();
+        if (angle == 0)
+            correction = 0;             // no adjustment.
+        else
+            correction = -angle;        // reverse sign of angle for correction.
+        correction = correction * gain;
+        return correction;
+    }
+
+     // rotate left or right the number of degrees. Does not support turning more than 180 degrees
+     //  @param degrees Degrees to turn, + for left (ccw), - for right (cw)
+    private void rotate(int degrees, double power)
+    {
+        double  leftPower, rightPower;
+        // restart imu movement tracking.
+        resetAngle();
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < 0)
+        {   // turn right.
+            leftPower = power;
+            rightPower = -power;
+        }
+        else if (degrees > 0)
+        {   // turn left.
+            leftPower = -power;
+            rightPower = power;
+        }
+        else return;
+
+        // set power to rotate.
+        leftMotor.setPower(leftPower);
+        rightMotor.setPower(rightPower);
+
+        // rotate until turn is completed.
+        if (degrees < 0)
+        {
+            // On right turn we have to get off zero first.
+            while (opModeIsActive() && getAngle() == 0) {}
+            while (opModeIsActive() && getAngle() > degrees) {}
+        }
+        else    // left turn.
+            while (opModeIsActive() && getAngle() < degrees) {}
+
+        // turn the motors off.
+        rightMotor.setPower(0);
+        leftMotor.setPower(0);
+
+        // wait for rotation to stop.
+        sleep(1000);
+
+        // reset angle tracking on new heading.
+        resetAngle();
+    }
+
+    // display telemetry to both SDK and dashboard
+    public class MultiTelemetry
+    {
+        public void init() {
+            telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+            // ...
+        }
+
+        // ...
+    }
+
 }
