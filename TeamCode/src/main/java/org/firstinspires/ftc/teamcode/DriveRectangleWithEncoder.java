@@ -157,7 +157,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
         // forward motion.
-        leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -347,7 +347,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
             rightMotor.setTargetPosition(1500);
-
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
