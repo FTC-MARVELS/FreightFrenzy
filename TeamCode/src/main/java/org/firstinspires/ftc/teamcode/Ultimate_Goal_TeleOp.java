@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Ultimate Goal TeleOp")
@@ -12,7 +13,6 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     // declare our motors
     DcMotorEx leftMotor;
     DcMotorEx rightMotor;
-    DcMotorEx middleMotor;
     DcMotorEx shooter;
     DcMotorEx intake;
     DcMotorEx roller;
@@ -28,7 +28,6 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     public void runOpMode() {
         leftMotor = hardwareMap.get(DcMotorEx.class, "LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
-        middleMotor = hardwareMap.get(DcMotorEx.class, "MiddleDrive");
         shooter = hardwareMap.get(DcMotorEx.class, "Shooter");
         intake = hardwareMap.get(DcMotorEx.class, "Intake");
         roller = hardwareMap.get(DcMotorEx.class, "Roller");
@@ -46,14 +45,14 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // run until the end of the match (driver presses STOP)
+         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             rightMotor.setPower(gamepad1.right_stick_y);
             leftMotor.setPower(gamepad1.left_stick_y);
 
             if (gamepad2.x) {
                 if (shooter.getPower() == 0.0) {
-                    shooter.setPower(1.0);
+                    shooter.setPower(0.86);
                 } else {
                     shooter.setPower(0.0);
                 }
