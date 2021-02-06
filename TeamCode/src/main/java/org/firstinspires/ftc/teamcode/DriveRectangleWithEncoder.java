@@ -334,7 +334,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         dashboard.sendTelemetryPacket(modepacket);
 
         targetsUltimateGoal.activate();
-        while (!isStopRequested()) {
+
+        while (opModeIsActive()) {
 
             // reset encoder counts kept by motors.
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
