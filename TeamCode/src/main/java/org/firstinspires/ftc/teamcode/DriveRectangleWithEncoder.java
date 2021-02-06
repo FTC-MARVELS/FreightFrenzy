@@ -367,10 +367,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (opModeIsActive() && getRuntime() < 5)
-            {
+            do {
                 trackAndTelemeter(allTrackables,"forward complete");
-            }
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
             rotate(-90, turnpower);
@@ -398,10 +397,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (opModeIsActive() && getRuntime() < 5)
-            {
+            do {
                 trackAndTelemeter(allTrackables,"right complete");
-            }
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
             rotate(-90, turnpower);
@@ -429,10 +427,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (opModeIsActive() && getRuntime() < 5)
-            {
+            do {
                 trackAndTelemeter(allTrackables,"back complete");
-            }
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
             rotate(-90, turnpower);
@@ -460,10 +457,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // unless disabled, wait 5 sec so you can observe the final encoder position
             resetStartTime();
-            while (opModeIsActive() && getRuntime() < 5)
-            {
+            do {
                 trackAndTelemeter(allTrackables,"left complete");
-            }
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
             rotate(180, turnpower);
