@@ -51,10 +51,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     DcMotorEx shooter;
     DcMotorEx intake;
     DcMotorEx roller;
+    DcMotorEx arm;
 
     // declare our servos
     Servo gate;
     Servo feeder;
+    Servo grabber;
 
     // declare IMU
     BNO055IMU imu;
@@ -127,11 +129,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // get references to hardware components
         leftMotor = hardwareMap.get(DcMotorEx.class,"LeftDrive");
         rightMotor = hardwareMap.get(DcMotorEx.class,"RightDrive");
-//dhw        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
-//dhw        intake = hardwareMap.get(DcMotorEx.class,"Intake");
-//dhw        roller = hardwareMap.get(DcMotorEx.class,"Roller");
-//dhw        gate = hardwareMap.get(Servo.class,"Gate");
-//dhw        feeder = hardwareMap.get(Servo.class,"Feeder");
+        shooter = hardwareMap.get(DcMotorEx.class,"Shooter");
+        intake = hardwareMap.get(DcMotorEx.class,"Intake");
+        roller = hardwareMap.get(DcMotorEx.class,"Roller");
+        arm = hardwareMap.get(DcMotorEx.class, "Arm");
+        gate = hardwareMap.get(Servo.class,"Gate");
+        feeder = hardwareMap.get(Servo.class,"Feeder");
+        grabber = hardwareMap.get(Servo.class, "Grabber");
 
         // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
