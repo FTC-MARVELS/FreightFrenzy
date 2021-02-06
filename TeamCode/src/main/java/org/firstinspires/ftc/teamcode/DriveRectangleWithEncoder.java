@@ -335,6 +335,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         targetsUltimateGoal.activate();
 
+        // main loop
         while (opModeIsActive()) {
 
             // reset encoder counts kept by motors.
