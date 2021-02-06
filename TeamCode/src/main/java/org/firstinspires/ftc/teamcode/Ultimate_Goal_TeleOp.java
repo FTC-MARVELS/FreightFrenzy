@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -22,6 +24,9 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     Servo feeder;
     Servo grabber;
 
+    // initialize instance of FtcDashboard
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
     // called when init button is pressed
     @Override
     public void runOpMode() {
@@ -41,13 +46,17 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         leftMotor.setDirection(DcMotorEx.Direction.FORWARD);
         rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
+        // declare dashboard telelmetry
+        TelemetryPacket modepacket = new TelemetryPacket();
+        TelemetryPacket imupacket = new TelemetryPacket();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
          // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            rightMotor.setPower(-gamepad1.right_stick_y);
             leftMotor.setPower(-gamepad1.left_stick_y);
+            rightMotor.setPower(-gamepad1.right_stick_y);
 
             if (gamepad2.x) {
                 if (shooter.getPower() == 0.0) {
