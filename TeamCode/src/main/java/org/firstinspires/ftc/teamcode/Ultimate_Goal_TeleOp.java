@@ -48,6 +48,7 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     // predefine some variables for dashboard configuration
+    public static double drivePowerFactor = 1.0;      // set <1.0 to decrease drive power, for a lightweight robot
     public static boolean useVuforia = false;      // set to true to enable Vuforia & trackables
 
     // initializeVuforia
@@ -252,8 +253,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
 
          // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            leftMotor.setPower(-gamepad1.left_stick_y);
-            rightMotor.setPower(-gamepad1.right_stick_y);
+            leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
+            rightMotor.setPower(-gamepad1.right_stick_y * drivePowerFactor);
 
             if (gamepad2.x) {
                 if (shooter.getPower() == 0.0) {
