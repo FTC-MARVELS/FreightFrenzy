@@ -21,3 +21,12 @@ repositories {
 dependencies {
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }
+
+sourceSets{
+    main{
+        java{
+            srcDir 'java'
+            exclude '**/excluded/**'
+        }
+    }
+}
