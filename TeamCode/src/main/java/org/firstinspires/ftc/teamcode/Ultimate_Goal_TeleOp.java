@@ -258,6 +258,10 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         modepacket.put("Mode", "running");
         dashboard.sendTelemetryPacket(modepacket);
 
+        if (useVuforia) {
+            targetsUltimateGoal.activate();
+        }
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
