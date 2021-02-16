@@ -252,6 +252,12 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+        // send same telemetry to dashboard using packet interface
+        modepacket.put("Mode", "running");
+        dashboard.sendTelemetryPacket(modepacket);
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
