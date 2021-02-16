@@ -236,7 +236,9 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, vparameters.cameraDirection);
         }
 
-        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
+        if (useVuforia) {
+            FtcDashboard.getInstance().startCameraStream(vuforia, 0);
+        }
 
         // declare dashboard telelmetry
         TelemetryPacket modepacket = new TelemetryPacket();
