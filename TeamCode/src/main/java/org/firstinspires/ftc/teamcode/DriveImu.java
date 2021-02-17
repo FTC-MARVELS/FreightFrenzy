@@ -140,22 +140,22 @@ public class DriveImu extends LinearOpMode
                 rightMotor.setPower(0);
                 sleep(1500);
 
-                // turn 90 degrees right.
-                if (aButton){
-                    telemetry.addData("motion", "rotating -90 degrees (cw)");
-                    telemetry.update();
-                    motionpacket.put("motion", "rotating -90 degrees (cw)");
-                    dashboard.sendTelemetryPacket(motionpacket);
-                    rotate(-90, power);
-                }
-
                 // turn 90 degrees left.
-                if (bButton){
+                if (aButton){
                     telemetry.addData("motion", "rotating +90 degrees (ccw)");
                     telemetry.update();
                     motionpacket.put("motion", "rotating +90 degrees (ccw)");
                     dashboard.sendTelemetryPacket(motionpacket);
                     rotate(90, power);
+                }
+
+                // turn 90 degrees right.
+                if (bButton){
+                    telemetry.addData("motion", "rotating -90 degrees (cw)");
+                    telemetry.update();
+                    motionpacket.put("motion", "rotating -90 degrees (cw)");
+                    dashboard.sendTelemetryPacket(motionpacket);
+                    rotate(-90, power);
                 }
 
                 telemetry.addData("motion", "rotation complete");
