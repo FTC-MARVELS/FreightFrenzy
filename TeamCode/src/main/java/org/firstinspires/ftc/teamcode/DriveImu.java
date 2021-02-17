@@ -23,14 +23,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-    @Autonomous(name="Drive Imu", group="Exercises")
+@Autonomous(name="Drive Imu", group="Exercises")
 //@Disabled
 public class DriveImu extends LinearOpMode
 {
     DcMotor leftMotor, rightMotor;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    double                  globalAngle, power = .30, correction;
+    double                  globalAngle, power = 0.20, correction;
     boolean                 aButton, bButton;
 
     // called when init button is  pressed.
@@ -40,7 +40,7 @@ public class DriveImu extends LinearOpMode
         leftMotor = hardwareMap.dcMotor.get("LeftDrive");
         rightMotor = hardwareMap.dcMotor.get("RightDrive");
 
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -82,8 +82,6 @@ public class DriveImu extends LinearOpMode
 
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         imupacket.put("imu calib status", imu.getCalibrationStatus().toString());
-        telemetry.addData("a turn will occur", "every 5 seconds");
-        motionpacket.put("a turn will occur", "every 5 seconds");
         telemetry.addData("Mode", "waiting for start");
         motionpacket.put("Mode", "waiting for start");
         dashboard.sendTelemetryPacket(imupacket);
@@ -91,11 +89,13 @@ public class DriveImu extends LinearOpMode
 
         // wait for start button.
         waitForStart();
+
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+
         sleep(1000);
 
         // drive until end of period.
-
-        resetStartTime();
 
         while (opModeIsActive())
         {
@@ -118,26 +118,10 @@ public class DriveImu extends LinearOpMode
             // one place with time passing between those places. See the lesson on
             // Timing Considerations to know why.
 
-//d            aButton = gamepad1.a;
-//d            bButton = gamepad1.b;
+            aButton = gamepad1.a;
+            bButton = gamepad1.b;
 
-            aButton = bButton = false;
-            telemetry.addData("runtime", getRuntime());
-            telemetry.update();
-            motionpacket.put("runtime", getRuntime());
-            dashboard.sendTelemetryPacket(motionpacket);
-
-            if (getRuntime() > 5){
-                telemetry.addData("runtime +5", getRuntime());
-                telemetry.update();
-                motionpacket.put("runtime +5", getRuntime());
-                dashboard.sendTelemetryPacket(motionpacket);
-                aButton = true;
-                resetStartTime();
-            }
-
-                if (aButton || bButton)
-            {
+            if (aButton || bButton){
                 // backup.
                 telemetry.addData("motion", "backing up");
                 telemetry.update();
@@ -158,23 +142,22 @@ public class DriveImu extends LinearOpMode
 
                 // turn 90 degrees right.
                 if (aButton){
-                    telemetry.addData("motion", "rotating -90 degrees");
+                    telemetry.addData("motion", "rotating -90 degrees (cw)");
                     telemetry.update();
-                    motionpacket.put("motion", "rotating -90 degrees");
+                    motionpacket.put("motion", "rotating -90 degrees (cw)");
                     dashboard.sendTelemetryPacket(motionpacket);
                     rotate(-90, power);
                 }
 
                 // turn 90 degrees left.
                 if (bButton){
-                    telemetry.addData("motion", "rotating +90 degrees");
+                    telemetry.addData("motion", "rotating +90 degrees (ccw)");
                     telemetry.update();
-                    motionpacket.put("motion", "rotating +90 degrees");
+                    motionpacket.put("motion", "rotating +90 degrees (ccw)");
                     dashboard.sendTelemetryPacket(motionpacket);
                     rotate(90, power);
                 }
 
-                aButton = bButton = false;
                 telemetry.addData("motion", "rotation complete");
                 telemetry.update();
                 motionpacket.put("motion", "rotation complete");

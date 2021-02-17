@@ -137,6 +137,11 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         feeder = hardwareMap.get(Servo.class,"Feeder");
         grabber = hardwareMap.get(Servo.class, "Grabber");
 
+        // You will need to set this based on your robot's
+        // gearing to get forward control input to result in
+        // forward motion.
+        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+
         // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
 
@@ -157,11 +162,6 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             leftMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vleft);
             rightMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, dashPID_Vright);
         }
-
-        // You will need to set this based on your robot's
-        // gearing to get forward control input to result in
-        // forward motion.
-        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
