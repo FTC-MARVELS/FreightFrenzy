@@ -625,7 +625,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // wait for rotation to stop.
         sleep(1000);
 
-        // reset angle tracking on new heading.
+        // reset imu angle tracking on new heading.
         resetImuAngle();
     }
 
