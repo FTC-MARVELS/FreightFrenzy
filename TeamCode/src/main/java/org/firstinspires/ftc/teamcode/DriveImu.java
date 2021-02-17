@@ -187,8 +187,8 @@ public class DriveImu extends LinearOpMode
     private double getAngle()
     {
         // We (Marvels) experimentally determined that the X axis is the axis we want to use for
-        //  heading angle, for our robot designed during the Ultimate Goal season.  Our REV hubs
-        //  are mounted with the USB ports toward the ground and ceiling.
+        //  IMU heading angle, when using our robot designed during the Ultimate Goal season.  Our
+        //  REV hubs are mounted with the USB ports toward the ground and ceiling.
         //  We are therefore using AxesOrder.XYZ rather than AxesOrder.ZYX per the example code.
         // We have to process the angle because the imu works in euler angles so the Z axis is
         //  returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
@@ -219,7 +219,8 @@ public class DriveImu extends LinearOpMode
         // The gain value determines how sensitive the correction is to direction changes.
         // You will have to experiment with your robot to get small smooth direction changes
         // to stay on a straight line.
-        double correction, angle, gain = .10;
+//d        double correction, angle, gain = .10;
+        double correction, angle, gain = .0002;
 
         angle = getAngle();
 
