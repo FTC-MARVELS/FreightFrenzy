@@ -129,8 +129,7 @@ public class DriveImu extends LinearOpMode
                 dashboard.sendTelemetryPacket(motionpacket);
                 leftMotor.setPower(-power);
                 rightMotor.setPower(-power);
-
-                sleep(1500);
+                sleep(1000);
 
                 // stop.
                 telemetry.addData("motion", "stopping");
@@ -139,6 +138,7 @@ public class DriveImu extends LinearOpMode
                 dashboard.sendTelemetryPacket(motionpacket);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
+                sleep(1500);
 
                 // turn 90 degrees right.
                 if (aButton){
