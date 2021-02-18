@@ -313,7 +313,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         //  Let all the trackable listeners know where the camera is
         for (VuforiaTrackable trackable : allTrackables) {
-            ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, vparameters.cameraDirection);
+            ((VuforiaTrackableDefaultListener) trackable.getListener()).setCameraLocationOnRobot(webcamName, robotFromCamera);  // see https://ftcforum.firstinspires.org/forum/first-tech-challenge-community-forum-this-is-an-open-forum/teams-helping-teams-programming/76847-question-on-vuforia-navigation
         }
 
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
