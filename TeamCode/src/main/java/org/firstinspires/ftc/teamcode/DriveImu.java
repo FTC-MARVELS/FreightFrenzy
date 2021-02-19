@@ -32,7 +32,8 @@ public class DriveImu extends LinearOpMode
     DcMotor leftMotor, rightMotor;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    double                  globalAngle, power = 0.20, correction;
+    public static double power = 0.20;
+    double                  globalAngle, correction;
     boolean                 aButton, bButton;
 
     // called when init button is  pressed.
