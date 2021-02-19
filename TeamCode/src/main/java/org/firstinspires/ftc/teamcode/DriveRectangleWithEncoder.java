@@ -58,7 +58,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     Servo feeder;
     Servo grabber;
 
-    // declare IMU
+    // declare IMU and its angle object & variables
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
     double                  globalAngle, correction;
@@ -79,6 +79,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static PIDFCoefficients dashPID_Pright = new PIDFCoefficients(0,0,0,0);
 
     // initializeVuforia
+
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
@@ -196,6 +197,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
 
         //executeVuforia
+
         // Retrieve the camera we are to use
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -349,13 +351,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // main loop
         while (opModeIsActive()) {
 
-            // reset encoder counts kept by motors.
-            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-
             // Move in a clockwise rectangle
 
             // Rectangle side cw1
+
+            // reset encoder counts kept by motors
+            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
@@ -387,9 +389,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // Rectangle side cw2
 
+            // reset encoder counts kept by motors
+            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
             // send robot right to specified encoder counts
-            leftMotor.setTargetPosition(1500);
-            rightMotor.setTargetPosition(1500);
+            leftMotor.setTargetPosition(1000);
+            rightMotor.setTargetPosition(1000);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
@@ -417,9 +423,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // Rectangle side cw3
 
+            // reset encoder counts kept by motors
+            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
             // send robot back to specified encoder counts
-            leftMotor.setTargetPosition(0);
-            rightMotor.setTargetPosition(0);
+            leftMotor.setTargetPosition(1500);
+            rightMotor.setTargetPosition(1500);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
@@ -447,9 +457,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
             // Rectangle side cw4
 
+            // reset encoder counts kept by motors
+            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
             // send robot left to specified encoder counts
-            leftMotor.setTargetPosition(0);
-            rightMotor.setTargetPosition(0);
+            leftMotor.setTargetPosition(1000);
+            rightMotor.setTargetPosition(1000);
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
