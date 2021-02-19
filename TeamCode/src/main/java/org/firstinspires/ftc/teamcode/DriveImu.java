@@ -12,6 +12,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -23,6 +24,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+@Config
 @Autonomous(name="Drive Imu", group="Exercises")
 //@Disabled
 public class DriveImu extends LinearOpMode
@@ -190,7 +192,7 @@ public class DriveImu extends LinearOpMode
         //  IMU heading angle, when using our robot designed during the Ultimate Goal season.  Our
         //  REV hubs are mounted with the USB ports toward the ground and ceiling.
         //  We are therefore using AxesOrder.XYZ rather than AxesOrder.ZYX per the example code.
-        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // We have to process the angle because the imu works in euler angles so the axis is
         //  returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         //  180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
@@ -214,14 +216,18 @@ public class DriveImu extends LinearOpMode
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
      */
+    // The gain value determines how sensitive the correction is to direction changes.
+    // You will have to experiment with your robot to get small smooth direction changes
+    // to stay on a straight line.
+    public static double gain = .0005;
+    // Perhaps gain = power/90?  So each degree of error would produce 1.11% correction
+    //  so a 90deg error produces correction = 1 * power, then applied is power +/- 1 * power = 2x power / 0x power;
+    //  and a 1deg error produces correction = 0.0111 * power, then applied is power +/- correction = 1.0111x power / 0.988x power.
+
     private double checkDirection()
     {
-        // The gain value determines how sensitive the correction is to direction changes.
-        // You will have to experiment with your robot to get small smooth direction changes
-        // to stay on a straight line.
 //d        double correction, angle, gain = .10;
-        double correction, angle, gain = .0002;
-
+        double correction, angle;
         angle = getAngle();
 
         if (angle == 0)
