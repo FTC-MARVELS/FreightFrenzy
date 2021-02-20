@@ -70,8 +70,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
-    public static double drivepower = 0.20;       // range 0.0 - 1.0
-    public static double turnpower = 0.15;       // range 0.0 - 1.0
+    public static double drivepower = 0.3;       // range 0.0 - 1.0
+    public static double turnpower = 0.3;       // range 0.0 - 1.0
 //d    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
