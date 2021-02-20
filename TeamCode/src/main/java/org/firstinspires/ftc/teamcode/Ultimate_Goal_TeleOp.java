@@ -112,8 +112,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         // The motor on one side must be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         // This eliminates the need to negate one of the setPower commands on left/right motor control
-        leftMotor.setDirection(DcMotorEx.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorEx.Direction.FORWARD);
 
         // executeVuforia
         // Retrieve the camera we are to use
