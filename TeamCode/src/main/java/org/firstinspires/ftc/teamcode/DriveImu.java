@@ -85,9 +85,12 @@ public class DriveImu extends LinearOpMode
 
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         imupacket.put("imu calib status", imu.getCalibrationStatus().toString());
+        telemetry.update();
+        dashboard.sendTelemetryPacket(imupacket);
+        sleep(500);
         telemetry.addData("Mode", "waiting for start");
         motionpacket.put("Mode", "waiting for start");
-        dashboard.sendTelemetryPacket(imupacket);
+        telemetry.update();
         dashboard.sendTelemetryPacket(motionpacket);
 
         // wait for start button.
