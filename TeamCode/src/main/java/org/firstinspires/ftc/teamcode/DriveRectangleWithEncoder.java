@@ -147,8 +147,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         dashboard = FtcDashboard.getInstance();
 
         // declare dashboard telelmetry
-        TelemetryPacket pidfpacket = new TelemetryPacket();
         TelemetryPacket modepacket = new TelemetryPacket();
+        TelemetryPacket pidfpacket = new TelemetryPacket();
+        TelemetryPacket motionpacket = new TelemetryPacket();
         TelemetryPacket imupacket = new TelemetryPacket();
 
         // discover current (default) PIDF coefficients
@@ -385,6 +386,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
+            telemetry.addData("motion", "rotating -90 degrees (cw)");
+            telemetry.update();
+            motionpacket.put("motion", "rotating -90 degrees (cw)");
+            dashboard.sendTelemetryPacket(motionpacket);
             rotate(-90, turnpower);
 
             // Rectangle side cw2
@@ -419,6 +424,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
+            telemetry.addData("motion", "rotating -90 degrees (cw)");
+            telemetry.update();
+            motionpacket.put("motion", "rotating -90 degrees (cw)");
+            dashboard.sendTelemetryPacket(motionpacket);
             rotate(-90, turnpower);
 
             // Rectangle side cw3
@@ -453,6 +462,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
+            telemetry.addData("motion", "rotating -90 degrees (cw)");
+            telemetry.update();
+            motionpacket.put("motion", "rotating -90 degrees (cw)");
+            dashboard.sendTelemetryPacket(motionpacket);
             rotate(-90, turnpower);
 
             // Rectangle side cw4
@@ -487,6 +500,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
 
             // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
+            telemetry.addData("motion", "rotating +180 degrees");
+            telemetry.update();
+            motionpacket.put("motion", "rotating +180 degrees");
+            dashboard.sendTelemetryPacket(motionpacket);
             rotate(180, turnpower);
         }
 
@@ -653,6 +670,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // display telemetry to both SDK and dashboard
     public class MultiTelemetry
     {
+        // THIS IS STILL A WORK IN PROGRESS.
+        // The idea is to have one method that will send to both SDK AND Dashboard Telemetry with
+        // a single method call.
         public void init() {
             telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
