@@ -624,6 +624,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     private void rotate(int degrees, double power)
     {
         double  leftPower, rightPower;
+        TelemetryPacket turnpacket = new TelemetryPacket();
+
         // restart imu movement tracking.
         resetImuAngle();
 
@@ -646,6 +648,15 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
+        // set motors to run while ignoring their encoders
+        // movement will start here
+        telemetry.addData("", "executing turn");
+        telemetry.update();
+        turnpacket.put("", "executing turn");
+        dashboard.sendTelemetryPacket(turnpacket);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         // rotate until turn is completed.
         if (degrees < 0)
         {
@@ -659,6 +670,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // turn the motors off.
         rightMotor.setPower(0);
         leftMotor.setPower(0);
+        telemetry.addData("turn power", "zero");
+        telemetry.update();
+        turnpacket.put("turn power", "zero");
+        dashboard.sendTelemetryPacket(turnpacket);
 
         // wait for rotation to stop.
         sleep(1000);
