@@ -32,7 +32,7 @@ public class DriveImu extends LinearOpMode
     DcMotor leftMotor, rightMotor;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    public static double power = 0.20;
+    public static double power = 0.40;
     double                  globalAngle, correction;
     boolean                 aButton, bButton;
 
@@ -135,7 +135,7 @@ public class DriveImu extends LinearOpMode
                 dashboard.sendTelemetryPacket(motionpacket);
                 leftMotor.setPower(-power);
                 rightMotor.setPower(-power);
-                sleep(1000);
+                sleep(400);
 
                 // stop.
                 telemetry.addData("motion", "stopping");
@@ -223,7 +223,7 @@ public class DriveImu extends LinearOpMode
     // The gain value determines how sensitive the correction is to direction changes.
     // You will have to experiment with your robot to get small smooth direction changes
     // to stay on a straight line.
-    public static double gain = .0005;
+    public static double gain = .001;
     // Perhaps gain = power/90?  So each degree of error would produce 1.11% correction
     //  so a 90deg error produces correction = 1 * power, then applied is power +/- 1 * power = 2x power / 0x power;
     //  and a 1deg error produces correction = 0.0111 * power, then applied is power +/- correction = 1.0111x power / 0.988x power.
