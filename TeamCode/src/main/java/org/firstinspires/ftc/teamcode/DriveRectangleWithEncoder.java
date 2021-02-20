@@ -71,7 +71,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
     public static double drivepower = 0.3;       // range 0.0 - 1.0
-    public static double turnpower = 0.3;       // range 0.0 - 1.0
+    public static double turnpower = 0.4;       // range 0.0 - 1.0
 //d    public static double motorVelocity = 125.0;         // units is ticks/second
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
@@ -383,7 +383,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"forward complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
             telemetry.addData("motion", "rotating -90 degrees (cw)");
@@ -421,7 +421,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"right complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
             telemetry.addData("motion", "rotating -90 degrees (cw)");
@@ -459,7 +459,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"back complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
 
             // We are in a corner of the rectangle, turn cw 90 degrees
             telemetry.addData("motion", "rotating -90 degrees (cw)");
@@ -497,7 +497,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"left complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 5);
+            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
 
             // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
             telemetry.addData("motion", "rotating +180 degrees");
