@@ -572,7 +572,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // reset the cumulative angle tracking to zero
     private void resetImuAngle()
     {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         globalAngle = 0;
     }
 
@@ -580,15 +580,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // @return Angle in degrees. + = left, - = right
     private double getAngle()
     {
-        // We (Marvels) experimentally determined that the X axis is the axis we want to use for
-        //  IMU heading angle, when using our robot designed during the Ultimate Goal season.  Our
+        // We (Marvels) experimentally determined that the Z axis is the axis we want to use for
+        //  IMU heading angle, when using our robot designed for the Ultimate Goal season.  Our
         //  REV hubs are mounted with the USB ports toward the ground and ceiling.
-        //  We are therefore using AxesOrder.XYZ rather than AxesOrder.ZYX per the example code.
-        // We have to process the angle because the imu works in euler angles so the Z axis is
-        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
-        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+        //  Logic suggests that the X axis would be correct (AxesOrder XYZ), but experiments say
+        //  otherwise.  We still need to reconcile why.
+        // We have to process the angle because the imu works in euler angles so the axis is
+        //  returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        //  180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
