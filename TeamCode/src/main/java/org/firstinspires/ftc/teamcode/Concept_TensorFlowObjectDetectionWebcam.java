@@ -52,7 +52,7 @@ import java.util.List;
  */
 @TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
 //@Disabled
-public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
+public class Concept_TensorFlowObjectDetectionWebcam extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
