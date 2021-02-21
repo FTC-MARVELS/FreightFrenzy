@@ -5,7 +5,7 @@
         <LynxModule name="Expansion Hub 2" port="2">
             <NeveRest40Gearmotor name="LeftDrive" port="0" />
             <NeveRest40Gearmotor name="LeftDrive" port="1" />
-            <NeveRest40Gearmotor name="RigtDrive" port="2" />
+            <NeveRest40Gearmotor name="RightDrive" port="2" />
             <NeveRest40Gearmotor name="RightDrive" port="3" />
             <Servo name="Gate" port="0" />
             <Servo name="Feeder" port="1" />
