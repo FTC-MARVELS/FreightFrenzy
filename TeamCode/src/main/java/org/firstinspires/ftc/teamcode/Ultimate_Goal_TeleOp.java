@@ -279,7 +279,7 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             targetsUltimateGoal.activate();
         }
 
-        // run until the end of the match (driver presses STOP)
+        // run until the end of the match (driver presses ST OP)
         while (opModeIsActive()) {
             leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
             leftMotor2.setPower(-gamepad1.left_stick_y * drivePowerFactor);
