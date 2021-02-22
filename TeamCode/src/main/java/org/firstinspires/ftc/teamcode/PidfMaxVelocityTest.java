@@ -38,6 +38,9 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
         rightMotor2 = hardwareMap.get(DcMotorEx.class, "RightDrive2");
 
+        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        rightMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+
         // we won't be using encoders, but this will prevent motion on setPower commands, and instead wait for RunMode.RUN... commands
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
