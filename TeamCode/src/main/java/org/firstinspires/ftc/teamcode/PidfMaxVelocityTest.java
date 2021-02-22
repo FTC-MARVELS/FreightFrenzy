@@ -38,7 +38,7 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
         rightMotor2 = hardwareMap.get(DcMotorEx.class, "RightDrive2");
 
-        // we won't be using encoders, but will this prevent motion on setPower commands, and hopefully wait for RunMode.RUN... commands instead?
+        // we won't be using encoders, but this will prevent motion on setPower commands, and instead wait for RunMode.RUN... commands
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -99,10 +99,11 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         sleep(1500);
 
         // display maximum velocities
-        telemetry.log().add("maximum left velocity", maxLeftVelocity);
-        telemetry.log().add("maximum left2 velocity", maxLeft2Velocity);
-        telemetry.log().add("maximum right velocity", maxRightVelocity);
-        telemetry.log().add("maximum right2 velocity", maxRight2Velocity);
+        telemetry.log().add("maximum left velocity: " + maxLeftVelocity);
+        telemetry.log().add("maximum left2 velocity: " + maxLeft2Velocity);
+        telemetry.log().add("maximum right velocity: " + maxRightVelocity);
+        telemetry.log().add("maximum right2 velocity: " + maxRight2Velocity);
         telemetry.update();
+        sleep(15000);
     }
 }
