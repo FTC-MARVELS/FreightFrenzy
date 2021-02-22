@@ -5,10 +5,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+@Config
 @TeleOp
 public class PidfMaxVelocityTest extends LinearOpMode {
     DcMotorEx leftMotor, leftMotor2, rightMotor, rightMotor2;
@@ -21,6 +24,12 @@ public class PidfMaxVelocityTest extends LinearOpMode {
     double maxRightVelocity = 0.0;
     double maxRight2Velocity = 0.0;
 
+    // initialize an instance of FtcDashboard;
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
+    // predefine some variables for dashboard configuration
+    public static double driveTimout = 2.1;   // don't allow robot to move too far !!!
+
     // called when init button is pressed
     @Override
     public void runOpMode() {
@@ -28,6 +37,12 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         leftMotor2 = hardwareMap.get(DcMotorEx.class, "LeftDrive2");
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
         rightMotor2 = hardwareMap.get(DcMotorEx.class, "RightDrive2");
+
+        // we won't be using encoders, but will this prevent motion on setPower commands, and hopefully wait for RunMode.RUN... commands instead?
+        leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         // use maximum power
         leftMotor.setPower(1);
@@ -39,7 +54,7 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         waitForStart();
 
         resetStartTime();
-        while (opModeIsActive() && getRuntime() < 2.1) {  // stop after enough time to achieve max velocity, BUT BEFORE HITTING WALL !!!
+        while (opModeIsActive() && getRuntime() < driveTimout) {  // stop after enough time to achieve max velocity, BUT BEFORE HITTING WALL !!!
 
             // motion will start here
             leftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
@@ -84,10 +99,10 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         sleep(1500);
 
         // display maximum velocities
-        telemetry.addData("maximum left velocity", maxLeftVelocity);
-        telemetry.addData("maximum left2 velocity", maxLeft2Velocity);
-        telemetry.addData("maximum right velocity", maxRightVelocity);
-        telemetry.addData("maximum right2 velocity", maxRight2Velocity);
+        telemetry.log().add("maximum left velocity", maxLeftVelocity);
+        telemetry.log().add("maximum left2 velocity", maxLeft2Velocity);
+        telemetry.log().add("maximum right velocity", maxRightVelocity);
+        telemetry.log().add("maximum right2 velocity", maxRight2Velocity);
         telemetry.update();
     }
 }
