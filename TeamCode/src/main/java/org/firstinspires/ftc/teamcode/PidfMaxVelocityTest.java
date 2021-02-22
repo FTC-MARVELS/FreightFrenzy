@@ -1,7 +1,7 @@
-// original code from: https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#
-// Motor PIDF Tuning Guide
-// This OpMode will determine and display the maximum velocities for drive motors to telemetry.
-// See the above link for how to then use these maximum velocities to calculating PIDF Values.
+// Original code from Motor PIDF Tuning Guide
+// https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#
+// This OpMode will determine and display to telemetry, the maximum velocities for all drive motors.
+// See the above link for how to then use these maximum velocities to calculate initial  PIDF Values.
 
 package org.firstinspires.ftc.teamcode;
 
