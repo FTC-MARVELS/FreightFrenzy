@@ -28,7 +28,7 @@ public class PidfMaxVelocityTest extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     // predefine some variables for dashboard configuration
-    public static double driveTimout = 1.5;   // don't allow robot to move too far !!!
+    public static double driveTimout = 1.0;   // don't allow robot to move too far !!!
 
     // called when init button is pressed
     @Override
