@@ -94,7 +94,23 @@ public class PidfMaxVelocityTest extends LinearOpMode {
             telemetry.update();
         }
 
-        // full stop
+        // stop with breaks on
+        fullStop();
+
+        // display maximum velocities
+        telemetry.log().add("maximum left velocity: " + maxLeftVelocity);
+        telemetry.log().add("maximum left2 velocity: " + maxLeft2Velocity);
+        telemetry.log().add("maximum right velocity: " + maxRightVelocity);
+        telemetry.log().add("maximum right2 velocity: " + maxRight2Velocity);
+        telemetry.update();
+        sleep(15000);
+    }
+
+// internal methods below here
+
+    public void fullStop()
+    {
+        // stop with breaks on
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -114,13 +130,5 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         leftMotor2.setPower(0);
         rightMotor.setPower(0);
         rightMotor2.setPower(0);
-
-        // display maximum velocities
-        telemetry.log().add("maximum left velocity: " + maxLeftVelocity);
-        telemetry.log().add("maximum left2 velocity: " + maxLeft2Velocity);
-        telemetry.log().add("maximum right velocity: " + maxRightVelocity);
-        telemetry.log().add("maximum right2 velocity: " + maxRight2Velocity);
-        telemetry.update();
-        sleep(15000);
     }
 }
