@@ -94,12 +94,26 @@ public class PidfMaxVelocityTest extends LinearOpMode {
             telemetry.update();
         }
 
-        // stop all motors
+        // full stop
+        leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setTargetPosition(0);
+        leftMotor2.setTargetPosition(0);
+        rightMotor.setTargetPosition(0);
+        rightMotor2.setTargetPosition(0);
+        leftMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        leftMotor2.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        rightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        rightMotor2.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        sleep(2000);
+
+        // remove power from all motors
         leftMotor.setPower(0);
         leftMotor2.setPower(0);
         rightMotor.setPower(0);
         rightMotor2.setPower(0);
-        sleep(1500);
 
         // display maximum velocities
         telemetry.log().add("maximum left velocity: " + maxLeftVelocity);
