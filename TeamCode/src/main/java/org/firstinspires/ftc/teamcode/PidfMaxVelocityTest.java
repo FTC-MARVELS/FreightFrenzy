@@ -3,6 +3,16 @@
 // This OpMode will determine and display to telemetry, the maximum velocities for all drive motors.
 // See the above link for how to then use these maximum velocities to calculate initial  PIDF Values.
 
+// From https://gm0.org/en/stable/docs/software/using-the-sdk.html
+//        RUN_TO_POSITION
+//        Warning:  This mode can be a convenient way to control a single-motor mechanism, as it
+//        offloads all control work; however, since every motor is dealt with independently, it is
+//        inadvisable to use this on mechanisms with multiple motors, especially drivetrains.
+// This suggests that PIDF control should NOT be implemented when using "mechanisms with multiple
+//  motors", which our Ultimate Goal competition robot does.  Perhaps we can turn off leftMotor2 and
+//  rightMotor2 when RUN_TO_POSITION is needed, but turn them on when executing turns.  If so, then
+//  we must determine our max velocities without these extra motors as well.
+
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -49,10 +59,12 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         // use maximum power
+        leftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftMotor.setPower(1);
-        leftMotor2.setPower(1);
+        leftMotor2.setPower(0);
         rightMotor.setPower(1);
-        rightMotor2.setPower(1);
+        rightMotor2.setPower(0);
 
         // wait for start button to be pressed
         waitForStart();
