@@ -9,6 +9,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Config
@@ -111,6 +112,7 @@ public class PidfMaxVelocityTest extends LinearOpMode {
     public void fullStop()
     {
         // stop with breaks on
+        /*  the following lines do work as intended, but maybe there is a simpler way
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -123,12 +125,24 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         leftMotor2.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         rightMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         rightMotor2.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        sleep(2000);
+        sleep(2000);    // allow all motion to come to a rest
+        */
 
-        // remove power from all motors
+        // simpler way
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftMotor.setPower(0);
         leftMotor2.setPower(0);
         rightMotor.setPower(0);
         rightMotor2.setPower(0);
+        sleep(2000);    // allow all motion to come to a rest
+
+        // remove power from all motors
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 }
