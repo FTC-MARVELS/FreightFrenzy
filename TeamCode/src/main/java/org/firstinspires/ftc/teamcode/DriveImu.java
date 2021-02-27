@@ -31,7 +31,7 @@ import static java.lang.Math.abs;
 //@Disabled
 public class DriveImu extends LinearOpMode
 {
-    DcMotor leftMotor, rightMotor;
+    DcMotor leftMotor, rightMotor, leftMotor2, rightMotor2;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
     public static double drivepower = 0.40;
@@ -45,11 +45,18 @@ public class DriveImu extends LinearOpMode
     {
         leftMotor = hardwareMap.dcMotor.get("LeftDrive");
         rightMotor = hardwareMap.dcMotor.get("RightDrive");
+        leftMotor2 = hardwareMap.dcMotor.get("LeftDrive");
+        rightMotor2 = hardwareMap.dcMotor.get("RightDrive");
 
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftMotor2.setPower(0);
+        rightMotor2.setPower(0);
 
         // define an instance of FtcDashboard;
         FtcDashboard dashboard;
