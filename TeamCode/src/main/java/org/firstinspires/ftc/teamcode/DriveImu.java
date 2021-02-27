@@ -24,15 +24,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import static java.lang.Math.abs;
+
 @Config
 @Autonomous(name="Drive Imu", group="Exercises")
 //@Disabled
 public class DriveImu extends LinearOpMode
 {
-    DcMotor leftMotor, rightMotor;
+    DcMotor leftMotor, rightMotor, leftMotor2, rightMotor2;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    public static double power = 0.40;
+    public static double drivepower = 0.40;
+    public static double turnpower = 0.50;
+    public static double minturnpower = 0.1;
     double                  globalAngle, correction;
     boolean                 aButton, bButton, yButton;
 
@@ -42,11 +46,18 @@ public class DriveImu extends LinearOpMode
     {
         leftMotor = hardwareMap.dcMotor.get("LeftDrive");
         rightMotor = hardwareMap.dcMotor.get("RightDrive");
+        leftMotor2 = hardwareMap.dcMotor.get("LeftDrive");
+        rightMotor2 = hardwareMap.dcMotor.get("RightDrive");
 
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftMotor2.setPower(0);
+        rightMotor2.setPower(0);
 
         // define an instance of FtcDashboard;
         FtcDashboard dashboard;
@@ -103,7 +114,7 @@ public class DriveImu extends LinearOpMode
 
         // drive until end of period.
 
-        while (!isStopRequested() && opModeIsActive())
+        while (opModeIsActive())
         {
             // Use gyro to drive in a straight line.
             correction = checkDirection();
@@ -117,8 +128,8 @@ public class DriveImu extends LinearOpMode
             imupacket.put("3 correction", correction);
             dashboard.sendTelemetryPacket(imupacket);
 
-            leftMotor.setPower(power - correction);
-            rightMotor.setPower(power + correction);
+            leftMotor.setPower(drivepower - correction);
+            rightMotor.setPower(drivepower + correction);
 
             // We record the sensor values because we will test them in more than
             // one place with time passing between those places. See the lesson on
@@ -141,8 +152,8 @@ public class DriveImu extends LinearOpMode
                 telemetry.update();
                 motionpacket.put("motion", "backing up");
                 dashboard.sendTelemetryPacket(motionpacket);
-                leftMotor.setPower(-power);
-                rightMotor.setPower(-power);
+                leftMotor.setPower(-drivepower);
+                rightMotor.setPower(-drivepower);
                 sleep(400);
 
                 // stop.
@@ -160,7 +171,7 @@ public class DriveImu extends LinearOpMode
                     telemetry.update();
                     motionpacket.put("motion", "rotating +90 degrees (ccw)");
                     dashboard.sendTelemetryPacket(motionpacket);
-                    rotate(90, power);
+                    rotate(90, turnpower);
                 }
 
                 // turn 90 degrees right.
@@ -169,7 +180,7 @@ public class DriveImu extends LinearOpMode
                     telemetry.update();
                     motionpacket.put("motion", "rotating -90 degrees (cw)");
                     dashboard.sendTelemetryPacket(motionpacket);
-                    rotate(-90, power);
+                    rotate(-90, turnpower);
                 }
 
                 telemetry.addData("motion", "rotation complete");
@@ -229,11 +240,12 @@ public class DriveImu extends LinearOpMode
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
      */
-    // The gain value determines how sensitive the correction is to direction changes.
+    // The straightgain value determines how sensitive the correction is to direction changes.
     // You will have to experiment with your robot to get small smooth direction changes
     // to stay on a straight line.
-    public static double gain = .001;
-    // Perhaps gain = power/90?  So each degree of error would produce 1.11% correction
+    public static double straightgain = .001;
+    public static double turngain = 0.01;
+    // Perhaps straightgain = power/90?  So each degree of error would produce 1.11% correction
     //  so a 90deg error produces correction = 1 * power, then applied is power +/- 1 * power = 2x power / 0x power;
     //  and a 1deg error produces correction = 0.0111 * power, then applied is power +/- correction = 1.0111x power / 0.988x power.
 
@@ -248,7 +260,7 @@ public class DriveImu extends LinearOpMode
         else
             correction = -angle;        // reverse sign of angle for correction.
 
-        correction = correction * gain;
+        correction = correction * straightgain;
 
         return correction;
     }
@@ -287,7 +299,7 @@ public class DriveImu extends LinearOpMode
         }
         else return;
 
-        // set power to rotate.
+        // set power to rotate, turning motion will start here
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
@@ -295,12 +307,26 @@ public class DriveImu extends LinearOpMode
         if (degrees < 0)
         {
             // On right turn we have to get off zero first.
-            while (!isStopRequested() && opModeIsActive() && getAngle() == 0) {}
+            while (opModeIsActive() && getAngle() == 0) {}
 
-            while (!isStopRequested() && opModeIsActive() && getAngle() > degrees) {}
+            while (opModeIsActive() && getAngle() > degrees) {
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(minturnpower);
+                    rightMotor.setPower(-minturnpower);
+                }
+            }
         }
         else    // left turn.
-            while (!isStopRequested() && opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && getAngle() < degrees) {
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(-minturnpower);
+                    rightMotor.setPower(minturnpower);
+                }
+            }
 
         // turn the motors off.
         rightMotor.setPower(0);
