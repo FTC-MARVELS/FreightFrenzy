@@ -36,7 +36,7 @@ public class DriveImu extends LinearOpMode
     Orientation             lastAngles = new Orientation();
     public static double drivepower = 0.40;
     public static double turnpower = 0.50;
-    public static double minturnpower = 0.05;
+    public static double minturnpower = 0.1;
     double                  globalAngle, correction;
     boolean                 aButton, bButton, yButton;
 
