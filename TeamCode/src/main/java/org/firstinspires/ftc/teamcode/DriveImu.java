@@ -36,6 +36,7 @@ public class DriveImu extends LinearOpMode
     Orientation             lastAngles = new Orientation();
     public static double drivepower = 0.40;
     public static double turnpower = 0.50;
+    public static double minturnpower = 0.05;
     double                  globalAngle, correction;
     boolean                 aButton, bButton, yButton;
 
@@ -311,12 +312,20 @@ public class DriveImu extends LinearOpMode
             while (opModeIsActive() && getAngle() > degrees) {
                 leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
                 rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(minturnpower);
+                    rightMotor.setPower(-minturnpower);
+                }
             }
         }
         else    // left turn.
             while (opModeIsActive() && getAngle() < degrees) {
                 leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
                 rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(-minturnpower);
+                    rightMotor.setPower(minturnpower);
+                }
             }
 
         // turn the motors off.
