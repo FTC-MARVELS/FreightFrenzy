@@ -298,7 +298,16 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 shooter.setPower(0.0);
             }
 
-            arm.setPower(0.5 * gamepad2.left_stick_y);
+            if (gamepad2.dpad_down) {
+                arm.setPower(0.5);
+            }
+            else if (gamepad2.dpad_up) {
+                arm.setPower(-0.5);
+            }
+            else {
+                arm.setPower(0.0);
+            }
+
             intake.setPower(gamepad2.right_stick_y);
             roller.setPower(gamepad2.left_stick_x);
 
