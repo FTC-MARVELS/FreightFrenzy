@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -34,7 +35,9 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
 
     // declare our motors
     DcMotorEx leftMotor;
+    DcMotorEx leftMotor2;
     DcMotorEx rightMotor;
+    DcMotorEx rightMotor2;
     DcMotorEx shooter;
     DcMotorEx intake;
     DcMotorEx roller;
@@ -100,7 +103,9 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     @Override
     public void runOpMode() {
         leftMotor = hardwareMap.get(DcMotorEx.class, "LeftDrive");
+        leftMotor2 = hardwareMap.get(DcMotorEx.class, "LeftDrive2");
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
+        rightMotor2 = hardwareMap.get(DcMotorEx.class, "RightDrive2");
         shooter = hardwareMap.get(DcMotorEx.class, "Shooter");
         intake = hardwareMap.get(DcMotorEx.class, "Intake");
         roller = hardwareMap.get(DcMotorEx.class, "Roller");
@@ -112,8 +117,10 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         // The motor on one side must be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         // This eliminates the need to negate one of the setPower commands on left/right motor control
-        leftMotor.setDirection(DcMotorEx.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        leftMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        rightMotor2.setDirection(DcMotorEx.Direction.FORWARD);
 
         // executeVuforia
         // Retrieve the camera we are to use
@@ -272,10 +279,12 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             targetsUltimateGoal.activate();
         }
 
-        // run until the end of the match (driver presses STOP)
+        // run until the end of the match (driver presses ST OP)
         while (opModeIsActive()) {
             leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
+            leftMotor2.setPower(-gamepad1.left_stick_y * drivePowerFactor);
             rightMotor.setPower(-gamepad1.right_stick_y * drivePowerFactor);
+            rightMotor2.setPower(-gamepad1.right_stick_y * drivePowerFactor);
 
             // if enabled, send Vuforia telemetry
             if (useVuforia) {
@@ -283,14 +292,22 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             }
 
             if (gamepad2.x) {
-                if (shooter.getPower() == 0.0) {
-                    shooter.setPower(0.86);
-                } else {
-                    shooter.setPower(0.0);
-                }
+                shooter.setPower(0.86);
+            }
+            if (gamepad2.y) {
+                shooter.setPower(0.0);
             }
 
-            arm.setPower(0.5 * gamepad2.left_stick_y);
+            if (gamepad2.dpad_down) {
+                arm.setPower(0.5);
+            }
+            else if (gamepad2.dpad_up) {
+                arm.setPower(-0.5);
+            }
+            else {
+                arm.setPower(0.0);
+            }
+
             intake.setPower(gamepad2.right_stick_y);
             roller.setPower(gamepad2.left_stick_x);
 
