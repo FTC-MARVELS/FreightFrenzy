@@ -32,7 +32,8 @@ public class DriveImu extends LinearOpMode
     DcMotor leftMotor, rightMotor;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    public static double power = 0.40;
+    public static double drivepower = 0.40;
+    public static double turnpower = 0.50;
     double                  globalAngle, correction;
     boolean                 aButton, bButton, yButton;
 
@@ -103,7 +104,7 @@ public class DriveImu extends LinearOpMode
 
         // drive until end of period.
 
-        while (!isStopRequested() && opModeIsActive())
+        while (opModeIsActive())
         {
             // Use gyro to drive in a straight line.
             correction = checkDirection();
@@ -117,8 +118,8 @@ public class DriveImu extends LinearOpMode
             imupacket.put("3 correction", correction);
             dashboard.sendTelemetryPacket(imupacket);
 
-            leftMotor.setPower(power - correction);
-            rightMotor.setPower(power + correction);
+            leftMotor.setPower(drivepower - correction);
+            rightMotor.setPower(drivepower + correction);
 
             // We record the sensor values because we will test them in more than
             // one place with time passing between those places. See the lesson on
@@ -141,8 +142,8 @@ public class DriveImu extends LinearOpMode
                 telemetry.update();
                 motionpacket.put("motion", "backing up");
                 dashboard.sendTelemetryPacket(motionpacket);
-                leftMotor.setPower(-power);
-                rightMotor.setPower(-power);
+                leftMotor.setPower(-drivepower);
+                rightMotor.setPower(-drivepower);
                 sleep(400);
 
                 // stop.
@@ -160,7 +161,7 @@ public class DriveImu extends LinearOpMode
                     telemetry.update();
                     motionpacket.put("motion", "rotating +90 degrees (ccw)");
                     dashboard.sendTelemetryPacket(motionpacket);
-                    rotate(90, power);
+                    rotate(90, turnpower);
                 }
 
                 // turn 90 degrees right.
@@ -169,7 +170,7 @@ public class DriveImu extends LinearOpMode
                     telemetry.update();
                     motionpacket.put("motion", "rotating -90 degrees (cw)");
                     dashboard.sendTelemetryPacket(motionpacket);
-                    rotate(-90, power);
+                    rotate(-90, turnpower);
                 }
 
                 telemetry.addData("motion", "rotation complete");
@@ -295,12 +296,12 @@ public class DriveImu extends LinearOpMode
         if (degrees < 0)
         {
             // On right turn we have to get off zero first.
-            while (!isStopRequested() && opModeIsActive() && getAngle() == 0) {}
+            while (opModeIsActive() && getAngle() == 0) {}
 
-            while (!isStopRequested() && opModeIsActive() && getAngle() > degrees) {}
+            while (opModeIsActive() && getAngle() > degrees) {}
         }
         else    // left turn.
-            while (!isStopRequested() && opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && getAngle() < degrees) {}
 
         // turn the motors off.
         rightMotor.setPower(0);
