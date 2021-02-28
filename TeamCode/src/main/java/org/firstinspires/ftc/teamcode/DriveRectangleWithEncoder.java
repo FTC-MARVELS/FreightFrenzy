@@ -310,10 +310,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         }
 
         // Next, translate the camera lens to where it is on the robot.
-        // In this example, it is centered (left to right), but forward of the middle of the robot, and above ground level.
-        final float CAMERA_FORWARD_DISPLACEMENT  = 4.0f * mmPerInch;   // eg: Camera is 4 Inches in front of robot-center
-        final float CAMERA_VERTICAL_DISPLACEMENT = 8.0f * mmPerInch;   // eg: Camera is 8 Inches above ground
-        final float CAMERA_LEFT_DISPLACEMENT     = 0;     // eg: Camera is ON the robot's center line
+        // The following 3 values were measured on Marvels Primary Robot, for Ultimate Goal season, on 20-Feb-2021:
+        final float CAMERA_FORWARD_DISPLACEMENT  = 6.75f * mmPerInch;   // amount camera lens is in front of robot-center
+        final float CAMERA_VERTICAL_DISPLACEMENT = 6.625f * mmPerInch;   // amount camera lens is above ground
+        final float CAMERA_LEFT_DISPLACEMENT     = 8.50f * mmPerInch;     // amount camera lens is left of the robot's center line
 
 //d        OpenGLMatrix robotFromCamera = OpenGLMatrix
 //d                .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
