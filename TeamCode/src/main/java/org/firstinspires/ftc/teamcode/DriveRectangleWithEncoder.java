@@ -68,13 +68,17 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     // define an instance of FtcDashboard;
     FtcDashboard dashboard;
 
-    // predefine some variables for dashboard configuration
+    // predefine variables for dashboard configuration
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
     // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
-    public static double drivepower = 0.3;       // range 0.0 - 1.0
-    public static double turnpower = 0.4;       // range 0.0 - 1.0
-//d    public static double motorVelocity = 125.0;         // units is ticks/second
+//d    public static double driveVelocity = 800;        // units is ticks/second
+//d    public static double turnVelocity = 1400;        // units is ticks/second
+//d    public static double minTurnVelocity = 600;      // units is ticks/second
+    public static double drivepower = 0.4;      // range 0.0 - 1.0
+    public static double turnpower = 0.7;       // range 0.0 - 1.0
+    public static double minturnpower = 0.3;
+    public static double turngain = 0.01;
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
