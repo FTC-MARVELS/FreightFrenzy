@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -51,6 +52,7 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     // predefine some variables for dashboard configuration
+    public static double shooterVelocity = 2000;
     public static double drivePowerFactor = 1.0;      // set <1.0 to decrease drive power, for a lightweight robot
     public static boolean useVuforia = false;      // set to true to enable Vuforia & trackables
 
@@ -278,6 +280,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             targetsUltimateGoal.activate();
         }
 
+        shooter.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
         // run until the end of the match (driver presses ST OP)
         while (opModeIsActive()) {
             leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
@@ -291,10 +295,11 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             }
 
             if (gamepad2.x) {
-                shooter.setPower(0.86);
+                shooter.setVelocity(shooterVelocity);
+                shooter.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
             }
             if (gamepad2.y) {
-                shooter.setPower(0.0);
+                shooter.setVelocity(0.0);
             }
 
             if (gamepad2.dpad_down) {
@@ -320,6 +325,13 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 grabber.setPosition(0);
             } else {
                 grabber.setPosition(0.3);
+            }
+
+            if (gamepad2.a) {
+                gate.setPosition(0.5);
+            }
+            else {
+                
             }
         }
     }

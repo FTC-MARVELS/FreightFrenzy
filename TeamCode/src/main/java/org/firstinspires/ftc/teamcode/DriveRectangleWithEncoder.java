@@ -36,6 +36,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.ZYX;
@@ -323,10 +324,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         }
 
         // Next, translate the camera lens to where it is on the robot.
-        // In this example, it is centered (left to right), but forward of the middle of the robot, and above ground level.
-        final float CAMERA_FORWARD_DISPLACEMENT  = 4.0f * mmPerInch;   // eg: Camera is 4 Inches in front of robot-center
-        final float CAMERA_VERTICAL_DISPLACEMENT = 8.0f * mmPerInch;   // eg: Camera is 8 Inches above ground
-        final float CAMERA_LEFT_DISPLACEMENT     = 0;     // eg: Camera is ON the robot's center line
+        // The following 3 values were measured on Marvels Primary Robot, for Ultimate Goal season, on 20-Feb-2021:
+        final float CAMERA_FORWARD_DISPLACEMENT  = 6.75f * mmPerInch;   // amount camera lens is in front of robot-center
+        final float CAMERA_VERTICAL_DISPLACEMENT = 6.625f * mmPerInch;   // amount camera lens is above ground
+        final float CAMERA_LEFT_DISPLACEMENT     = 8.50f * mmPerInch;     // amount camera lens is left of the robot's center line
 
 //d        OpenGLMatrix robotFromCamera = OpenGLMatrix
 //d                .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
@@ -710,6 +711,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         double  leftPower, rightPower;
         TelemetryPacket turnpacket = new TelemetryPacket();
 
+        // ensure setPower command does not begin motion, wait for RunMode.RUN... instead
+        leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
         // restart imu movement tracking.
         resetImuAngle();
 
@@ -728,16 +733,16 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         }
         else return;
 
-        // set power to rotate.
+        // set power to rotate, turning motion will start here
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
-        // set motors to run while ignoring their encoders
-        // movement will start here
         telemetry.addData("", "executing turn");
         telemetry.update();
         turnpacket.put("", "executing turn");
         dashboard.sendTelemetryPacket(turnpacket);
+        // set motors to run while ignoring their encoders
+        // movement will start here
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -746,10 +751,25 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         {
             // On right turn we have to get off zero first.
             while (opModeIsActive() && getAngle() == 0) {}
-            while (opModeIsActive() && getAngle() > degrees) {}
+
+            while (opModeIsActive() && getAngle() > degrees) {
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(minturnpower);
+                    rightMotor.setPower(-minturnpower);
+                }
+            }
         }
         else    // left turn.
-            while (opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && getAngle() < degrees) {
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(-minturnpower);
+                    rightMotor.setPower(minturnpower);
+                }
+            }
 
         // turn the motors off.
         rightMotor.setPower(0);
