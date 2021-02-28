@@ -631,6 +631,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         double  leftPower, rightPower;
         TelemetryPacket turnpacket = new TelemetryPacket();
 
+        leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
         // restart imu movement tracking.
         resetImuAngle();
 
@@ -653,12 +656,12 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
-        // set motors to run while ignoring their encoders
-        // movement will start here
         telemetry.addData("", "executing turn");
         telemetry.update();
         turnpacket.put("", "executing turn");
         dashboard.sendTelemetryPacket(turnpacket);
+        // set motors to run while ignoring their encoders
+        // movement will start here
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
