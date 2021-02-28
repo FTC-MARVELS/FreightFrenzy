@@ -631,6 +631,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         double  leftPower, rightPower;
         TelemetryPacket turnpacket = new TelemetryPacket();
 
+        // ensure setPower command does not begin motion, wait for RunMode.RUN... instead
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
