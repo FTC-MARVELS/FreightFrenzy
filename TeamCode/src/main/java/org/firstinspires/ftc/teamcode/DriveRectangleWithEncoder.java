@@ -34,6 +34,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.ZYX;
@@ -653,7 +654,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         }
         else return;
 
-        // set power to rotate.
+        // set power to rotate, turning motion will start here
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
@@ -671,10 +672,25 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         {
             // On right turn we have to get off zero first.
             while (opModeIsActive() && getAngle() == 0) {}
-            while (opModeIsActive() && getAngle() > degrees) {}
+
+            while (opModeIsActive() && getAngle() > degrees) {
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(minturnpower);
+                    rightMotor.setPower(-minturnpower);
+                }
+            }
         }
         else    // left turn.
-            while (opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && getAngle() < degrees) {
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (abs(leftMotor.getPower()) < minturnpower) {
+                    leftMotor.setPower(-minturnpower);
+                    rightMotor.setPower(minturnpower);
+                }
+            }
 
         // turn the motors off.
         rightMotor.setPower(0);
