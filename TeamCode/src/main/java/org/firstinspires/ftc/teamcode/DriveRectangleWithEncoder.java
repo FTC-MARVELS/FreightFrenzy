@@ -49,8 +49,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 public class DriveRectangleWithEncoder extends LinearOpMode
 {
     // declare our motors
-    DcMotorEx leftMotor;
-    DcMotorEx rightMotor;
+    DcMotorEx leftMotor, rightMotor, leftMotor2, rightMotor2;
     DcMotorEx shooter;
     DcMotorEx intake;
     DcMotorEx roller;
@@ -70,9 +69,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     FtcDashboard dashboard;
 
     // predefine variables for dashboard configuration
+    public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
-    // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encooders
+    // motor POWER is used for running WITHOUT encoders, motor VELOCITY is used for running WITH encoders
 //d    public static double driveVelocity = 800;        // units is ticks/second
 //d    public static double turnVelocity = 1400;        // units is ticks/second
 //d    public static double minTurnVelocity = 600;      // units is ticks/second
@@ -157,11 +157,18 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         gate = hardwareMap.get(Servo.class,"Gate");
         feeder = hardwareMap.get(Servo.class,"Feeder");
         grabber = hardwareMap.get(Servo.class, "Grabber");
+        if (!isSecondaryRobot) {
+            leftMotor2 = hardwareMap.get(DcMotorEx.class,"LeftDrive2");
+            rightMotor2 = hardwareMap.get(DcMotorEx.class,"RightDrive2");
+        }
 
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
         // forward motion.
         rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        if (!isSecondaryRobot) {
+            rightMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+        }
 
         // initialize FtcDashboard
         dashboard = FtcDashboard.getInstance();
@@ -187,6 +194,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        if (!isSecondaryRobot) {
+            leftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            rightMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
 
         BNO055IMU.Parameters imuparameters = new BNO055IMU.Parameters();
 
@@ -396,19 +407,35 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // reset encoder counts kept by motors
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            }
 
             // send robot forward to specified encoder counts
             leftMotor.setTargetPosition(1500);
             rightMotor.setTargetPosition(1500);
+            if (!isSecondaryRobot) {
+                leftMotor2.setTargetPosition(1500);
+                rightMotor2.setTargetPosition(1500);
+            }
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
             rightMotor.setPower(drivepower);
+            if (!isSecondaryRobot) {
+                leftMotor2.setPower(drivepower);
+                rightMotor2.setPower(drivepower);
+            }
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -416,7 +443,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"forward motion");
             }
 
-            // unless disabled, wait 5 sec so you can observe the final encoder position
+            // unless disabled, wait so you can observe the final encoder position
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"forward complete");
@@ -434,19 +461,35 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // reset encoder counts kept by motors
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            }
 
             // send robot right to specified encoder counts
             leftMotor.setTargetPosition(1000);
             rightMotor.setTargetPosition(1000);
+            if (!isSecondaryRobot) {
+                leftMotor2.setTargetPosition(1000);
+                rightMotor2.setTargetPosition(1000);
+            }
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
             rightMotor.setPower(drivepower);
+            if (!isSecondaryRobot) {
+                leftMotor2.setPower(drivepower);
+                rightMotor2.setPower(drivepower);
+            }
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -454,7 +497,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"right motion");
             }
 
-            // unless disabled, wait 5 sec so you can observe the final encoder position
+            // unless disabled, wait so you can observe the final encoder position
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"right complete");
@@ -472,19 +515,35 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // reset encoder counts kept by motors
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            }
 
             // send robot back to specified encoder counts
             leftMotor.setTargetPosition(1500);
             rightMotor.setTargetPosition(1500);
+            if (!isSecondaryRobot) {
+                leftMotor2.setTargetPosition(1500);
+                rightMotor2.setTargetPosition(1500);
+            }
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
             rightMotor.setPower(drivepower);
+            if (!isSecondaryRobot) {
+                leftMotor2.setPower(drivepower);
+                rightMotor2.setPower(drivepower);
+            }
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -492,7 +551,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"back motion");
             }
 
-            // unless disabled, wait 5 sec so you can observe the final encoder position
+            // unless disabled, wait so you can observe the final encoder position
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"back complete");
@@ -510,19 +569,35 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             // reset encoder counts kept by motors
             leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            }
 
             // send robot left to specified encoder counts
             leftMotor.setTargetPosition(1000);
             rightMotor.setTargetPosition(1000);
+            if (!isSecondaryRobot) {
+                leftMotor2.setTargetPosition(1000);
+                rightMotor2.setTargetPosition(1000);
+            }
 
             // Set motors to appropriate power levels
             leftMotor.setPower(drivepower);
             rightMotor.setPower(drivepower);
+            if (!isSecondaryRobot) {
+                leftMotor2.setPower(drivepower);
+                rightMotor2.setPower(drivepower);
+            }
 
             // set motors to run to target encoder position and stop with brakes on
             // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (!isSecondaryRobot) {
+                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
 
             // wait while opmode is active and motor is busy running to position
             while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
@@ -530,7 +605,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 trackAndTelemeter(allTrackables,"left motion");
             }
 
-            // unless disabled, wait 5 sec so you can observe the final encoder position
+            // unless disabled, wait so you can observe the final encoder position
             resetStartTime();
             do {
                 trackAndTelemeter(allTrackables,"left complete");
@@ -672,6 +747,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // ensure setPower command does not begin motion, wait for RunMode.RUN... instead
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        if (!isSecondaryRobot) {
+            leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        }
 
         // restart imu movement tracking.
         resetImuAngle();
@@ -694,6 +773,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // set power to rotate, turning motion will start here
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
+        if (!isSecondaryRobot) {
+            leftMotor2.setPower(leftPower);
+            rightMotor2.setPower(rightPower);
+        }
 
         telemetry.addData("", "executing turn");
         telemetry.update();
@@ -703,35 +786,58 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // movement will start here
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        if (!isSecondaryRobot) {
+            leftMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
 
         // rotate until turn is completed.
-        if (degrees < 0)
-        {
+        if (degrees < 0) {  // right turn
             // On right turn we have to get off zero first.
             while (opModeIsActive() && getAngle() == 0) {}
 
             while (opModeIsActive() && getAngle() > degrees) {
-                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);     // decrease power as IMU angle approaches desired angle
                 rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
-                if (abs(leftMotor.getPower()) < minturnpower) {
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                    rightMotor2.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                }
+                if (abs(leftMotor.getPower()) < minturnpower) {                             // but don't go below minimum turn power
                     leftMotor.setPower(minturnpower);
                     rightMotor.setPower(-minturnpower);
+                    if (!isSecondaryRobot) {
+                        leftMotor2.setPower(minturnpower);
+                        rightMotor2.setPower(-minturnpower);
+                    }
                 }
             }
         }
-        else    // left turn.
+        else {              // left turn.
             while (opModeIsActive() && getAngle() < degrees) {
-                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);     // decrease power as IMU angle approaches desired angle
                 rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
-                if (abs(leftMotor.getPower()) < minturnpower) {
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(leftPower * abs((getAngle() - degrees)) * turngain);     // decrease power as IMU angle approaches desired angle
+                    rightMotor2.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                }
+                if (abs(leftMotor.getPower()) < minturnpower) {                             // but don't go below minimum turn power
                     leftMotor.setPower(-minturnpower);
                     rightMotor.setPower(minturnpower);
+                    if (!isSecondaryRobot) {
+                        leftMotor2.setPower(-minturnpower);
+                        rightMotor2.setPower(minturnpower);
+                    }
                 }
             }
-
+        }
         // turn the motors off.
-        rightMotor.setPower(0);
         leftMotor.setPower(0);
+        rightMotor.setPower(0);
+        if (!isSecondaryRobot) {
+            leftMotor2.setPower(0);
+            rightMotor2.setPower(0);
+        }
         telemetry.addData("turn power", "zero");
         telemetry.update();
         turnpacket.put("turn power", "zero");
