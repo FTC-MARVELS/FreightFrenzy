@@ -85,7 +85,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pright = new PIDFCoefficients(0,0,0,0);
 
-    // initializeVuforia
+    // configureVuforia
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -195,9 +195,8 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         imuparameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         imuparameters.loggingEnabled      = false;
 
-        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
-        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
+        // Retrieve and initialize the IMU. The IMU is internally attached to I2C port 0 on REV
+        //  hubs (both Control and Expansion), and named "imu".
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         imu.initialize(imuparameters);
@@ -217,31 +216,10 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         // declare worker class(es)
         org.firstinspires.ftc.teamcode.AutonomousWorkerMethods workers = new org.firstinspires.ftc.teamcode.AutonomousWorkerMethods();
 
-        //executeVuforia
+        // Initialize Vuforia engine
+        initVuforia();
 
-        // Retrieve the camera we are to use
-        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
-         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
-         */
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        // VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
-
-        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
-
-        // We also indicate which camera on the RC we wish to use
-        vparameters.cameraName = webcamName;
-
-        // Make sure extended tracking is disabled for this example.
-        vparameters.useExtendedTracking = false;
-
-        //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
-
+        // Initialize Vuforia Trackables
         // Load the data sets for the trackable objects. These particular data
         //  sets are stored in the 'assets' part of our application.
         VuforiaTrackables targetsUltimateGoal = this.vuforia.loadTrackablesFromAsset("UltimateGoal");
@@ -346,8 +324,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setCameraLocationOnRobot(webcamName, robotFromCamera);
         }
 
-        //TENSOR FLOW CODE
-        initVuforia();
+        // Initialize TensorFlow
         initTfod();
 
         /**
@@ -567,7 +544,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             rotate(180, turnpower);
         }
 
-        // Disable Tracking and TFOD when OpMode is complete;
+        // Disable Vuforia Tracking and TFOD when OpMode is complete
         targetsUltimateGoal.deactivate();
 
         if (tfod != null) {
@@ -786,18 +763,28 @@ public class DriveRectangleWithEncoder extends LinearOpMode
      * Initialize the Vuforia localization engine.
      */
     private void initVuforia() {
+        // Retrieve the camera we are to use
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
+         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
          */
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        // VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
 
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
+
+        // We also indicate which camera on the RC we wish to use
+        vparameters.cameraName = webcamName;
+
+        // Make sure extended tracking is disabled for this example.
+        vparameters.useExtendedTracking = false;
 
         //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
     }
 
     /**
