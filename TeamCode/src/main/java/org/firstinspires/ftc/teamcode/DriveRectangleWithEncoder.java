@@ -617,6 +617,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             motionpacket.put("motion", "rotating +180 degrees");
             dashboard.sendTelemetryPacket(motionpacket);
             rotate(180, turnpower);
+            // We are in the starting corner of the rectangle, but facing right, turn ccw +90 degrees
+            telemetry.addData("motion", "rotating +90 degrees (ccw)");
+            telemetry.update();
+            motionpacket.put("motion", "rotating +90 degrees (ccw)");
+            dashboard.sendTelemetryPacket(motionpacket);
+            rotate(90, turnpower);
+        // repeat the loop and do it all over again (another cw rectangle)
         }
 
         // Disable Vuforia Tracking and TFOD when OpMode is complete
