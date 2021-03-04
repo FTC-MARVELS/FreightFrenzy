@@ -178,6 +178,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         TelemetryPacket pidfpacket = new TelemetryPacket();
         TelemetryPacket motionpacket = new TelemetryPacket();
         TelemetryPacket imupacket = new TelemetryPacket();
+        TelemetryPacket tfodpacket = new TelemetryPacket();
 
         // discover current (default) PIDF coefficients
         PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -386,17 +387,29 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                 // the last time that call was made.
                 List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
-                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    int tfodSize = updatedRecognitions.size();
+                    telemetry.addData("# Objects Detected", tfodSize);
+                    tfodpacket.put("# Objects Detected", tfodSize);
+
                     // step through the list of recognitions and display boundary info.
                     int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
-                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        String tfodLabel = recognition.getLabel();
+                        Float tfodLeft = recognition.getLeft();
+                        Float tfodTop = recognition.getTop();
+                        Float tfodRight = recognition.getRight();
+                        Float tfodBottom = recognition.getBottom();
+                        telemetry.addData(String.format("label (%d)", i), tfodLabel);
                         telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
+                                tfodLeft, tfodTop);
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
+                                tfodRight, tfodBottom);
+                        tfodpacket.put(String.format("label (%d)", i), tfodLabel);
+                        tfodpacket.put("-  left, top", String.format("(%d), %.03f, %.03f", i, tfodLeft, tfodTop));
+                        tfodpacket.put("-  right, bottom", String.format("(%d), %.03f, %.03f", i, tfodRight, tfodBottom));
                     }
                     telemetry.update();
+                    dashboard.sendTelemetryPacket(tfodpacket);
                 }
             }
 
