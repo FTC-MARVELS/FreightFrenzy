@@ -136,6 +136,9 @@ public class DriveRectangleWithEncoder extends LinearOpMode
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
+    int wobbleZone = -1;
+    int tfodSize = -1;
+    String tfodLabel = "";
 
     /**
      * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
@@ -383,35 +386,50 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         while (opModeIsActive()) {
 
             if (tfod != null) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
-                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                if (updatedRecognitions != null) {
-                    int tfodSize = updatedRecognitions.size();
-                    telemetry.addData("# Objects Detected", tfodSize);
-                    tfodpacket.put("# Objects Detected", tfodSize);
+                for (int j=0; j<50; j++) {
+                    // getUpdatedRecognitions() will return null if no new information is available since
+                    // the last time that call was made.
+                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    if (updatedRecognitions != null) {
+                        tfodSize = updatedRecognitions.size();
+                        telemetry.addData("# Objects Detected", tfodSize);
+                        tfodpacket.put("# Objects Detected", tfodSize);
 
-                    // step through the list of recognitions and display boundary info.
-                    int i = 0;
-                    for (Recognition recognition : updatedRecognitions) {
-                        String tfodLabel = recognition.getLabel();
-                        Float tfodLeft = recognition.getLeft();
-                        Float tfodTop = recognition.getTop();
-                        Float tfodRight = recognition.getRight();
-                        Float tfodBottom = recognition.getBottom();
-                        telemetry.addData(String.format("label (%d)", i), tfodLabel);
-                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                tfodLeft, tfodTop);
-                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                tfodRight, tfodBottom);
-                        tfodpacket.put(String.format("label (%d)", i), tfodLabel);
-                        tfodpacket.put("-  left, top", String.format("(%d), %.03f, %.03f", i, tfodLeft, tfodTop));
-                        tfodpacket.put("-  right, bottom", String.format("(%d), %.03f, %.03f", i, tfodRight, tfodBottom));
+                        // step through the list of recognitions and display boundary info.
+                        int i = 0;
+                        for (Recognition recognition : updatedRecognitions) {
+                            String tfodLabel = recognition.getLabel();
+                            Float tfodLeft = recognition.getLeft();
+                            Float tfodTop = recognition.getTop();
+                            Float tfodRight = recognition.getRight();
+                            Float tfodBottom = recognition.getBottom();
+                            telemetry.addData(String.format("label (%d)", i), tfodLabel);
+                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                    tfodLeft, tfodTop);
+                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                    tfodRight, tfodBottom);
+                            tfodpacket.put(String.format("label (%d)", i), tfodLabel);
+                            tfodpacket.put("-  left, top", String.format("(%d), %.03f, %.03f", i, tfodLeft, tfodTop));
+                            tfodpacket.put("-  right, bottom", String.format("(%d), %.03f, %.03f", i, tfodRight, tfodBottom));
+                        }
+                        telemetry.update();
+                        dashboard.sendTelemetryPacket(tfodpacket);
                     }
-                    telemetry.update();
-                    dashboard.sendTelemetryPacket(tfodpacket);
+                    if (tfodSize == 0) {wobbleZone = 0;}
+                    else if (tfodLabel == "Single") {wobbleZone = 1;}
+                    else {wobbleZone = 2;}      // only choice left is tfodLabel = Quad
+                    idle();
+                    sleep(25);
                 }
             }
+
+            // show TFOD ring count results
+            telemetry.addData("wobbleZone", wobbleZone);
+            tfodpacket.put("wobbleZone", wobbleZone);
+            telemetry.update();
+            dashboard.sendTelemetryPacket(tfodpacket);
+            // pause to read TFOD telemetry
+            sleep(5000);
 
             // Move in a clockwise rectangle
 
