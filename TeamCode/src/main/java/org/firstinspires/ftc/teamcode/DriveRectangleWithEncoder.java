@@ -448,7 +448,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             telemetry.update();
             dashboard.sendTelemetryPacket(tfodpacket);
             // pause to read TFOD telemetry
-            sleep(5000);
+            sleep(10000);
 
             // Move in a clockwise rectangle
 
