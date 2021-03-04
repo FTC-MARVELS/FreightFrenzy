@@ -371,6 +371,13 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         dashboard.sendTelemetryPacket(imupacket);
         modepacket.put("Mode", "waiting for start");
         dashboard.sendTelemetryPacket(modepacket);
+
+        // make sure the imu gyro is calibrated before continuing.
+        while (!isStopRequested() && !imu.isGyroCalibrated())
+        {
+            sleep(50);
+            idle();
+        }
         // wait for start button to be pressed
         waitForStart();
 
@@ -414,16 +421,28 @@ public class DriveRectangleWithEncoder extends LinearOpMode
                         }
                         telemetry.update();
                         dashboard.sendTelemetryPacket(tfodpacket);
+
+                        telemetry.addData("# Objects Detected is", tfodSize);
+                        tfodpacket.put("# Objects Detected is", tfodSize);
+                        if (tfodSize == 0) {wobbleZone = 0; telemetry.addData("ring stack is none", "");}
+                        else {
+                            if (tfodLabel.equals("Single")) {wobbleZone = 1;}
+                            if (tfodLabel.equals("Quad")) {wobbleZone = 2;}
+                            telemetry.addData("ring stack is ", tfodLabel);
+                        }
+                        telemetry.update();
+                        dashboard.sendTelemetryPacket(tfodpacket);
                     }
-                    if (tfodSize == 0) {wobbleZone = 0;}
-                    else if (tfodLabel == "Single") {wobbleZone = 1;}
-                    else {wobbleZone = 2;}      // only choice left is tfodLabel = Quad
                     idle();
-                    sleep(25);
+                    sleep(50);
                 }
             }
 
             // show TFOD ring count results
+            telemetry.addData("# Objects Detected", tfodSize);
+            tfodpacket.put("# Objects Detected", tfodSize);
+            telemetry.addData("ring stack", tfodLabel);
+            tfodpacket.put("ring stack", tfodLabel);
             telemetry.addData("wobbleZone", wobbleZone);
             tfodpacket.put("wobbleZone", wobbleZone);
             telemetry.update();
