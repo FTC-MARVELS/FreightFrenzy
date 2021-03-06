@@ -1,8 +1,66 @@
 // original code from: https://stemrobotics.cs.pdx.edu/node/4746
-//  autonomous program that drives bot forward a set distance, stops then
+//  Autonomous program that drives bot forward a set distance, stops then
 //   backs up to the starting point using encoders to measure the distance.
-// Modified by team MARVELS to drive in a small rectangle (or square),
-//  first clockwise then counter-clockwise.
+// Modified by team MARVELS to drive continuously in small rectangles, clockwise.
+//  This is meant to act as a template for building autonomous linear OpModes -- just modify the
+//   code between the comments "// Move in a clockwise rectangle" and
+//   "// repeat the loop to do it all over again" with code to accomplish your desired routine.
+//  Built-in abilities include:
+//   * FTC Dashboard to aid with OpMode design, tuning, and troubleshooting
+//   * PID motor control tuning
+//   * Use of motor encoders to drive a set velocity and/or to a given position
+//   * Use of IMU gyro to execute turns of any angle between 0-180 degrees
+//   * Use of Vuforia to determine robot's position on field using navigation targets
+//   * Use of Tensor Flow to discover objects (size of ring starter stack for Ultimate Goal season)
+
+/**
+ * To utilize the above listed "built-in abilities" do the following:
+ *
+ * ** FTC Dashboard **
+ * 1. On any computer or tablet, connect WiFi to SSID: 14571-x-RC
+ * 2. Open a web browser to address 192.168.49.1 (if RC phone on WiFi-Direct)
+ *    or to 192.168.43.1 (if Control Hub)
+ * *******************
+ *
+ * ** PID motor control tuning **
+ * 1. Use FTC Dashboard to play with different Configuration PID variables until robot is well tuned
+ * 2. To make these coefficients persistent, copy the values to the code lines starting with
+ *     "public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0)"
+ *     do the same for coefficients Vright, Pleft, and Pright
+ * ******************************
+ *
+ * ** Motor encoders **
+ * 1. Use setVelocity commands instead of setPower commands
+ * 2. Use commands setMode(DcMotor.RunMode.RUN_TO_POSITION) or setMode(DcMotor.RunMode.RUN_USING_ENCODER)
+ *     instead of setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER) or simply setPower alone
+ * ********************
+ *
+ * ** IMU gyro **
+ * 1. Call the rotate() method anytime you need to execute a turn
+ * 2. Valid range for degrees is 0-180, use negative degrees for clockwise,
+ *     or positive degrees for counter-clockwise rotations.
+ * 3. Example: rotate(-90, 0.8); to execute a 90 degree clockwise turn (to the right),
+ *     with a starting power level of 0.8.
+ * **************
+ *
+ * ** Vuforia positioning **
+ * 1. This OpMode is already polling Vuforia for the robot's current position and rotation,
+ *     each iteration of the main loop.
+ * 2. The position's origin is the center of the field.
+ * 3. Call String.format("{X, Y, Z} = %.1f, %.1f, %.1f", translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch)
+ *     to poll for the robot's current x,y,z position coordinates in inches.
+ * 4. Call String.format("{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle)
+ *     to poll for the robot's current roll,pitch,heading rotation in degrees.
+ * *************************
+ *
+ * ** Tensor Flow **
+ * 1. Poll the method updatedRecognitions.size() to determine if the camera sees a stack of
+ *     rings or it does not see a stack of rings.
+ * 2. If the camera does see a stack of rings, poll the method recognition.getLabel() to determine
+ *     if the stack is a 'Single' or a 'Quad' stack (one ring or four rings).
+ * 3. It may require multiple polls to gather enough data for accurate results.
+ * *****************
+ */
 
 package org.firstinspires.ftc.teamcode;
 
@@ -183,7 +241,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
         TelemetryPacket imupacket = new TelemetryPacket();
         TelemetryPacket tfodpacket = new TelemetryPacket();
 
-        // discover current (default) PIDF coefficients
+        // discover and show current (default) PIDF coefficients
         PIDFCoefficients readPidfVleft = leftMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
         telemetry.addData("default PIDF (Vleft)", readPidfVleft);
         pidfpacket.put("default PIDF (Vleft)", readPidfVleft);
@@ -673,7 +731,7 @@ public class DriveRectangleWithEncoder extends LinearOpMode
             motionpacket.put("motion", "rotating +90 degrees (ccw)");
             dashboard.sendTelemetryPacket(motionpacket);
             rotate(90, turnpower);
-        // repeat the loop and do it all over again (another cw rectangle)
+        // repeat the loop to do it all over again (continue cw rectangles)
         }
 
         // Disable Vuforia Tracking and TFOD when OpMode is complete
