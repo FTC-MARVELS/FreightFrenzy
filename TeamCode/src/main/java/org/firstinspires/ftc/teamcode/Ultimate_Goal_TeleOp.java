@@ -302,7 +302,7 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 shooter.setVelocity(0.0);
             }
             else if (gamepad2.a) {
-                shooter.setVelocity(1500);
+                shooter.setVelocity(1750);
             }
 
             if (gamepad2.dpad_down) {
