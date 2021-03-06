@@ -298,8 +298,11 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 shooter.setVelocity(shooterVelocity);
                 shooter.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
             }
-            if (gamepad2.y) {
+            else if (gamepad2.y) {
                 shooter.setVelocity(0.0);
+            }
+            else if (gamepad2.a) {
+                shooter.setVelocity(1500);
             }
 
             if (gamepad2.dpad_down) {
