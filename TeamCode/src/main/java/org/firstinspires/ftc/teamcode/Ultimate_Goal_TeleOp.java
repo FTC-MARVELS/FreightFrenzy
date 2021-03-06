@@ -326,13 +326,6 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             } else {
                 grabber.setPosition(0.3);
             }
-
-            if (gamepad2.a) {
-                gate.setPosition(0.5);
-            }
-            else {
-                
-            }
         }
     }
 
