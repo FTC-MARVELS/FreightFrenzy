@@ -138,6 +138,10 @@ public class DriveImu extends LinearOpMode
 
             leftMotor.setPower(drivepower - correction);
             rightMotor.setPower(drivepower + correction);
+            if (!isSecondaryRobot) {
+                leftMotor2.setPower(drivepower - correction);
+                rightMotor2.setPower(drivepower + correction);
+            }
 
             // We record the sensor values because we will test them in more than
             // one place with time passing between those places. See the lesson on
@@ -150,6 +154,10 @@ public class DriveImu extends LinearOpMode
             if (yButton){   // emergency stop!
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(0);
+                    rightMotor2.setPower(0);
+                }
                 sleep(1500);
                 stop();
             }
@@ -160,9 +168,20 @@ public class DriveImu extends LinearOpMode
                 telemetry.update();
                 motionpacket.put("motion", "backing up");
                 dashboard.sendTelemetryPacket(motionpacket);
+                leftMotor.setPower(0);
+                rightMotor.setPower(0);
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(0);
+                    rightMotor2.setPower(0);
+                }
+                sleep(200);
                 leftMotor.setPower(-drivepower);
                 rightMotor.setPower(-drivepower);
-                sleep(400);
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(-drivepower);
+                    rightMotor2.setPower(-drivepower);
+                }
+                sleep(200);
 
                 // stop.
                 telemetry.addData("motion", "stopping");
@@ -171,7 +190,11 @@ public class DriveImu extends LinearOpMode
                 dashboard.sendTelemetryPacket(motionpacket);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
-                sleep(1500);
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(0);
+                    rightMotor2.setPower(0);
+                }
+                sleep(200);
 
                 // turn 90 degrees left.
                 if (aButton){
@@ -201,6 +224,10 @@ public class DriveImu extends LinearOpMode
         // turn the motors off.
         rightMotor.setPower(0);
         leftMotor.setPower(0);
+        if (!isSecondaryRobot) {
+            leftMotor2.setPower(0);
+            rightMotor2.setPower(0);
+        }
     }
 
     /**
@@ -282,6 +309,10 @@ public class DriveImu extends LinearOpMode
         if (yButton){   // emergency stop!
             leftMotor.setPower(0);
             rightMotor.setPower(0);
+            if (!isSecondaryRobot) {
+                leftMotor2.setPower(0);
+                rightMotor2.setPower(0);
+            }
             sleep(1500);
             stop();
         }
@@ -310,6 +341,10 @@ public class DriveImu extends LinearOpMode
         // set power to rotate, turning motion will start here
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
+        if (!isSecondaryRobot) {
+            leftMotor2.setPower(leftPower);
+            rightMotor2.setPower(rightPower);
+        }
 
         // rotate until turn is completed.
         if (degrees < 0)
@@ -320,9 +355,17 @@ public class DriveImu extends LinearOpMode
             while (opModeIsActive() && getAngle() > degrees) {
                 leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
                 rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                    rightMotor2.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                }
                 if (abs(leftMotor.getPower()) < minturnpower) {
                     leftMotor.setPower(minturnpower);
                     rightMotor.setPower(-minturnpower);
+                    if (!isSecondaryRobot) {
+                        leftMotor2.setPower(minturnpower);
+                        rightMotor2.setPower(-minturnpower);
+                    }
                 }
             }
         }
@@ -330,15 +373,27 @@ public class DriveImu extends LinearOpMode
             while (opModeIsActive() && getAngle() < degrees) {
                 leftMotor.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
                 rightMotor.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                if (!isSecondaryRobot) {
+                    leftMotor2.setPower(leftPower * abs((getAngle() - degrees)) * turngain);
+                    rightMotor2.setPower(rightPower * abs((getAngle() - degrees)) * turngain);
+                }
                 if (abs(leftMotor.getPower()) < minturnpower) {
                     leftMotor.setPower(-minturnpower);
                     rightMotor.setPower(minturnpower);
+                    if (!isSecondaryRobot) {
+                        leftMotor2.setPower(-minturnpower);
+                        rightMotor2.setPower(minturnpower);
+                    }
                 }
             }
 
         // turn the motors off.
         rightMotor.setPower(0);
         leftMotor.setPower(0);
+        if (!isSecondaryRobot) {
+            leftMotor2.setPower(0);
+            rightMotor2.setPower(0);
+        }
 
         // wait for rotation to stop.
         sleep(1000);
