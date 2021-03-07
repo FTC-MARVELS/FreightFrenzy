@@ -35,9 +35,9 @@ public class DriveImu extends LinearOpMode
     DcMotor leftMotor, rightMotor, leftMotor2, rightMotor2;
     BNO055IMU imu;
     Orientation             lastAngles = new Orientation();
-    public static double drivepower = 0.40;
-    public static double turnpower = 0.70;
-    public static double minturnpower = 0.3;
+    public static double drivepower = 0.80;
+    public static double turnpower = 0.90;
+    public static double minturnpower = 0.80;
     public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
     double                  globalAngle, correction;
     boolean                 aButton, bButton, yButton;
@@ -279,7 +279,7 @@ public class DriveImu extends LinearOpMode
     // You will have to experiment with your robot to get small smooth direction changes
     // to stay on a straight line.
     public static double straightgain = .001;
-    public static double turngain = 0.01;
+    public static double turngain = 0.05;
     // Perhaps straightgain = power/90?  So each degree of error would produce 1.11% correction
     //  so a 90deg error produces correction = 1 * power, then applied is power +/- 1 * power = 2x power / 0x power;
     //  and a 1deg error produces correction = 0.0111 * power, then applied is power +/- correction = 1.0111x power / 0.988x power.

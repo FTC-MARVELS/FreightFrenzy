@@ -135,10 +135,10 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 //d    public static double driveVelocity = 800;        // units is ticks/second
 //d    public static double turnVelocity = 1400;        // units is ticks/second
 //d    public static double minTurnVelocity = 600;      // units is ticks/second
-    public static double drivepower = 0.4;      // range 0.0 - 1.0
-    public static double turnpower = 0.7;       // range 0.0 - 1.0
-    public static double minturnpower = 0.3;
-    public static double turngain = 0.01;
+    public static double drivepower = 0.8;      // range 0.0 - 1.0
+    public static double turnpower = 0.9;       // range 0.0 - 1.0
+    public static double minturnpower = 0.8;
+    public static double turngain = 0.05;
     public static PIDFCoefficients dashPID_Vleft = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Vright = new PIDFCoefficients(0,0,0,0);
     public static PIDFCoefficients dashPID_Pleft = new PIDFCoefficients(0,0,0,0);
