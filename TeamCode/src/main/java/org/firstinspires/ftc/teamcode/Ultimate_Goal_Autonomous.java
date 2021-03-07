@@ -127,6 +127,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
     FtcDashboard dashboard;
 
     // predefine variables for dashboard configuration
+    public static double magnification = 1.4;
     public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
@@ -415,7 +416,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             // (typically 1.78 or 16/9).
 
             // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
-            //tfod.setZoom(2.5, 1.78);
+            tfod.setZoom(magnification, 1.78);
         }
 
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
@@ -506,7 +507,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             telemetry.update();
             dashboard.sendTelemetryPacket(tfodpacket);
             // pause to read TFOD telemetry
-            sleep(10000);
+            sleep(1000000);
+
 
             // Move in a clockwise rectangle
 

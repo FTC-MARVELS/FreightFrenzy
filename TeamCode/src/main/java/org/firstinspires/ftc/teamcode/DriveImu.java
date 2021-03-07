@@ -49,8 +49,8 @@ public class DriveImu extends LinearOpMode
         leftMotor2 = hardwareMap.dcMotor.get("LeftDrive");
         rightMotor2 = hardwareMap.dcMotor.get("RightDrive");
 
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightMotor2.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
