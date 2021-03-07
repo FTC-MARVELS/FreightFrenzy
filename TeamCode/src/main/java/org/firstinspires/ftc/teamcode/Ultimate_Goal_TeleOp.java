@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -52,7 +51,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     // predefine some variables for dashboard configuration
-    public static double shooterVelocity = 2000;
+    public static double shooterVelocityHighGoal = 2000;
+    public static double shooterVelocityPowerShot = 1800;
     public static double drivePowerFactor = 1.0;      // set <1.0 to decrease drive power, for a lightweight robot
     public static boolean useVuforia = false;      // set to true to enable Vuforia & trackables
 
@@ -295,14 +295,14 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             }
 
             if (gamepad2.x) {
-                shooter.setVelocity(shooterVelocity);
+                shooter.setVelocity(shooterVelocityHighGoal);
                 shooter.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
             }
             else if (gamepad2.y) {
                 shooter.setVelocity(0.0);
             }
             else if (gamepad2.a) {
-                shooter.setVelocity(1750);
+                shooter.setVelocity(shooterVelocityPowerShot);
             }
 
             if (gamepad2.dpad_down) {
