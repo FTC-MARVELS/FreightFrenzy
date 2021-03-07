@@ -39,7 +39,8 @@ public class PidfMaxVelocityTest extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     // predefine some variables for dashboard configuration
-    public static double driveTimout = 1.0;   // don't allow robot to move too far !!!
+    public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
+    public static double driveTimout = 1.0;             // don't allow robot to move too far !!!
 
     // called when init button is pressed
     @Override
@@ -49,8 +50,14 @@ public class PidfMaxVelocityTest extends LinearOpMode {
         rightMotor = hardwareMap.get(DcMotorEx.class, "RightDrive");
         rightMotor2 = hardwareMap.get(DcMotorEx.class, "RightDrive2");
 
+        leftMotor.setDirection(DcMotorEx.Direction.FORWARD);
         rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
-        rightMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+        if (!isSecondaryRobot) {
+            leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+            leftMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+            rightMotor.setDirection(DcMotorEx.Direction.FORWARD);
+            rightMotor2.setDirection(DcMotorEx.Direction.FORWARD);
+        }
 
         // we won't be using encoders, but this will prevent motion on setPower commands, and instead wait for RunMode.RUN... commands
         leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
