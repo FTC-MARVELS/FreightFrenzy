@@ -18,6 +18,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -37,6 +38,7 @@ public class DriveImu extends LinearOpMode
     public static double drivepower = 0.40;
     public static double turnpower = 0.70;
     public static double minturnpower = 0.3;
+    public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
     double                  globalAngle, correction;
     boolean                 aButton, bButton, yButton;
 
@@ -49,8 +51,14 @@ public class DriveImu extends LinearOpMode
         leftMotor2 = hardwareMap.dcMotor.get("LeftDrive");
         rightMotor2 = hardwareMap.dcMotor.get("RightDrive");
 
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftMotor2.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        if (!isSecondaryRobot) {
+            leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+            leftMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+            rightMotor.setDirection(DcMotorEx.Direction.FORWARD);
+            rightMotor2.setDirection(DcMotorEx.Direction.FORWARD);
+        }
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -195,9 +195,9 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
-    int wobbleZone = -1;
-    int tfodSize = -1;
-    String tfodLabel = "";
+    private static int wobbleZone = -1;
+    private static int tfodSize = -1;
+    private static String tfodLabel = "";
 
     /**
      * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
@@ -227,9 +227,13 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
         // You will need to set this based on your robot's
         // gearing to get forward control input to result in
         // forward motion.
+        leftMotor.setDirection(DcMotorEx.Direction.FORWARD);
         rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
         if (!isSecondaryRobot) {
-            rightMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+            leftMotor.setDirection(DcMotorEx.Direction.REVERSE);
+            leftMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+            rightMotor.setDirection(DcMotorEx.Direction.FORWARD);
+            rightMotor2.setDirection(DcMotorEx.Direction.FORWARD);
         }
 
         // initialize FtcDashboard
@@ -452,6 +456,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
         while (opModeIsActive()) {
 
             if (tfod != null) {
+                Float tfodLeft, tfodTop, tfodRight, tfodBottom;
                 for (int j=0; j<50; j++) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
@@ -464,11 +469,11 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                         // step through the list of recognitions and display boundary info.
                         int i = 0;
                         for (Recognition recognition : updatedRecognitions) {
-                            String tfodLabel = recognition.getLabel();
-                            Float tfodLeft = recognition.getLeft();
-                            Float tfodTop = recognition.getTop();
-                            Float tfodRight = recognition.getRight();
-                            Float tfodBottom = recognition.getBottom();
+                            tfodLabel = recognition.getLabel();
+                            tfodLeft = recognition.getLeft();
+                            tfodTop = recognition.getTop();
+                            tfodRight = recognition.getRight();
+                            tfodBottom = recognition.getBottom();
                             telemetry.addData(String.format("label (%d)", i), tfodLabel);
                             telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                                     tfodLeft, tfodTop);
