@@ -315,6 +315,7 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 arm.setPower(0.0);
             }
 
+
             if (gamepad2.dpad_right) {
                 gate.setPosition(0.6);
             }

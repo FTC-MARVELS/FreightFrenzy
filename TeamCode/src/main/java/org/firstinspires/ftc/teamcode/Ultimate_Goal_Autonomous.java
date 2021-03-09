@@ -135,7 +135,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 //d    public static double driveVelocity = 800;        // units is ticks/second
 //d    public static double turnVelocity = 1400;        // units is ticks/second
 //d    public static double minTurnVelocity = 600;      // units is ticks/second
-    public static double drivepower = 0.8;      // range 0.0 - 1.0
+    public static double drivepower = 0.8;// range 0.0 - 1.0
+    public static double driveVelocity = 2000;
     public static double turnpower = 0.9;       // range 0.0 - 1.0
     public static double minturnpower = 0.8;
     public static double turngain = 0.05;
@@ -512,233 +513,169 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             telemetry.update();
             dashboard.sendTelemetryPacket(tfodpacket);
             // pause to read TFOD telemetry
-            sleep(1000000);
+            sleep(2000);
 
+            // Start of Autonomous
 
-            // Move in a clockwise rectangle
+            grabber.setPosition(0.0);
+            gate.setPosition(0.45);
+            feeder.setPosition(0.45);
 
-            // Rectangle side cw1
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            // reset encoder counts kept by motors
-            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            }
+            leftMotor.setVelocity(driveVelocity);
+            rightMotor.setVelocity(driveVelocity);
+            leftMotor2.setVelocity(driveVelocity);
+            rightMotor2.setVelocity(driveVelocity);
 
-            // send robot forward to specified encoder counts
-            leftMotor.setTargetPosition(1500);
-            rightMotor.setTargetPosition(1500);
-            if (!isSecondaryRobot) {
-                leftMotor2.setTargetPosition(1500);
-                rightMotor2.setTargetPosition(1500);
-            }
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            // Set motors to appropriate power levels
-            leftMotor.setPower(drivepower);
-            rightMotor.setPower(drivepower);
-            if (!isSecondaryRobot) {
-                leftMotor2.setPower(drivepower);
-                rightMotor2.setPower(drivepower);
-            }
+            sleep(2000);
 
-            // set motors to run to target encoder position and stop with brakes on
-            // movement will start here
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
+            leftMotor.setVelocity(0);
+            rightMotor.setVelocity(0);
+            leftMotor2.setVelocity(0);
+            rightMotor2.setVelocity(0);
 
-            // wait while opmode is active and motor is busy running to position
-            while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
-            {
-                trackAndTelemeter(allTrackables,"forward motion");
-            }
+            sleep(1000000000);
 
-            // unless disabled, wait so you can observe the final encoder position
-            resetStartTime();
-            do {
-                trackAndTelemeter(allTrackables,"forward complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
-
-            // We are in a corner of the rectangle, turn cw 90 degrees
-            telemetry.addData("motion", "rotating -90 degrees (cw)");
-            telemetry.update();
             motionpacket.put("motion", "rotating -90 degrees (cw)");
             dashboard.sendTelemetryPacket(motionpacket);
-            rotate(-90, turnpower);
+            rotate(-45, turnpower);
 
-            // Rectangle side cw2
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            // reset encoder counts kept by motors
-            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            }
+            leftMotor.setTargetPosition(500);
+            rightMotor.setTargetPosition(500);
+            leftMotor2.setTargetPosition(500);
+            rightMotor2.setTargetPosition(500);
 
-            // send robot right to specified encoder counts
-            leftMotor.setTargetPosition(1000);
-            rightMotor.setTargetPosition(1000);
-            if (!isSecondaryRobot) {
-                leftMotor2.setTargetPosition(1000);
-                rightMotor2.setTargetPosition(1000);
-            }
+            leftMotor.setVelocity(driveVelocity);
+            rightMotor.setVelocity(driveVelocity);
+            leftMotor2.setVelocity(driveVelocity);
+            rightMotor2.setVelocity(driveVelocity);
 
-            // Set motors to appropriate power levels
-            leftMotor.setPower(drivepower);
-            rightMotor.setPower(drivepower);
-            if (!isSecondaryRobot) {
-                leftMotor2.setPower(drivepower);
-                rightMotor2.setPower(drivepower);
-            }
-
-            // set motors to run to target encoder position and stop with brakes on
-            // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
+            leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // wait while opmode is active and motor is busy running to position
-            while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
-            {
-                trackAndTelemeter(allTrackables,"right motion");
-            }
-
-            // unless disabled, wait so you can observe the final encoder position
-            resetStartTime();
-            do {
-                trackAndTelemeter(allTrackables,"right complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
-
-            // We are in a corner of the rectangle, turn cw 90 degrees
-            telemetry.addData("motion", "rotating -90 degrees (cw)");
-            telemetry.update();
             motionpacket.put("motion", "rotating -90 degrees (cw)");
             dashboard.sendTelemetryPacket(motionpacket);
-            rotate(-90, turnpower);
+            rotate(45, turnpower);
 
-            // Rectangle side cw3
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            // reset encoder counts kept by motors
-            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            }
+            leftMotor.setTargetPosition(500);
+            rightMotor.setTargetPosition(500);
+            leftMotor2.setTargetPosition(500);
+            rightMotor2.setTargetPosition(500);
 
-            // send robot back to specified encoder counts
-            leftMotor.setTargetPosition(1500);
-            rightMotor.setTargetPosition(1500);
-            if (!isSecondaryRobot) {
-                leftMotor2.setTargetPosition(1500);
-                rightMotor2.setTargetPosition(1500);
-            }
+            leftMotor.setVelocity(driveVelocity);
+            rightMotor.setVelocity(driveVelocity);
+            leftMotor2.setVelocity(driveVelocity);
+            rightMotor2.setVelocity(driveVelocity);
 
-            // Set motors to appropriate power levels
-            leftMotor.setPower(drivepower);
-            rightMotor.setPower(drivepower);
-            if (!isSecondaryRobot) {
-                leftMotor2.setPower(drivepower);
-                rightMotor2.setPower(drivepower);
-            }
-
-            // set motors to run to target encoder position and stop with brakes on
-            // movement will start here
             leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
+            leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // wait while opmode is active and motor is busy running to position
-            while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
-            {
-                trackAndTelemeter(allTrackables,"back motion");
-            }
-
-            // unless disabled, wait so you can observe the final encoder position
-            resetStartTime();
-            do {
-                trackAndTelemeter(allTrackables,"back complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
-
-            // We are in a corner of the rectangle, turn cw 90 degrees
-            telemetry.addData("motion", "rotating -90 degrees (cw)");
-            telemetry.update();
             motionpacket.put("motion", "rotating -90 degrees (cw)");
-            dashboard.sendTelemetryPacket(motionpacket);
-            rotate(-90, turnpower);
-
-            // Rectangle side cw4
-
-            // reset encoder counts kept by motors
-            leftMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-                rightMotor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-            }
-
-            // send robot left to specified encoder counts
-            leftMotor.setTargetPosition(1000);
-            rightMotor.setTargetPosition(1000);
-            if (!isSecondaryRobot) {
-                leftMotor2.setTargetPosition(1000);
-                rightMotor2.setTargetPosition(1000);
-            }
-
-            // Set motors to appropriate power levels
-            leftMotor.setPower(drivepower);
-            rightMotor.setPower(drivepower);
-            if (!isSecondaryRobot) {
-                leftMotor2.setPower(drivepower);
-                rightMotor2.setPower(drivepower);
-            }
-
-            // set motors to run to target encoder position and stop with brakes on
-            // movement will start here
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (!isSecondaryRobot) {
-                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-
-            // wait while opmode is active and motor is busy running to position
-            while (opModeIsActive() && leftMotor.isBusy())   //leftMotor.getCurrentPosition() < leftMotor.getTargetPosition())
-            {
-                trackAndTelemeter(allTrackables,"left motion");
-            }
-
-            // unless disabled, wait so you can observe the final encoder position
-            resetStartTime();
-            do {
-                trackAndTelemeter(allTrackables,"left complete");
-            } while (pauseAtEachCorner && opModeIsActive() && getRuntime() < 2);
-
-            // We are in the starting (lower left) corner of the rectangle, turn 180 degrees completely around
-            telemetry.addData("motion", "rotating +180 degrees");
-            telemetry.update();
-            motionpacket.put("motion", "rotating +180 degrees");
-            dashboard.sendTelemetryPacket(motionpacket);
-            rotate(180, turnpower);
-            // We are in the starting corner of the rectangle, but facing right, turn ccw +90 degrees
-            telemetry.addData("motion", "rotating +90 degrees (ccw)");
-            telemetry.update();
-            motionpacket.put("motion", "rotating +90 degrees (ccw)");
             dashboard.sendTelemetryPacket(motionpacket);
             rotate(90, turnpower);
-        // repeat the loop to do it all over again (continue cw rectangles)
+
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            leftMotor.setTargetPosition(500);
+            rightMotor.setTargetPosition(500);
+            leftMotor2.setTargetPosition(500);
+            rightMotor2.setTargetPosition(500);
+
+            leftMotor.setVelocity(driveVelocity);
+            rightMotor.setVelocity(driveVelocity);
+            leftMotor2.setVelocity(driveVelocity);
+            rightMotor2.setVelocity(driveVelocity);
+
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            shooter.setVelocity(2000);
+            shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            motionpacket.put("motion", "rotating -90 degrees (cw)");
+            dashboard.sendTelemetryPacket(motionpacket);
+            rotate(-90, turnpower);
+
+            feeder.setPosition(0.73);
+
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            if (wobbleZone == 0) {
+                leftMotor.setTargetPosition(200);
+                rightMotor.setTargetPosition(200);
+                leftMotor2.setTargetPosition(200);
+                rightMotor2.setTargetPosition(200);
+
+                leftMotor.setVelocity(driveVelocity);
+                rightMotor.setVelocity(driveVelocity);
+                leftMotor2.setVelocity(driveVelocity);
+                rightMotor2.setVelocity(driveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                motionpacket.put("motion", "rotating -90 degrees (cw)");
+                dashboard.sendTelemetryPacket(motionpacket);
+                rotate(90, turnpower);
+
+                grabber.setPosition(0.3);
+            }
+            else if (wobbleZone == 1) {
+                leftMotor.setTargetPosition(300);
+                rightMotor.setTargetPosition(300);
+                leftMotor2.setTargetPosition(300);
+                rightMotor2.setTargetPosition(300);
+
+                leftMotor.setVelocity(driveVelocity);
+                rightMotor.setVelocity(driveVelocity);
+                leftMotor2.setVelocity(driveVelocity);
+                rightMotor2.setVelocity(driveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                motionpacket.put("motion", "rotating -90 degrees (cw)");
+                dashboard.sendTelemetryPacket(motionpacket);
+                rotate(-90, turnpower);
+
+                grabber.setPosition(0.3);
+            }
+        // End of Autonomous
         }
 
         // Disable Vuforia Tracking and TFOD when OpMode is complete
