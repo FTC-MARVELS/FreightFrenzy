@@ -40,7 +40,7 @@ public class PidfMaxVelocityTest extends LinearOpMode {
 
     // predefine some variables for dashboard configuration
     public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
-    public static double driveTimout = 1.0;             // don't allow robot to move too far !!!
+    public static double driveTimout = 2.5;             // don't allow robot to move too far !!!
 
     // called when init button is pressed
     @Override
