@@ -555,7 +555,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             feeder.setPosition(0.73);
             roller.setPower(1.0);
 
-            sleep(300);
+            sleep(500);
 
             roller.setPower(0);
 
