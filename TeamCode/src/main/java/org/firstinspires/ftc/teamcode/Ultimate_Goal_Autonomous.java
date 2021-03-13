@@ -127,7 +127,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
     FtcDashboard dashboard;
 
     // predefine variables for dashboard configuration
-    public static double magnification = 1.4;
+    public static double magnification = 1.1;
     public static boolean isSecondaryRobot = false;     // set to true when using secondary, which has less hardware
     public static boolean pauseAtEachCorner = true;   // set to false if pausing at each corner is not desired
     public static boolean useCustomPIDF = false;      // set to true to use custom PIDF control
@@ -137,7 +137,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 //d    public static double minTurnVelocity = 600;      // units is ticks/second
     public static double drivepower = 0.8;// range 0.0 - 1.0
     public static double leftDriveVelocity = 1500;
-    public static double rightDriveVelocity = 1320;
+    public static double rightDriveVelocity = 1300;
     public static double turnpower = 0.9;       // range 0.0 - 1.0
     public static double minturnpower = 0.8;
     public static double turngain = 0.05;
@@ -558,6 +558,9 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             sleep(300);
 
             roller.setPower(0);
+
+            sleep(200);
+
             feeder.setPosition(0.45);
 
             sleep(300);
