@@ -136,7 +136,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 //d    public static double turnVelocity = 1400;        // units is ticks/second
 //d    public static double minTurnVelocity = 600;      // units is ticks/second
     public static double drivepower = 0.8;// range 0.0 - 1.0
-    public static double driveVelocity = 2000;
+    public static double leftDriveVelocity = 1500;
+    public static double rightDriveVelocity = 1320;
     public static double turnpower = 0.9;       // range 0.0 - 1.0
     public static double minturnpower = 0.8;
     public static double turngain = 0.05;
@@ -513,117 +514,12 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             telemetry.update();
             dashboard.sendTelemetryPacket(tfodpacket);
             // pause to read TFOD telemetry
-            sleep(2000);
+            sleep(1500);
 
             // Start of Autonomous
 
-            grabber.setPosition(0.0);
-            gate.setPosition(0.45);
-            feeder.setPosition(0.45);
-
-            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            leftMotor.setVelocity(driveVelocity);
-            rightMotor.setVelocity(driveVelocity);
-            leftMotor2.setVelocity(driveVelocity);
-            rightMotor2.setVelocity(driveVelocity);
-
-            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            sleep(2000);
-
-            leftMotor.setVelocity(0);
-            rightMotor.setVelocity(0);
-            leftMotor2.setVelocity(0);
-            rightMotor2.setVelocity(0);
-
-            sleep(1000000000);
-
-            motionpacket.put("motion", "rotating -90 degrees (cw)");
-            dashboard.sendTelemetryPacket(motionpacket);
-            rotate(-45, turnpower);
-
-            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            leftMotor.setTargetPosition(500);
-            rightMotor.setTargetPosition(500);
-            leftMotor2.setTargetPosition(500);
-            rightMotor2.setTargetPosition(500);
-
-            leftMotor.setVelocity(driveVelocity);
-            rightMotor.setVelocity(driveVelocity);
-            leftMotor2.setVelocity(driveVelocity);
-            rightMotor2.setVelocity(driveVelocity);
-
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            motionpacket.put("motion", "rotating -90 degrees (cw)");
-            dashboard.sendTelemetryPacket(motionpacket);
-            rotate(45, turnpower);
-
-            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            leftMotor.setTargetPosition(500);
-            rightMotor.setTargetPosition(500);
-            leftMotor2.setTargetPosition(500);
-            rightMotor2.setTargetPosition(500);
-
-            leftMotor.setVelocity(driveVelocity);
-            rightMotor.setVelocity(driveVelocity);
-            leftMotor2.setVelocity(driveVelocity);
-            rightMotor2.setVelocity(driveVelocity);
-
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            motionpacket.put("motion", "rotating -90 degrees (cw)");
-            dashboard.sendTelemetryPacket(motionpacket);
-            rotate(90, turnpower);
-
-            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            leftMotor.setTargetPosition(500);
-            rightMotor.setTargetPosition(500);
-            leftMotor2.setTargetPosition(500);
-            rightMotor2.setTargetPosition(500);
-
-            leftMotor.setVelocity(driveVelocity);
-            rightMotor.setVelocity(driveVelocity);
-            leftMotor2.setVelocity(driveVelocity);
-            rightMotor2.setVelocity(driveVelocity);
-
-            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            shooter.setVelocity(2000);
-            shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            motionpacket.put("motion", "rotating -90 degrees (cw)");
-            dashboard.sendTelemetryPacket(motionpacket);
-            rotate(-90, turnpower);
-
+            grabber.setPosition(0.3);
+            gate.setPosition(1);
             feeder.setPosition(0.73);
 
             leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -631,49 +527,153 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            if (wobbleZone == 0) {
-                leftMotor.setTargetPosition(200);
-                rightMotor.setTargetPosition(200);
-                leftMotor2.setTargetPosition(200);
-                rightMotor2.setTargetPosition(200);
+            leftMotor.setVelocity(leftDriveVelocity);
+            rightMotor.setVelocity(rightDriveVelocity);
+            leftMotor2.setVelocity(leftDriveVelocity);
+            rightMotor2.setVelocity(rightDriveVelocity);
 
-                leftMotor.setVelocity(driveVelocity);
-                rightMotor.setVelocity(driveVelocity);
-                leftMotor2.setVelocity(driveVelocity);
-                rightMotor2.setVelocity(driveVelocity);
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            sleep(1925);
 
-                motionpacket.put("motion", "rotating -90 degrees (cw)");
-                dashboard.sendTelemetryPacket(motionpacket);
-                rotate(90, turnpower);
+            leftMotor.setVelocity(0);
+            rightMotor.setVelocity(0);
+            leftMotor2.setVelocity(0);
+            rightMotor2.setVelocity(0);
 
-                grabber.setPosition(0.3);
+            shooter.setVelocity(2000);
+
+            sleep(600);
+
+            feeder.setPosition(0.45);
+
+            sleep(600);
+
+            feeder.setPosition(0.73);
+            roller.setPower(1.0);
+
+            sleep(300);
+
+            roller.setPower(0);
+            feeder.setPosition(0.45);
+
+            sleep(300);
+
+            feeder.setPosition(0.73);
+            intake.setPower(-1);
+
+            sleep(300);
+
+            intake.setPower(1);
+
+            sleep(500);
+
+            intake.setPower(-1);
+
+            sleep(300);
+
+            intake.setPower(1);
+
+            sleep(300);
+
+            intake.setPower(0);
+            roller.setPower(1);
+
+            sleep(1000);
+
+            roller.setPower(0);
+            feeder.setPosition(0.45);
+
+            sleep( 300);
+
+            shooter.setVelocity(0);
+
+            if (wobbleZone == 0); {
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(leftDriveVelocity);
+                leftMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(leftDriveVelocity);
+                rightMotor2.setVelocity(leftDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(350);
+
+                leftMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(55, turnpower);
+
+                grabber.setPosition(0);
+
+                sleep(30000);
             }
-            else if (wobbleZone == 1) {
-                leftMotor.setTargetPosition(300);
-                rightMotor.setTargetPosition(300);
-                leftMotor2.setTargetPosition(300);
-                rightMotor2.setTargetPosition(300);
+            if(wobbleZone == 1) {
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-                leftMotor.setVelocity(driveVelocity);
-                rightMotor.setVelocity(driveVelocity);
-                leftMotor2.setVelocity(driveVelocity);
-                rightMotor2.setVelocity(driveVelocity);
+                leftMotor.setVelocity(leftDriveVelocity);
+                leftMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(leftDriveVelocity);
+                rightMotor2.setVelocity(leftDriveVelocity);
 
-                leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                leftMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                motionpacket.put("motion", "rotating -90 degrees (cw)");
-                dashboard.sendTelemetryPacket(motionpacket);
-                rotate(-90, turnpower);
+                sleep(500);
 
-                grabber.setPosition(0.3);
+                leftMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(-55, turnpower);
+
+                grabber.setPosition(0);
+
+                sleep(200);
+
+                rotate(-55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(leftDriveVelocity);
+                leftMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(leftDriveVelocity);
+                rightMotor2.setVelocity(leftDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(500);
+
+                leftMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                sleep(30000);
             }
         // End of Autonomous
         }
