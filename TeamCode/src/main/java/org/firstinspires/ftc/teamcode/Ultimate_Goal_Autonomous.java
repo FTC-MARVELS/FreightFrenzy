@@ -454,9 +454,6 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
         targetsUltimateGoal.activate();
 
-        // main loop
-        while (opModeIsActive()) {
-
             if (tfod != null) {
                 Float tfodLeft, tfodTop, tfodRight, tfodBottom;
                 for (int j=0; j<50; j++) {
@@ -620,8 +617,6 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                 rotate(55, turnpower);
 
                 grabber.setPosition(0);
-
-                sleep(30000);
             }
             if (wobbleZone == 1) {
                 leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -675,8 +670,6 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                 leftMotor2.setVelocity(0);
                 rightMotor.setVelocity(0);
                 rightMotor2.setVelocity(0);
-
-                sleep(30000);
             }
             if (wobbleZone == 2) {
                 leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -728,11 +721,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                 leftMotor2.setVelocity(0);
                 rightMotor.setVelocity(0);
                 rightMotor2.setVelocity(0);
-
-                sleep(30000);
             }
         // End of Autonomous
-        }
 
         // Disable Vuforia Tracking and TFOD when OpMode is complete
         targetsUltimateGoal.deactivate();
