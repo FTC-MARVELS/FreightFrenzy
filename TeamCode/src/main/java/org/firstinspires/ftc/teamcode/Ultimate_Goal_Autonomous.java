@@ -594,7 +594,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
             shooter.setVelocity(0);
 
-            if (wobbleZone == 0); {
+            if (wobbleZone == 0) {
                 leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -677,6 +677,50 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                 rightMotor2.setVelocity(0);
 
                 sleep(30000);
+
+                if (wobbleZone == 2) {
+                    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                    leftMotor.setVelocity(leftDriveVelocity);
+                    leftMotor2.setVelocity(leftDriveVelocity);
+                    rightMotor.setVelocity(leftDriveVelocity);
+                    rightMotor2.setVelocity(leftDriveVelocity);
+
+                    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                    sleep(1550);
+
+                    leftMotor.setVelocity(0);
+                    leftMotor2.setVelocity(0);
+                    rightMotor.setVelocity(0);
+                    rightMotor2.setVelocity(0);
+
+                    rotate(23, turnpower);
+
+                    grabber.setPosition(0);
+
+                    sleep(200);
+
+                    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                    sleep(1900);
+
+                    leftMotor.setVelocity(0);
+                    leftMotor2.setVelocity(0);
+                    rightMotor.setVelocity(0);
+                    rightMotor2.setVelocity(0);
+
+                    sleep(30000);
+                }
             }
         // End of Autonomous
         }
