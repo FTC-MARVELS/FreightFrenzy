@@ -100,7 +100,6 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.ZYX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
-
 @Config
 @Autonomous(name="Ultimate Goal Autonomous", group="Templates")
 //@Disabled
@@ -541,7 +540,7 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
             leftMotor2.setVelocity(0);
             rightMotor2.setVelocity(0);
 
-            shooter.setVelocity(2000);
+            shooter.setVelocity(1925);
 
             sleep(600);
 
@@ -599,8 +598,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
                 leftMotor.setVelocity(leftDriveVelocity);
                 leftMotor2.setVelocity(leftDriveVelocity);
-                rightMotor.setVelocity(leftDriveVelocity);
-                rightMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(rightDriveVelocity);
+                rightMotor2.setVelocity(rightDriveVelocity);
 
                 leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -617,6 +616,80 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                 rotate(55, turnpower);
 
                 grabber.setPosition(0);
+
+                sleep(200);
+
+                rotate(-55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(2450);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(450);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(53, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(2200);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor2.setVelocity(0);
             }
             if (wobbleZone == 1) {
                 leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -626,8 +699,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
                 leftMotor.setVelocity(leftDriveVelocity);
                 leftMotor2.setVelocity(leftDriveVelocity);
-                rightMotor.setVelocity(leftDriveVelocity);
-                rightMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(rightDriveVelocity);
+                rightMotor2.setVelocity(rightDriveVelocity);
 
                 leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -643,6 +716,28 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
                 rotate(-55, turnpower);
 
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(leftDriveVelocity);
+                leftMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(rightDriveVelocity);
+                rightMotor2.setVelocity(rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(100);
+
+                leftMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
                 grabber.setPosition(0);
 
                 sleep(200);
@@ -656,19 +751,67 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
                 leftMotor.setVelocity(leftDriveVelocity);
                 leftMotor2.setVelocity(leftDriveVelocity);
-                rightMotor.setVelocity(leftDriveVelocity);
-                rightMotor2.setVelocity(leftDriveVelocity);
+                rightMotor.setVelocity(rightDriveVelocity);
+                rightMotor2.setVelocity(rightDriveVelocity);
 
                 leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                sleep(500);
+                sleep(2950);
 
                 leftMotor.setVelocity(0);
                 leftMotor2.setVelocity(0);
                 rightMotor.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(-55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(1100);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(2200);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
                 rightMotor2.setVelocity(0);
             }
             if (wobbleZone == 2) {
@@ -700,6 +843,8 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
 
                 sleep(200);
 
+                rotate(-27, turnpower);
+
                 leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -715,11 +860,59 @@ public class Ultimate_Goal_Autonomous extends LinearOpMode
                 rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                sleep(1900);
+                sleep(3500);
 
                 leftMotor.setVelocity(0);
                 leftMotor2.setVelocity(0);
                 rightMotor.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(800);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
+                rightMotor2.setVelocity(0);
+
+                rotate(55, turnpower);
+
+                leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                leftMotor.setVelocity(-leftDriveVelocity);
+                rightMotor.setVelocity(-rightDriveVelocity);
+                leftMotor2.setVelocity(-leftDriveVelocity);
+                rightMotor2.setVelocity(-rightDriveVelocity);
+
+                leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                sleep(2200);
+
+                leftMotor.setVelocity(0);
+                rightMotor.setVelocity(0);
+                leftMotor2.setVelocity(0);
                 rightMotor2.setVelocity(0);
             }
         // End of Autonomous
