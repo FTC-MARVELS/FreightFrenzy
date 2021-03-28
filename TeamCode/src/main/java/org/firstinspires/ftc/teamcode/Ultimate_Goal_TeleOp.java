@@ -282,6 +282,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
 
         shooter.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
+        double currentShooterVelocity;
+
         // run until the end of the match (driver presses ST OP)
         while (opModeIsActive()) {
             leftMotor.setPower(-gamepad1.left_stick_y * drivePowerFactor);
@@ -337,6 +339,10 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             } else {
                 grabber.setPosition(0.3);
             }
+
+            currentShooterVelocity = shooter.getVelocity();
+            telemetry.addData("Current Shooter Velocity", currentShooterVelocity);
+            telemetry.update();
         }
     }
 
