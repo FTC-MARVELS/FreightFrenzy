@@ -46,6 +46,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
     Servo gate;
     Servo feeder;
     Servo grabber;
+    Servo wobbleGripper1;
+    Servo wobbleGripper2;
 
     // initialize instance of FtcDashboard
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -114,6 +116,8 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
         gate = hardwareMap.get(Servo.class, "Gate");
         feeder = hardwareMap.get(Servo.class, "Feeder");
         grabber = hardwareMap.get(Servo.class, "Grabber");
+        wobbleGripper1 = hardwareMap.get(Servo.class, "WobbleGripper1");
+        wobbleGripper2 = hardwareMap.get(Servo.class, "WobbleGripper2");
 
         // The motor on one side must be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -307,10 +311,10 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 shooter.setVelocity(shooterVelocityPowerShot);
             }
 
-            if (gamepad2.dpad_down) {
+            if (gamepad1.dpad_down) {
                 arm.setPower(0.5);
             }
-            else if (gamepad2.dpad_up) {
+            else if (gamepad1.dpad_up) {
                 arm.setPower(-0.5);
             }
             else {
@@ -318,7 +322,7 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
             }
 
 
-            if (gamepad2.dpad_right) {
+            if (gamepad2.b) {
                 gate.setPosition(0.6);
             }
             else {
@@ -334,10 +338,12 @@ public class Ultimate_Goal_TeleOp extends LinearOpMode{
                 feeder.setPosition(0.73);
             }
 
-            if (gamepad2.left_bumper) {
-                grabber.setPosition(0);
+            if (gamepad1.right_bumper) {
+              wobbleGripper1.setPosition(1.0);
+              wobbleGripper2.setPosition(0.0);
             } else {
-                grabber.setPosition(0.3);
+                wobbleGripper1.setPosition(0.0);
+                wobbleGripper2.setPosition(1.0);
             }
 
             currentShooterVelocity = shooter.getVelocity();
