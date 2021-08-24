@@ -21,12 +21,37 @@ android {
     }
 }
 
+//repositories {
+//    //maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+//    mavenCentral()
+//    flatDir {
+//        dirs '../libs'
+//    }
+//}
+//
+//dependencies {
+//    doc 'org.firstinspires.ftc:Hardware:6.2.0'
+//    doc 'org.firstinspires.ftc:RobotCore:6.2.0'
+//    doc 'org.firstinspires.ftc:FtcCommon:6.2.0'
+//    doc 'org.firstinspires.ftc:OnBotJava:6.2.0'
+//    doc 'org.firstinspires.ftc:Inspection:6.2.0'
+//}
+
 repositories {
-    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+    mavenCentral()
 
     flatDir {
         dirs '../libs'
     }
+}
+
+dependencies {
+    //annotationProcessor 'androidx.annotation:annotation:1.1.0'
+//    doc 'org.firstinspires.ftc:Hardware:6.0.1'
+//    doc 'org.firstinspires.ftc:RobotCore:6.0.1'
+//    doc 'org.firstinspires.ftc:FtcCommon:6.0.1'
+//    doc 'org.firstinspires.ftc:OnBotJava:6.0.1'
+//    doc 'org.firstinspires.ftc:Inspection:6.0.1'
 }
 
 apply from: 'build.release.gradle'

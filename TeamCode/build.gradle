@@ -13,26 +13,23 @@
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
+apply from: 'build.release.gradle'
 
-android {
-    androidResources {
-        noCompress 'tflite'
-    }
-}
-
-repositories {
-    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
-}
+//repositories {
+//    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+//}
 
 dependencies {
+    implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+    //annotationProcessor 'androidx.annotation:annotation:1.1.0'
 }
 
-sourceSets{
-    main{
-        java{
-            srcDir 'java'
-            exclude '**/ignoreInBuild/**'
-        }
-    }
-}
+//sourceSets{
+//    main{
+//        java{
+//            srcDir 'java'
+//            exclude '**/ignoreInBuild/**'
+//        }
+//    }
+//}

@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -133,10 +134,10 @@ public class PushbotAutoDriveByTime_Linear extends LinearOpMode {
 
 
         // Step 5: Positioning
-        motorBackLeft.setPosition(1.0);
-        motorBackRight.setPosition(1.0);
-        motorFrontLeft.setPosition(1.0);
-        motorFrontRight.setPosition(1.0);
+//        motorBackLeft.setPosition(1.0);
+//        motorBackRight.setPosition(1.0);
+//        motorFrontLeft.setPosition(1.0);
+//        motorFrontRight.setPosition(1.0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

@@ -1,9 +1,10 @@
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     implementation project(':FtcRobotController')
-    implementation 'org.firstinspires.ftc:RobotCore:6.0.1'
-    implementation 'org.firstinspires.ftc:Hardware:6.0.1'
-    implementation 'org.firstinspires.ftc:FtcCommon:6.0.1'
-    implementation 'com.acmerobotics.dashboard:dashboard:0.4.0'
     implementation (name: 'tfod-release', ext:'aar')
     implementation (name: 'tensorflow-lite-0.0.0-nightly', ext:'aar')
+    implementation(group: 'org.firstinspires.ftc', name: 'RobotCore', version: '6.2.1', ext:'aar')
+    implementation(group: 'org.firstinspires.ftc', name: 'Hardware', version: '6.2.0', ext:'aar')
+    implementation(group: 'org.firstinspires.ftc', name: 'FtcCommon', version: '6.2.0', ext:'aar')
+    implementation (group: 'com.acmerobotics.dashboard', name: 'dashboard', version :'0.4.0', ext:'aar')
 }
