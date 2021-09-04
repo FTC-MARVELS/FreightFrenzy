@@ -13,26 +13,22 @@
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
+apply from: '../build.dependencies.gradle'
 
 android {
-    androidResources {
-        noCompress 'tflite'
+    signingConfigs {
+        release {
+            storeFile file('libs\\ftc.debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
     }
-}
-
-repositories {
-    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
 }
 
 dependencies {
+    implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
-}
 
-sourceSets{
-    main{
-        java{
-            srcDir 'java'
-            exclude '**/ignoreInBuild/**'
-        }
-    }
+    implementation (group: 'com.acmerobotics.dashboard', name: 'dashboard', version :'0.4.0', ext:'aar')
 }
