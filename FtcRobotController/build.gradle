@@ -7,13 +7,27 @@ apply plugin: 'com.android.library'
 
 android {
 
+    signingConfigs {
+        debug {
+            storeFile file('libs\\ftc.debug.keystore')
+            storePassword 'android'
+            keyPassword 'android'
+            keyAlias 'androiddebugkey'
+        }
+        release {
+            storeFile file('libs\\ftc.debug.keystore')
+            storePassword 'android'
+            keyPassword 'android'
+            keyAlias 'androiddebugkey'
+        }
+    }
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 28
         buildConfigField "String", "BUILD_TIME", '"' + (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ROOT).format(new Date())) + '"'
     }
 
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -21,37 +35,4 @@ android {
     }
 }
 
-//repositories {
-//    //maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
-//    mavenCentral()
-//    flatDir {
-//        dirs '../libs'
-//    }
-//}
-//
-//dependencies {
-//    doc 'org.firstinspires.ftc:Hardware:6.2.0'
-//    doc 'org.firstinspires.ftc:RobotCore:6.2.0'
-//    doc 'org.firstinspires.ftc:FtcCommon:6.2.0'
-//    doc 'org.firstinspires.ftc:OnBotJava:6.2.0'
-//    doc 'org.firstinspires.ftc:Inspection:6.2.0'
-//}
-
-repositories {
-    mavenCentral()
-
-    flatDir {
-        dirs '../libs'
-    }
-}
-
-dependencies {
-    //annotationProcessor 'androidx.annotation:annotation:1.1.0'
-//    doc 'org.firstinspires.ftc:Hardware:6.0.1'
-//    doc 'org.firstinspires.ftc:RobotCore:6.0.1'
-//    doc 'org.firstinspires.ftc:FtcCommon:6.0.1'
-//    doc 'org.firstinspires.ftc:OnBotJava:6.0.1'
-//    doc 'org.firstinspires.ftc:Inspection:6.0.1'
-}
-
-apply from: 'build.release.gradle'
+apply from: '../build.dependencies.gradle'

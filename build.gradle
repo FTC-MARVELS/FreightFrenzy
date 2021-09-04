@@ -13,11 +13,9 @@ buildscript {
         mavenCentral()
         google()
         jcenter()
-        //mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
-        //annotationProcessor 'androidx.annotation:annotation:1.1.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
@@ -28,7 +26,6 @@ allprojects {
         mavenCentral()
         google()
         jcenter()
-
     }
 }
 
@@ -42,7 +39,7 @@ repositories {
 
 dependencies {
     doc 'org.firstinspires.ftc:Hardware:6.2.0'
-    doc 'org.firstinspires.ftc:RobotCore:6.2.1'
+    doc 'org.firstinspires.ftc:RobotCore:6.2.0'
     doc 'org.firstinspires.ftc:FtcCommon:6.2.0'
     doc 'org.firstinspires.ftc:OnBotJava:6.2.0'
     doc 'org.firstinspires.ftc:Inspection:6.2.0'
@@ -69,3 +66,4 @@ task extractJavadoc {
         }
     }
 }
+
