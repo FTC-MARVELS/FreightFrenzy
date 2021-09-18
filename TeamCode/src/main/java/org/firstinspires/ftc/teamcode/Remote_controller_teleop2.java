@@ -35,11 +35,11 @@ public class Remote_controller_teleop2 extends LinearOpMode {
             double rightx = gamepad1.right_stick_x;
 
             //lets the left stick control forward and backward movement of robot
-            Rightmotor.setPower(lefty);
+            Rightmotor.setPower(-lefty);
             Leftmotor.setPower(lefty);
 
             //Lets the right stick x make the robot rotate
-            Rightmotor.setPower(-rightx);
+            Rightmotor.setPower(rightx);
             Leftmotor.setPower(rightx);
 
             //Displays power of each motor on the robot controller
