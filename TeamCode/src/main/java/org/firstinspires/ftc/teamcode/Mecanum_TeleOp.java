@@ -22,7 +22,7 @@ public class Mecanum_TeleOp extends LinearOpMode {
 
     double lefty = gamepad1.left_stick_y;
     double leftx = gamepad1.left_stick_x;
-    double righty = gamepad1.right_stick_y;
+    double righty =      gamepad1.right_stick_y;
     double rightx = gamepad1.right_stick_x;
 
     public void move_forwardback(){
@@ -67,7 +67,10 @@ public class Mecanum_TeleOp extends LinearOpMode {
             Leftmotor1.setPower(reset);
             Leftmotor2.setPower(reset);
             Rightmotor2.setPower(reset);
-
+            lefty = gamepad1.left_stick_y;
+            leftx = gamepad1.left_stick_x;
+            righty = gamepad1.right_stick_y;
+            rightx = gamepad1.right_stick_x;
             move_forwardback();
             move_side();
             diagonal();
