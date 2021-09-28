@@ -67,10 +67,12 @@ public class Mecanum_TeleOp extends LinearOpMode {
             Leftmotor1.setPower(reset);
             Leftmotor2.setPower(reset);
             Rightmotor2.setPower(reset);
-            lefty = gamepad1.left_stick_y/2;
-            leftx = gamepad1.left_stick_x/2;
-            righty = gamepad1.right_stick_y/2;
-            rightx = gamepad1.right_stick_x/2;
+
+            lefty = gamepad1.left_stick_y;
+            leftx = gamepad1.left_stick_x;
+            righty = gamepad1.right_stick_y;
+            rightx = gamepad1.right_stick_x;
+
             move_forwardback();
             move_side();
             diagonal();
