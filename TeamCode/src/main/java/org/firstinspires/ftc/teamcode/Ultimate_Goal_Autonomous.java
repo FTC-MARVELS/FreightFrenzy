@@ -115,6 +115,11 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
      // declare our servos
      Servo gate;
+
+     public Ultimate_Goal_Autonomous() {
+         super();
+     }
+
      Servo feeder;
      Servo grabber;
      Servo wobbleGripper1;

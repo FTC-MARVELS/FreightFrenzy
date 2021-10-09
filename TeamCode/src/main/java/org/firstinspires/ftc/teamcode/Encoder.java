@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name="Encoder_Drive_3")
-public class dadad extends LinearOpMode {
+public class Encoder extends LinearOpMode {
     private DcMotor rightmotor;
     private DcMotor leftmotor;
 
