@@ -44,6 +44,7 @@ public class Teleop extends LinearOpMode {
                 telemetry.addData("right", "%.2f", right);
                 telemetry.update();
 
+
             }
         }
     }
