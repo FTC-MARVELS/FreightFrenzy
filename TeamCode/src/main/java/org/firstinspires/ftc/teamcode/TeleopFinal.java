@@ -38,11 +38,11 @@ public class TeleopFinal extends LinearOpMode {
         MiddleLeft.setPower(lefty +rightx );
 
 
-        extend_collapse()
+        extend_collapse();
 
     }
 
-    public void  extend_collpse() {
+    public void  extend_collapse() {
 
         boolean dpadright = gamepad1.dpad_right;
         boolean dpadleft = gamepad1.dpad_left;
