@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 
-@TeleOp(name = "Mecanum_TeleOp")
+@TeleOp(name = "Mecanum_TeleOp_test")
 public class Mecanum_TeleOp extends LinearOpMode {
 
     //Declaring Motors
@@ -20,23 +20,23 @@ public class Mecanum_TeleOp extends LinearOpMode {
     private DcMotor Leftmotor2;
     private DcMotor Rightmotor2;
 
-    double lefty = gamepad1.left_stick_y;
-    double leftx = gamepad1.left_stick_x;
-    double righty =      gamepad1.right_stick_y;
-    double rightx = gamepad1.right_stick_x;
+    double lefty = 0.0;
+    double leftx = 0.0;
+    double righty = 0.0;
+    double rightx = 0.0;
 
     public void move_forwardback(){
         Leftmotor1.setPower(lefty);
-        Leftmotor2.setPower(lefty);
+        Leftmotor2.setPower(-lefty);
         Rightmotor1.setPower(-lefty);
-        Rightmotor2.setPower(-lefty);
+        Rightmotor2.setPower(lefty);
     }
 
     public void move_side(){
-        Leftmotor1.setPower(-leftx);
-        Leftmotor2.setPower(leftx);
-        Rightmotor1.setPower(leftx);
-        Rightmotor2.setPower(-leftx);
+        Leftmotor1.setPower(leftx);
+        Leftmotor2.setPower(-leftx);
+        Rightmotor1.setPower(-leftx);
+        Rightmotor2.setPower(leftx);
     }
 
     //top right, bottom left diagonal directions
@@ -81,10 +81,12 @@ public class Mecanum_TeleOp extends LinearOpMode {
             Leftmotor1.setPower(reset);
             Leftmotor2.setPower(reset);
             Rightmotor2.setPower(reset);
+
             lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
+
             move_forwardback();
             move_side();
             diagonal();
