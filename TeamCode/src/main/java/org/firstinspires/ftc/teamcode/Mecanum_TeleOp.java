@@ -39,17 +39,31 @@ public class Mecanum_TeleOp extends LinearOpMode {
         Rightmotor2.setPower(-leftx);
     }
 
+    //top right, bottom left diagonal directions
     public void diagonal(){
-        if (rightx>0 && lefty>0||rightx<0 && lefty<0) {
+        if (rightx>0 && lefty>0) {
             Leftmotor1.setPower(lefty);
             Rightmotor2.setPower(-lefty);
         }
-        else if (rightx>0 && lefty<0 ||rightx<0 && lefty>0){
-            Leftmotor2.setPower(lefty);
-            Rightmotor1.setPower(-lefty);
+        else if (rightx<0 && lefty<0){
+            Leftmotor1.setPower(-lefty);
+            Rightmotor2.setPower(lefty);
         }
 
     }
+    //top left, bottom right diagonal directions
+    public void diagonal2(){
+        if (rightx<0 && lefty>0) {
+            Rightmotor1.setPower(-lefty);
+            Leftmotor2.setPower(lefty);
+        }
+        else if (rightx>0 && lefty<0){
+            Rightmotor1.setPower(lefty);
+            Leftmotor2.setPower(-lefty);
+        }
+
+    }
+
 
 
     @Override
@@ -74,6 +88,7 @@ public class Mecanum_TeleOp extends LinearOpMode {
             move_forwardback();
             move_side();
             diagonal();
+            diagonal2();
 
             //Displays power of each motor on the robot controller
             telemetry.addData("top left motor", "%.2f", Leftmotor1.getPower());
