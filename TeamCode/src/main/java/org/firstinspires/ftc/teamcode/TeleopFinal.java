@@ -38,7 +38,7 @@ public class TeleopFinal extends LinearOpMode {
         MiddleLeft.setPower(lefty +rightx );
 
 
-
+        extend_collapse()
 
     }
 
