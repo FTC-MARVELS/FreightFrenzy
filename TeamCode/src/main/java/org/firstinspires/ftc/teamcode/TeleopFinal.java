@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
-
-@TeleOp(name = "TeleOpFinal")
 public class TeleopFinal extends LinearOpMode {
     private DcMotor Frontright;
     private DcMotor Frontleft;
@@ -24,31 +20,28 @@ public class TeleopFinal extends LinearOpMode {
         Backleft=hardwareMap.get(DcMotor.class,"Backleft");
         MiddleRight=hardwareMap.get(DcMotor.class,"Middleright");
         MiddleLeft=hardwareMap.get(DcMotor.class, "Middleleft");
-        waitForStart();
-        while(opModeIsActive()) {
-            //The right motors are flipped so we have to reverse them
-            Frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-            Backright.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            double lefty = -gamepad1.left_stick_y;
-            double leftx = gamepad1.left_stick_x;
-            double righty = gamepad1.right_stick_y;
-            double rightx = gamepad1.right_stick_x;
+        //The right motors are flipped so we have to reverse them
+        Frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        Backright.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            Frontright.setPower(lefty -rightx  -leftx);
-            Frontleft.setPower(lefty +rightx +leftx);
-            Backright.setPower(lefty -rightx +leftx);
-            Backleft.setPower(lefty +rightx -leftx);
-            MiddleRight.setPower(lefty -rightx );
-            MiddleLeft.setPower(lefty +rightx );
+        double lefty = -gamepad1.left_stick_y;
+        double leftx = gamepad1.left_stick_x;
+        double righty = gamepad1.right_stick_y;
+        double rightx = gamepad1.right_stick_x;
 
-
-            extend_collapse();
-
-        }
+        Frontright.setPower(lefty -rightx  -leftx);
+        Frontleft.setPower(lefty +rightx +leftx);
+        Backright.setPower(lefty -rightx +leftx);
+        Backleft.setPower(lefty +rightx -leftx);
+        MiddleRight.setPower(lefty -rightx );
+        MiddleLeft.setPower(lefty +rightx );
 
 
-        }
+        extend_collapse();
+
+    }
+
     public void  extend_collapse() {
 
         boolean dpadright = gamepad1.dpad_right;
@@ -69,8 +62,4 @@ public class TeleopFinal extends LinearOpMode {
 
     }
 
-        }
-
-
-
-
+}
