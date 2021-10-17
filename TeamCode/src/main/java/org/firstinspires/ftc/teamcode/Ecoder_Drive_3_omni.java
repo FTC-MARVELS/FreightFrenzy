@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous (name = "EncoderDrive4")
-public class Ecoder_Drive_3 extends LinearOpMode {
+public class Ecoder_Drive_3_omni extends LinearOpMode {
     private DcMotorEx rightmotor;
     private DcMotorEx leftmotor;
     private ElapsedTime runtime = new ElapsedTime();
