@@ -20,7 +20,7 @@ public class MoveAround extends LinearOpMode {
 //        motorFrontLeft = hardwareMap.get(DcMotorEx.class, "left");
 //        motorFrontRight = hardwareMap.get(DcMotorEx.class, "right");
 //        //motorFrontLeft = hardwareMap.get(DcMotorEx.class, "top left");
-//        //motorFrontRight = hardwareMap.get(DcMotorEx.class, "top right");
+//        //motorFrontRight = hardwareMapDcMotorEx.class, "top right");
 //        //motorBackLeft = hardwareMap.get(DcMotorEx.class, "bottom left");
 //        //motorBackRight = hardwareMap.get(DcMotorEx.class, "bottom right");
 //        motorFrontLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -32,24 +32,24 @@ public class MoveAround extends LinearOpMode {
 //        sleep(1000);
 //        motorFrontLeft.setPower(0.0);
 //        motorFrontRight.setPower(0.0);
-//        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+//        telemetry.aa("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
 //
 //        telemetry.update();
 //        sleep(5000);
         DcMotor motorBackRight, motorFrontRight, motorBackLeft, motorFrontLeft;
-        static final double     FORWARD_SPEED = 0.6;
+        staticinal double     FORWARD_SPEED = 0.6;
         private ElapsedTime runtime = new ElapsedTime();
         @Override
-        public void runOpMode() throws InterruptedException
+        public void runOpde() throws InterruptedException
         {
             waitForStart();
             //motorFrontLeft = hardwareMap.get(DcMotorEx.class, "motorFrontLeft");
             //motorFrontRight = hardwareMap.get(DcMotorEx.class, "motorFrontRight");
-            motorBackLeft = hardwareMap.get(DcMotorEx.class, "left");
+            motorBackLeft = hardwarap.get(DcMotorEclass, "left");
             motorBackRight = hardwareMap.get(DcMotorEx.class, "right");
 
             //motorFrontLeft.setPower(FORWARD_SPEED);
-            //motorFrontRight.setPower(FORWARD_SPEED);
+            //motorFrontRight.setPow(FORWARD_SPEED);
             motorBackLeft.setPower(FORWARD_SPEED);
             motorBackRight.setPower(FORWARD_SPEED);
             runtime.reset();
@@ -58,7 +58,7 @@ public class MoveAround extends LinearOpMode {
                 telemetry.update();
             }
             motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
+            morFrontRight.setPower(0);
             motorBackLeft.setPower(0);
             motorBackRight.setPower(0);
     }
