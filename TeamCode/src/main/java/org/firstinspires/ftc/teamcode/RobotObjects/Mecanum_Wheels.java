@@ -21,7 +21,7 @@ public class Mecanum_Wheels  {
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
     }
 
-    private void moveForward() {
+    public void moveForward() {
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -52,7 +52,7 @@ public class Mecanum_Wheels  {
         middleleft.setVelocity(700);
         backleft.setVelocity(700);
     }
-    private void moveLeft() {
+    public void moveLeft() {
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -83,7 +83,7 @@ public class Mecanum_Wheels  {
         backleft.setVelocity(-700);
 
     }
-    private void moveRight() {
+    public void moveRight() {
 
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -114,7 +114,7 @@ public class Mecanum_Wheels  {
         middleleft.setVelocity(700);
         backleft.setVelocity(700);
     }
-    private void moveCollaspe() {
+    public void moveCollaspe() {
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

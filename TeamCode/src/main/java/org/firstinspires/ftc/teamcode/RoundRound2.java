@@ -6,9 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 //import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@Autonomous
+@Autonomous(name = "RoundRound2")
 public class RoundRound2 extends LinearOpMode {
 //    DcMotorEx motorFrontLeft, motorBackLeft, motorFrontRight, motorBackRight;
 //    @Override
@@ -37,33 +39,24 @@ public class RoundRound2 extends LinearOpMode {
 //
 //        telemetry.update();
 //        sleep(5000);
-        DcMotor motorBackRight, motorFrontRight, motorBackLeft, motorFrontLeft;
-        static final double     FORWARD_SPEED = 0.6;
+        //
+//  DcMotor CarouselWheel;
+        static final double     FORWARD_SPEED = -0.4;
         private ElapsedTime runtime = new ElapsedTime();
         @Override
         public void runOpMode() throws InterruptedException
         {
             waitForStart();
-            //motorFrontLeft = hardwareMap.get(DcMotorEx.class, "motorFrontLeft");
-            //motorFrontRight = hardwareMap.get(DcMotorEx.class, "motorFrontRight");
-            motorBackLeft = hardwareMap.get(DcMotorEx.class, "left");
-            motorBackRight = hardwareMap.get(DcMotorEx.class, "right");
-
-            //motorFrontLeft.setPower(FORWARD_SPEED);
-            //motorFrontRight.setPower(FORWARD_SPEED);
-            motorBackLeft.setPower(FORWARD_SPEED);
-            motorBackRight.setPower(FORWARD_SPEED);
-            motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+            Spinner spinner = new Spinner(hardwareMap);
+            spinner.setPower(FORWARD_SPEED);
+            spinner.setTime(100);
             runtime.reset();
-            runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() <1.0)) {
+            while (opModeIsActive() && (runtime.seconds() < spinner.getTime())) {
                 telemetry.addData("Done", runtime.seconds());
+                telemetry.addData("power", spinner.getPower());
                 telemetry.update();
             }
-            motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorBackLeft.setPower(0);
-            motorBackRight.setPower(0);
+            spinner.setPower(0);
     }
 
 }
