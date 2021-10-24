@@ -9,16 +9,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@TeleOp(name = "MecanumTeleOp6Wheels")
-public class MecanumTeleOp6Wheels extends LinearOpMode {
+@TeleOp(name = "MAS_MecanumTeleOp6Wheels")
+public class MAS_MecanumTeleOp6Wheels extends LinearOpMode {
 
     //Declaring Motors
     private DcMotor Frontleft;
     private DcMotor Frontright;
     private DcMotor Backleft;
     private DcMotor Backright;
-    private DcMotor Middleright;
-    private DcMotor Middleleft;
+    //private DcMotor Middleright;
+    //private DcMotor Middleleft;
 
     double lefty = 0.0;
     double leftx = 0.0;
@@ -30,8 +30,8 @@ public class MecanumTeleOp6Wheels extends LinearOpMode {
         Backleft.setPower(-lefty);
         Frontright.setPower(righty);
         Backright.setPower(righty);
-        Middleleft.setPower(-lefty);
-        Middleright.setPower(righty);
+       // Middleleft.setPower(-lefty);
+        //Middleright.setPower(righty);
     }
 
     public void move_side(){
@@ -41,21 +41,21 @@ public class MecanumTeleOp6Wheels extends LinearOpMode {
         Backright.setPower(-rightx);
     }
     public void slow_forwardback(){
-        Frontleft.setPower(-righty);
-        Backleft.setPower(-righty);
-        Frontright.setPower(righty);
-        Backright.setPower(righty);
+        Frontleft.setPower(-righty/2);
+        Backleft.setPower(-righty/2);
+        Frontright.setPower(righty/2);
+        Backright.setPower(righty/2);
     }
     public void slow_side(){
-        Frontleft.setPower(-leftx);
-        Backleft.setPower(leftx);
-        Frontright.setPower(rightx);
-        Backright.setPower(-rightx);
+        Frontleft.setPower(-leftx/2);
+        Backleft.setPower(leftx/2);
+        Frontright.setPower(rightx/2);
+        Backright.setPower(-rightx/2);
     }
-    public void middle_forwardback(){
+    /*public void middle_forwardback(){
         Middleright.setPower(righty);
         Middleleft.setPower(lefty);
-        }
+        }*/
 
 
     /*public void diagonal(){
@@ -76,8 +76,8 @@ public class MecanumTeleOp6Wheels extends LinearOpMode {
         Frontleft = hardwareMap.get(DcMotor.class, "Frontleft");
         Backright = hardwareMap.get(DcMotor.class, "Backright");
         Backleft = hardwareMap.get(DcMotor.class, "Backleft");
-        Middleright = hardwareMap.get(DcMotor.class, "Middleright");
-        Middleleft = hardwareMap.get(DcMotor.class, "Middleleft");
+        //Middleright = hardwareMap.get(DcMotor.class, "Middleright");
+        //Middleleft = hardwareMap.get(DcMotor.class, "Middleleft");
 
         waitForStart();
         while (opModeIsActive()) {
@@ -86,8 +86,8 @@ public class MecanumTeleOp6Wheels extends LinearOpMode {
             Frontleft.setPower(reset);
             Backleft.setPower(reset);
             Backright.setPower(reset);
-            Middleleft.setPower(reset);
-            Middleright.setPower(reset);
+            //Middleleft.setPower(reset);
+            //Middleright.setPower(reset);
 
             lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
@@ -108,7 +108,7 @@ public class MecanumTeleOp6Wheels extends LinearOpMode {
             }
             if(modeTwo==true){
                 move_side();
-                middle_forwardback();
+                //middle_forwardback();
             }
 
             if(modeThree==true) {
@@ -130,8 +130,8 @@ public class MecanumTeleOp6Wheels extends LinearOpMode {
             telemetry.addData("front right motor", "%.2f", Frontright.getPower());
             telemetry.addData("back left motor", "%.2f", Backleft.getPower());
             telemetry.addData("back right motor", "%.2f", Backright.getPower());
-            telemetry.addData("middle left motor", "%.2f", Middleleft.getPower());
-            telemetry.addData("middle right motor", "%.2f", Middleright.getPower());
+           // telemetry.addData("middle left motor", "%.2f", Middleleft.getPower());
+            //telemetry.addData("middle right motor", "%.2f", Middleright.getPower());
 
             telemetry.addData("lefty", "%.2f", lefty);
             telemetry.addData("leftx", "%.2f", leftx);

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@TeleOp(name = "Mecanum_TeleOp_test")
+@TeleOp(name = "FinalTeleOpV1")
 public class FinalTeleOpV1 extends LinearOpMode {
 
     //Declaring Motors
@@ -73,18 +73,18 @@ public class FinalTeleOpV1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
-        Rightmotor1 = hardwareMap.get(DcMotor.class, "Topright");
-        Leftmotor1 = hardwareMap.get(DcMotor.class, "Topleft");
-        Rightmotor2 = hardwareMap.get(DcMotor.class, "Bottomright");
-        Leftmotor2 = hardwareMap.get(DcMotor.class, "Bottomleft");
+        TopRight = hardwareMap.get(DcMotor.class, "Topright");
+        TopLeft = hardwareMap.get(DcMotor.class, "Topleft");
+        BottomRight = hardwareMap.get(DcMotor.class, "Bottomright");
+        BottomLeft = hardwareMap.get(DcMotor.class, "Bottomleft");
 
         waitForStart();
         while (opModeIsActive()) {
             double reset = 0;
-            Rightmotor1.setPower(reset);
-            Leftmotor1.setPower(reset);
-            Leftmotor2.setPower(reset);
-            Rightmotor2.setPower(reset);
+            TopRight.setPower(reset);
+            TopLeft.setPower(reset);
+            BottomLeft.setPower(reset);
+            BottomRight.setPower(reset);
 
             lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
@@ -97,10 +97,10 @@ public class FinalTeleOpV1 extends LinearOpMode {
             diagonal2();
 
             //Displays power of each motor on the robot controller
-            telemetry.addData("top left motor", "%.2f", Leftmotor1.getPower());
-            telemetry.addData("top right motor", "%.2f", Rightmotor1.getPower());
-            telemetry.addData("bottom left motor", "%.2f", Leftmotor2.getPower());
-            telemetry.addData("bottom right motor", "%.2f", Rightmotor2.getPower());
+            telemetry.addData("top left motor", "%.2f", TopLeft.getPower());
+            telemetry.addData("top right motor", "%.2f", TopRight.getPower());
+            telemetry.addData("bottom left motor", "%.2f", BottomLeft.getPower());
+            telemetry.addData("bottom right motor", "%.2f", BottomRight.getPower());
 
             telemetry.addData("lefty", "%.2f", lefty);
             telemetry.addData("leftx", "%.2f", leftx);

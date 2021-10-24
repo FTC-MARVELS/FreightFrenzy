@@ -30,7 +30,7 @@ import java.util.List;
  */
 @TeleOp(name = "TFOD Everyday Objects", group = "Concept")
 //@Disabled
-public class TFODEverydayObjects extends LinearOpMode {
+public class Image_Rec_Carl extends LinearOpMode {
     private static final String TFOD_MODEL_FILE = "TeamCode/src/main/java/org.firstinspires.ftc.teamcode/tflite/model_unquant.tflite";
     private static final String TFOD_MODEL_LABELS = "TeamCode/src/main/java/org.firstinspires.ftc.teamcode/tflite/labels.txt";
     private String[] labels;
