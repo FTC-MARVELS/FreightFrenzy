@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 //import com.qualcomm.robotcore.hardware.HardwareMap;
 
+//Using 6wheelConfig
 @Autonomous(name = "RoundRound2")
 public class RoundRound2 extends LinearOpMode {
 //    DcMotorEx motorFrontLeft, motorBackLeft, motorFrontRight, motorBackRight;

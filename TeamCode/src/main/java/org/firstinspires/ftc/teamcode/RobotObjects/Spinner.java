@@ -11,6 +11,7 @@ public class Spinner {
 
 
     public Spinner(HardwareMap hardwareMap){
+        //As per 6wheelConfig
         CarouselWheel = hardwareMap.get(DcMotorEx .class, "carouselMotor");
 
     }
