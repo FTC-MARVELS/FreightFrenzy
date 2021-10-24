@@ -21,6 +21,36 @@ public class Mecanum_Wheels  {
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
     }
 
+    //initialize for TeleOp
+    public void initialize() {
+        double reset = 0;
+        frontright.setPower(reset);
+        frontleft.setPower(reset);
+        backleft.setPower(reset);
+        backright.setPower(reset);
+        middleleft.setPower(reset);
+        middleright.setPower(reset);
+    }
+    //moveForward for TeleOp
+    //The left and right powers are controlled by the left and right y axes
+    public void move_forwardback_rotate( double leftPower, double rightPower){
+        frontleft.setPower(-leftPower);
+        backleft.setPower(-leftPower);
+        frontright.setPower(rightPower);
+        backright.setPower(rightPower);
+        middleleft.setPower(-leftPower);
+        middleright.setPower(rightPower);
+    }
+
+    //moveSide for TeleOp
+    //The left and right powers are controlled by the left and right x axes
+    public void move_side( double leftPower, double rightPower){
+        frontleft.setPower(-leftPower);
+        backleft.setPower(leftPower);
+        frontright.setPower(-rightPower);
+        backright.setPower(rightPower);
+    }
+
     public void moveForward() {
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

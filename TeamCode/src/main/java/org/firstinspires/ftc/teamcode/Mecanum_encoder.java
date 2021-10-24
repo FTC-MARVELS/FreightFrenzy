@@ -32,7 +32,6 @@ public class Mecanum_encoder extends LinearOpMode {
         telemetry.addData("ticks","motors defined");
 
         waitForStart();
-
         frontright.setDirection(DcMotorSimple.Direction.REVERSE);
         middleright.setDirection(DcMotorSimple.Direction.REVERSE);
         backright.setDirection(DcMotorSimple.Direction.REVERSE);
