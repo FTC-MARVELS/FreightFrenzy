@@ -59,7 +59,6 @@ public class Mecanum_Wheels  {
         backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
         frontright.setTargetPosition(537);
         middleright.setTargetPosition(537);
         backright.setTargetPosition(537);

@@ -33,5 +33,9 @@ public class AutonomousWheelExperiment extends LinearOpMode {
 
         waitForStart();
 
+        frontleft.setPower(1);
+        frontright.setPower(-1);
+
+        sleep(200);
     }
 }
