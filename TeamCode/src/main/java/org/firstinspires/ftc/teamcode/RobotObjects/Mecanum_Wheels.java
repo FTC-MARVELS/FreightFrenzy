@@ -21,11 +21,45 @@ public class Mecanum_Wheels  {
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
     }
 
+<<<<<<< HEAD
     public void moveForward(double distance,double speed ) {
         double circumference = 12;
         double rotations = distance/circumference;
         double TicksNeeded = rotations*distance;
         
+=======
+    //initialize for TeleOp
+    public void initialize() {
+        double reset = 0;
+        frontright.setPower(reset);
+        frontleft.setPower(reset);
+        backleft.setPower(reset);
+        backright.setPower(reset);
+        middleleft.setPower(reset);
+        middleright.setPower(reset);
+    }
+    //moveForward for TeleOp
+    //The left and right powers are controlled by the left and right y axes
+    public void move_forwardback_rotate( double leftPower, double rightPower){
+        frontleft.setPower(-leftPower);
+        backleft.setPower(-leftPower);
+        frontright.setPower(rightPower);
+        backright.setPower(rightPower);
+        middleleft.setPower(-leftPower);
+        middleright.setPower(rightPower);
+    }
+
+    //moveSide for TeleOp
+    //The left and right powers are controlled by the left and right x axes
+    public void move_side( double leftPower, double rightPower){
+        frontleft.setPower(-leftPower);
+        backleft.setPower(leftPower);
+        frontright.setPower(-rightPower);
+        backright.setPower(rightPower);
+    }
+
+    public void moveForward() {
+>>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -33,6 +67,7 @@ public class Mecanum_Wheels  {
         backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+<<<<<<< HEAD
 
         frontright.setTargetPosition((int)TicksNeeded);
         middleright.setTargetPosition((int)TicksNeeded);
@@ -40,6 +75,14 @@ public class Mecanum_Wheels  {
         frontleft.setTargetPosition((int)TicksNeeded);
         middleleft.setTargetPosition((int)TicksNeeded);
         backleft.setTargetPosition((int)TicksNeeded);
+=======
+        frontright.setTargetPosition(537);
+        middleright.setTargetPosition(537);
+        backright.setTargetPosition(537);
+        frontleft.setTargetPosition(537);
+        middleleft.setTargetPosition(537);
+        backleft.setTargetPosition(537);
+>>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
 
 
         frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -56,7 +99,11 @@ public class Mecanum_Wheels  {
         middleleft.setPower(speed);
         backleft.setPower(speed);
     }
+<<<<<<< HEAD
     public void moveLeft(double distance, double speed) {
+=======
+    public void moveLeft() {
+>>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -87,7 +134,11 @@ public class Mecanum_Wheels  {
         backleft.setPower(-speed);
 
     }
+<<<<<<< HEAD
     public void moveRight(double distance, double speed) {
+=======
+    public void moveRight() {
+>>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
 
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -118,7 +169,11 @@ public class Mecanum_Wheels  {
         middleleft.setPower(speed);
         backleft.setPower(speed);
     }
+<<<<<<< HEAD
     public void moveCollaspe(double distance, double speed) {
+=======
+    public void moveCollaspe() {
+>>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
