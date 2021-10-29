@@ -5,12 +5,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Mecanum_Wheels  {
-    public DcMotorEx frontright;
-    public DcMotorEx frontleft;
-    public DcMotorEx backright;
-    public DcMotorEx backleft;
-    public DcMotorEx middleright;
-    public DcMotorEx middleleft;
+    private DcMotorEx frontright;
+    private DcMotorEx frontleft;
+    private DcMotorEx backright;
+    private DcMotorEx backleft;
+    private DcMotorEx middleright;
+    private DcMotorEx middleleft;
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
         frontright = hardwareMap.get(DcMotorEx.class,"Frontright");
@@ -21,13 +21,6 @@ public class Mecanum_Wheels  {
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
     }
 
-<<<<<<< HEAD
-    public void moveForward(double distance,double speed ) {
-        double circumference = 12;
-        double rotations = distance/circumference;
-        double TicksNeeded = rotations*distance;
-        
-=======
     //initialize for TeleOp
     public void initialize() {
         double reset = 0;
@@ -59,7 +52,6 @@ public class Mecanum_Wheels  {
     }
 
     public void moveForward() {
->>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -67,22 +59,12 @@ public class Mecanum_Wheels  {
         backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-<<<<<<< HEAD
-
-        frontright.setTargetPosition((int)TicksNeeded);
-        middleright.setTargetPosition((int)TicksNeeded);
-        backright.setTargetPosition((int)TicksNeeded);
-        frontleft.setTargetPosition((int)TicksNeeded);
-        middleleft.setTargetPosition((int)TicksNeeded);
-        backleft.setTargetPosition((int)TicksNeeded);
-=======
         frontright.setTargetPosition(537);
         middleright.setTargetPosition(537);
         backright.setTargetPosition(537);
         frontleft.setTargetPosition(537);
         middleleft.setTargetPosition(537);
         backleft.setTargetPosition(537);
->>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
 
 
         frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -92,18 +74,14 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        frontright.setPower(speed);
-        middleright.setPower(speed);
-        backright.setPower(speed);
-        frontleft.setPower(speed);
-        middleleft.setPower(speed);
-        backleft.setPower(speed);
+        frontright.setVelocity(700);
+        middleright.setVelocity(700);
+        backright.setVelocity(700);
+        frontleft.setVelocity(700);
+        middleleft.setVelocity(700);
+        backleft.setVelocity(700);
     }
-<<<<<<< HEAD
-    public void moveLeft(double distance, double speed) {
-=======
     public void moveLeft() {
->>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -112,12 +90,12 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-        frontright.setTargetPosition((int)distance);
-        middleright.setTargetPosition((int)distance);
-        backright.setTargetPosition((int)distance);
-        frontleft.setTargetPosition(-(int)distance);
-        middleleft.setTargetPosition(-(int)distance);
-        backleft.setTargetPosition(-(int)distance);
+        frontright.setTargetPosition(537);
+        middleright.setTargetPosition(537);
+        backright.setTargetPosition(537);
+        frontleft.setTargetPosition(-537);
+        middleleft.setTargetPosition(-537);
+        backleft.setTargetPosition(-537);
 
         frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -126,19 +104,15 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        frontright.setPower(speed);
-        middleright.setPower(speed);
-        backright.setPower(speed);
-        frontleft.setPower(-speed);
-        middleleft.setPower(-speed);
-        backleft.setPower(-speed);
+        frontright.setVelocity(700);
+        middleright.setVelocity(700);
+        backright.setVelocity(700);
+        frontleft.setVelocity(-700);
+        middleleft.setVelocity(-700);
+        backleft.setVelocity(-700);
 
     }
-<<<<<<< HEAD
-    public void moveRight(double distance, double speed) {
-=======
     public void moveRight() {
->>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
 
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -148,12 +122,12 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-        frontright.setTargetPosition(-(int)distance);
-        middleright.setTargetPosition(-(int)distance);
-        backright.setTargetPosition(-(int)distance);
-        frontleft.setTargetPosition((int)distance);
-        middleleft.setTargetPosition((int)distance);
-        backleft.setTargetPosition((int)distance);
+        frontright.setTargetPosition(-537);
+        middleright.setTargetPosition(-537);
+        backright.setTargetPosition(-537);
+        frontleft.setTargetPosition(537);
+        middleleft.setTargetPosition(537);
+        backleft.setTargetPosition(537);
 
         frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -162,18 +136,14 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        frontright.setPower(-speed);
-        middleright.setPower(-speed);
-        backright.setPower(-speed);
-        frontleft.setPower(speed);
-        middleleft.setPower(speed);
-        backleft.setPower(speed);
+        frontright.setVelocity(-700);
+        middleright.setVelocity(-700);
+        backright.setVelocity(-700);
+        frontleft.setVelocity(700);
+        middleleft.setVelocity(700);
+        backleft.setVelocity(700);
     }
-<<<<<<< HEAD
-    public void moveCollaspe(double distance, double speed) {
-=======
     public void moveCollaspe() {
->>>>>>> 9cbc1c28461fb390e4953e574a11fc042d58e2de
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -182,12 +152,12 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-        frontright.setTargetPosition((int)distance);
+        frontright.setTargetPosition(537);
         middleright.setTargetPosition(0);
-        backright.setTargetPosition(-(int)distance);
-        frontleft.setTargetPosition((int)distance);
+        backright.setTargetPosition(-537);
+        frontleft.setTargetPosition(537);
         middleleft.setTargetPosition(0);
-        backleft.setTargetPosition(-(int)distance);
+        backleft.setTargetPosition(-537);
 
         frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -196,13 +166,12 @@ public class Mecanum_Wheels  {
         middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        frontright.setPower(speed);
-        middleright.setPower(0);
-        backright.setPower(-speed);
-        frontleft.setPower(speed);
-        middleleft.setPower(0);
-        backleft.setPower(-speed);
-
+        frontright.setVelocity(700);
+        middleright.setVelocity(0);
+        backright.setVelocity(-700);
+        frontleft.setVelocity(700);
+        middleleft.setVelocity(0);
+        backleft.setVelocity(-700);
 
     }
 }
