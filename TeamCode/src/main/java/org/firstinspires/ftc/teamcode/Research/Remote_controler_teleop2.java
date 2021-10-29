@@ -2,8 +2,9 @@
 forward and backward movement and letting the right stick x control the rotating of
 the robot just like an Rc Car.
 */
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,6 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 @TeleOp(name = "Remote_controler_teleop2")
+@Disabled
 public class Remote_controler_teleop2 extends LinearOpMode {
 
     //Declaring Motors

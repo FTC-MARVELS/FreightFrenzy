@@ -11,8 +11,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
 
 
-@TeleOp(name = "MAS_MecanumTeleOp6Wheels")
-public class MAS_MecanumTeleOp6Wheels extends LinearOpMode {
+@TeleOp(name = "MAS_TeleOp")
+public class MAS_TeleOp extends LinearOpMode {
+    //Configuration used: 6wheelConfig
     double lefty = 0.0;
     double leftx = 0.0;
     double righty = 0.0;

@@ -1,15 +1,21 @@
-package org.firstinspires.ftc.teamcode;
+/*
+Copied from https://gm0.org/en/latest/docs/software/mecanum-drive.html, Final Sample Code
+ */
 
+package org.firstinspires.ftc.teamcode.Research;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class MecanumTeleOp extends LinearOpMode {
+@Disabled
+public class MecanumTeleOp_tdv extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // Declare our motor
+        // Declare our motors
         // Make sure your ID's match your configuration
         DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");

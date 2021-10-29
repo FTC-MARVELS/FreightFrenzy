@@ -1,15 +1,16 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 //import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Autonomous
-public class RoundRound3 extends LinearOpMode {
+@Disabled
+public class MoveAround extends LinearOpMode {
 //    DcMotorEx motorFrontLeft, motorBackLeft, motorFrontRight, motorBackRight;
 //    @Override
 //    public void runOpMode() throws InterruptedException
@@ -53,8 +54,6 @@ public class RoundRound3 extends LinearOpMode {
             //motorFrontRight.setPower(FORWARD_SPEED);
             motorBackLeft.setPower(FORWARD_SPEED);
             motorBackRight.setPower(FORWARD_SPEED);
-            motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-            runtime.reset();
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() <1.0)) {
                 telemetry.addData("Done", runtime.seconds());

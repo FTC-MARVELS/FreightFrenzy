@@ -62,7 +62,7 @@
  * *****************
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -70,6 +70,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -103,7 +104,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
  @Config
  @Autonomous(name="Ultimate Goal Autonomous", group="Templates")
- //@Disabled
+ @Disabled
  public class Ultimate_Goal_Autonomous extends LinearOpMode
  {
      // declare our motors

@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -9,7 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Autonomous
-public class RoundRound extends LinearOpMode {
+@Disabled
+public class RoundRound4 extends LinearOpMode {
 //    DcMotorEx motorFrontLeft, motorBackLeft, motorFrontRight, motorBackRight;
 //    @Override
 //    public void runOpMode() throws InterruptedException

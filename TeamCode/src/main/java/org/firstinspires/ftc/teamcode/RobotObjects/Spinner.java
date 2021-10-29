@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Spinner {
+    //Configuration used: 6wheelConfig
     private DcMotor CarouselWheel;
     //private double power = 0;
     private int time = 0;

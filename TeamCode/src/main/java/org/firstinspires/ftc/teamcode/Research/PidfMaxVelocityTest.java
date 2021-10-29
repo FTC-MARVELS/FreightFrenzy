@@ -13,10 +13,11 @@
 //  rightMotor2 when RUN_TO_POSITION is needed, but turn them on when executing turns.  If so, then
 //  we must determine our max velocities without these extra motors as well.
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -24,6 +25,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Config
 @TeleOp
+@Disabled
+
 public class PidfMaxVelocityTest extends LinearOpMode {
     DcMotorEx leftMotor, leftMotor2, rightMotor, rightMotor2;
     double currentLeftVelocity;

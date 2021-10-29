@@ -9,7 +9,7 @@
 
 // Modified by team MARVELS to demonstrate these abilities on their Ultimate Goal robot
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
 import static java.lang.Math.abs;
 
@@ -18,6 +18,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -29,7 +30,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Config
 @Autonomous(name="Drive Imu", group="Exercises")
-//@Disabled
+@Disabled
 public class DriveImu extends LinearOpMode
 {
     DcMotor leftMotor, rightMotor, leftMotor2, rightMotor2;

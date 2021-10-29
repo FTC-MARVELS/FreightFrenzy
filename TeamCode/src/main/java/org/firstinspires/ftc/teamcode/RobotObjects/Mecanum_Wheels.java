@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Mecanum_Wheels  {
+    //Configuration used: 6wheelConfig
     private DcMotorEx frontright;
     private DcMotorEx frontleft;
     private DcMotorEx backright;

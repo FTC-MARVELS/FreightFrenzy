@@ -2,10 +2,11 @@
  *  the various autonomous OpModes.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Research;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
+@Disabled
 public class AutonomousWorkerMethods extends LinearOpMode {
 
     /*
