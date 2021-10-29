@@ -56,7 +56,7 @@ public class RoundRound3 extends LinearOpMode {
             motorBackLeft.setPower(FORWARD_SPEED);
             motorBackRight.setPower(FORWARD_SPEED);
             motorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
+            runtime.reset();
             while (opModeIsActive() && (runtime.seconds() <1.0)) {
                 telemetry.addData("Done", runtime.seconds());
                 telemetry.update();
