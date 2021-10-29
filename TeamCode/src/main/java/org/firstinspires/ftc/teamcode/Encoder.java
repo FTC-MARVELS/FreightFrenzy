@@ -38,7 +38,7 @@ public class Encoder extends LinearOpMode {
         double distance = 24; //Enter the amount of inches you want the robot to move
         double circumference = 3.141592653589793238 * 3.71;
         double rotations = (int)distance/circumference;
-        double Ticks = (int) rotations * 537.6;
+        double Ticks =(int) rotations*537.6;
 
         frontright.setTargetPosition(1106);
         frontleft.setTargetPosition(1106);
