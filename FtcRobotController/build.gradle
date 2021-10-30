@@ -7,6 +7,14 @@ apply plugin: 'com.android.library'
 
 android {
 
+    signingConfigs {
+        debug {
+            storeFile file('libs\\ftc.debug.keystore')
+            keyAlias 'androiddebugkey'
+            storePassword 'android'
+            keyPassword 'android'
+        }
+    }
     defaultConfig {
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
