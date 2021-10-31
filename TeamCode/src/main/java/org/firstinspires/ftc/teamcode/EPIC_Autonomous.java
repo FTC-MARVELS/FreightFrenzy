@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 @Autonomous(name="EPIC_Autonomous")
 public class EPIC_Autonomous extends LinearOpMode {
@@ -26,6 +27,7 @@ public class EPIC_Autonomous extends LinearOpMode {
             //telemetry.addData
             telemetry.update();
         }
+
         //mecanum.TestOmniWheels(0.5);
         mecanum.TestOmniWheelsBackward(0);
         //mecanum.TestMechanumWheels(0);
