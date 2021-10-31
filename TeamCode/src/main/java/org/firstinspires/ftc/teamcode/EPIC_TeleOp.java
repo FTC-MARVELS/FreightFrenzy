@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 
 @TeleOp(name = "EPIC_TeleOp")
@@ -22,6 +23,7 @@ public class EPIC_TeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
+        Spinner spinner = new Spinner(hardwareMap);
 
         waitForStart();
         while (opModeIsActive()) {
@@ -34,6 +36,11 @@ public class EPIC_TeleOp extends LinearOpMode {
             rightx = gamepad1.right_stick_x;
             boolean dpad_left = gamepad1.dpad_left;
             boolean dpad_right = gamepad1.dpad_right;
+            boolean b = gamepad1.b;
+            boolean x = gamepad1.x;
+            boolean y = gamepad1.y;
+            boolean a = gamepad1.a;
+
 
             if(!gamepad1.left_bumper)
             {
@@ -55,11 +62,21 @@ public class EPIC_TeleOp extends LinearOpMode {
                 else if(dpad_right == true) {
                     mecanumWheels.Collapse();
                 }
+                else if(x == true) {
+                    mecanumWheels.TurnLeft();
+                }
+                else if(b == true) {
+                    mecanumWheels.TurnRight();
 
-            }
-            else {
+                }
+                else if(y == true){
+                    spinner.spinCarouselLeft();
+                }
+                else if(a == true) {
+                    spinner.spinCarouselRight();
+                }
 
-            }
+
 //            boolean modeTwo = false;
 //            if(gamepad1.right_bumper) {
 //                modeTwo = true;
@@ -112,6 +129,6 @@ public class EPIC_TeleOp extends LinearOpMode {
 
             telemetry.update();
         }
-    }
+    }}
 
 

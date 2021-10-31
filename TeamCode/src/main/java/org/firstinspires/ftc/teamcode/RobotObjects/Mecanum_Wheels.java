@@ -57,6 +57,18 @@ public class Mecanum_Wheels  {
         middleright.setPower(power - 0.4);
 
     }
+    public void TurnLeft() {
+        frontleft.setPower(-0.6);
+        backleft.setPower(-0.6);
+        frontright.setPower(-0.6);
+        backright.setPower(-0.6);
+    }
+    public void TurnRight() {
+        frontleft.setPower(0.6);
+        backleft.setPower(0.6);
+        frontright.setPower(0.6);
+        backright.setPower(0.6);
+    }
 
     public void Expand() {
         frontleft.setPower(-0.6);
