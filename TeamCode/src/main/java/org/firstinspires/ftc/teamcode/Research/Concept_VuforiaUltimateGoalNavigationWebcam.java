@@ -51,6 +51,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,7 @@ import java.util.List;
 
 
 @Autonomous(name="ULTIMATEGOAL Vuforia Nav Webcam", group ="Concept")
+@Disabled
 public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
@@ -121,7 +123,7 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
 
     // Class Members
     private OpenGLMatrix lastLocation;
-    private VuforiaLocalizer vuforia ;
+    //private VuforiaLocalizer vuforia ;
 
     /**
      * This is the webcam we are to use. As with other hardware devices such as motors and
@@ -148,10 +150,10 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
          * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
          */
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        //VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
 
@@ -162,13 +164,14 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
 
         // Make sure extended tracking is disabled for this example.
         parameters.useExtendedTracking = false;
-
+        parameters.cameraDirection = CAMERA_CHOICE;
         //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+        VuforiaLocalizer vuforia = ClassFactory.getInstance().createVuforia(parameters);
+        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
         // Load the data sets for the trackable objects. These particular data
         // sets are stored in the 'assets' part of our application.
-        VuforiaTrackables targetsUltimateGoal = this.vuforia.loadTrackablesFromAsset("UltimateGoal");
+        VuforiaTrackables targetsUltimateGoal = vuforia.loadTrackablesFromAsset("UltimateGoal");
         VuforiaTrackable blueTowerGoalTarget = targetsUltimateGoal.get(0);
         blueTowerGoalTarget.setName("Blue Tower Goal Target");
         VuforiaTrackable redTowerGoalTarget = targetsUltimateGoal.get(1);
@@ -269,7 +272,6 @@ public class Concept_VuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
         // declare dashboard telelmetry
         TelemetryPacket packet = new TelemetryPacket();
 
-        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
         // send telemetry to Driver Station using standard SDK interface
         telemetry.addData("Mode", "proceeding");
