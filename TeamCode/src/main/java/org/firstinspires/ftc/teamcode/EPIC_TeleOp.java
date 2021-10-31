@@ -32,10 +32,12 @@ public class EPIC_TeleOp extends LinearOpMode {
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
+            boolean dpad_left = gamepad1.dpad_left;
+            boolean dpad_right = gamepad1.dpad_right;
 
             if(!gamepad1.left_bumper)
             {
-                if(lefty>=0 && rightx==0) {
+                if(lefty>0 && rightx==0) {
                     mecanumWheels.moveForward(lefty);
                 }
                 else if(lefty<0 && rightx==0) {
@@ -47,6 +49,13 @@ public class EPIC_TeleOp extends LinearOpMode {
                 else if(lefty==0 && rightx<0) {
                     mecanumWheels.moveLeft(rightx);
                 }
+                else if(dpad_left == true){
+                    mecanumWheels.Expand();
+                }
+                else if(dpad_right == true) {
+                    mecanumWheels.Collapse();
+                }
+
             }
             else {
 

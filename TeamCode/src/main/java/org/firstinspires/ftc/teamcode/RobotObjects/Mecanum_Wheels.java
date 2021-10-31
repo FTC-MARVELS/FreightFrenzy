@@ -50,12 +50,30 @@ public class Mecanum_Wheels  {
        middleright.setPower(-power);
 
     }
+
     public void TestOmniWheelsBackward(double power) {
         middleleft.setDirection(DcMotorSimple.Direction.REVERSE);
         middleleft.setPower(power);
         middleright.setPower(power - 0.4);
 
     }
+
+    public void Expand() {
+        frontleft.setPower(-0.6);
+        backleft.setPower(0.6);
+        frontright.setPower(0.6);
+        backright.setPower(-0.6);
+
+    }
+
+    public void Collapse() {
+        frontleft.setPower(0.6);
+        backleft.setPower(-0.6);
+        frontright.setPower(-0.6);
+        backright.setPower(0.6);
+
+    }
+
     //moveForward for TeleOp
     //The left and right powers are controlled by the left and right y axes
     public void move_forwardback_rotate( double leftPower, double rightPower){
@@ -97,8 +115,8 @@ public class Mecanum_Wheels  {
     public void moveLeft(double power){
         frontleft.setPower(-power);
         backleft.setPower(power);
-        frontright.setPower(power);
-        backright.setPower(-power);
+        frontright.setPower(-power);
+        backright.setPower(power);
         //middleleft.setPower(-power);
         //middleright.setPower(-power);
     }
@@ -106,8 +124,8 @@ public class Mecanum_Wheels  {
     public void moveRight(double power){
         frontleft.setPower(power);
         backleft.setPower(-power);
-        frontright.setPower(-power);
-        backright.setPower(power);
+        frontright.setPower(power);
+        backright.setPower(-power);
         //middleleft.setPower(power);
         //middleright.setPower(power);
     }
