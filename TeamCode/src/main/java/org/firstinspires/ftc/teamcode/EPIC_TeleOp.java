@@ -33,33 +33,51 @@ public class EPIC_TeleOp extends LinearOpMode {
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
 
-            boolean modeTwo = false;
-            if(gamepad1.right_bumper) {
-                modeTwo = true;
-            } else{
-                modeTwo = false;
+            if(!gamepad1.left_bumper)
+            {
+                if(lefty>=0 && rightx==0) {
+                    mecanumWheels.moveForward(lefty);
+                }
+                else if(lefty<0 && rightx==0) {
+                    mecanumWheels.moveBackward(lefty);
+                }
+                else if(lefty==0 && rightx>0) {
+                    mecanumWheels.moveRight(rightx);
+                }
+                else if(lefty==0 && rightx<0) {
+                    mecanumWheels.moveLeft(rightx);
+                }
             }
-            boolean modeThree = false;
-            if(gamepad1.left_bumper){
-                modeThree = true;
-            }
-            else{
-                modeThree=false;
-            }
-            if(modeTwo==true){
-               // move_side();
-                mecanumWheels.move_side(leftx, rightx);
-                //middle_forwardback();
-            }
+            else {
 
-            if(modeThree==true) {
-                //slow_forwardback();
-                //slow_side();
-                mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
-                mecanumWheels.move_side(leftx/2, rightx/2);
             }
-            mecanumWheels.move_forwardback_rotate(lefty, righty);
-          //  move_forwardback_rotate();
+//            boolean modeTwo = false;
+//            if(gamepad1.right_bumper) {
+//                modeTwo = true;
+//            } else{
+//                modeTwo = false;
+//            }
+//            boolean modeThree = false;
+//            if(gamepad1.left_bumper){
+//                modeThree = true;
+//            }
+//            else{
+//                modeThree=false;
+//            }
+//            if(modeTwo==true){
+//               // move_side();
+//                mecanumWheels.move_side(leftx, rightx);
+//                //middle_forwardback();
+//            }
+//
+//            if(modeThree==true) {
+//                //slow_forwardback();
+//                //slow_side();
+//                mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
+//                mecanumWheels.move_side(leftx/2, rightx/2);
+//            }
+//            mecanumWheels.move_forwardback_rotate(lefty, righty);
+//          //  move_forwardback_rotate();
 
 
         }

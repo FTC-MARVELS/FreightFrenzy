@@ -2,16 +2,17 @@ package org.firstinspires.ftc.teamcode.RobotObjects;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Mecanum_Wheels  {
     //Configuration used: 6wheelConfig
-    private DcMotorEx frontright;
-    private DcMotorEx frontleft;
-    private DcMotorEx backright;
-    private DcMotorEx backleft;
-    private DcMotorEx middleright;
-    private DcMotorEx middleleft;
+    public DcMotorEx frontright;
+    public DcMotorEx frontleft;
+    public DcMotorEx backright;
+    public DcMotorEx backleft;
+    public DcMotorEx middleright;
+    public DcMotorEx middleleft;
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
         frontright = hardwareMap.get(DcMotorEx.class,"Frontright");
@@ -26,11 +27,34 @@ public class Mecanum_Wheels  {
     public void initialize() {
         double reset = 0;
         frontright.setPower(reset);
+        //frontright.setDirection(DcMotorSimple.Direction.REVERSE);
         frontleft.setPower(reset);
         backleft.setPower(reset);
         backright.setPower(reset);
+        //backright.setDirection(DcMotorSimple.Direction.REVERSE);
         middleleft.setPower(reset);
         middleright.setPower(reset);
+        //middleright.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+    public void TestMechanumWheels(double power) {
+        frontleft.setPower(power);
+        backleft.setPower(power);
+        frontright.setPower(-power);
+        backright.setPower(-power);
+
+
+    }
+    public void TestOmniWheels(double power) {
+        //middleright.setDirection(DcMotorSimple.Direction.REVERSE);
+       middleleft.setPower(power + 0.4);
+       middleright.setPower(-power);
+
+    }
+    public void TestOmniWheelsBackward(double power) {
+        middleleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleleft.setPower(power);
+        middleright.setPower(power - 0.4);
+
     }
     //moveForward for TeleOp
     //The left and right powers are controlled by the left and right y axes
@@ -50,6 +74,42 @@ public class Mecanum_Wheels  {
         backleft.setPower(leftPower);
         frontright.setPower(-rightPower);
         backright.setPower(rightPower);
+    }
+
+    public void moveForward(double power){
+        frontleft.setPower(power);
+        backleft.setPower(power);
+        frontright.setPower(-power);
+        backright.setPower(-power);
+        middleleft.setPower(power);
+        middleright.setPower(-power);
+    }
+
+    public void moveBackward(double power){
+        frontleft.setPower(-power);
+        backleft.setPower(-power);
+        frontright.setPower(power);
+        backright.setPower(power);
+        middleleft.setPower(-power);
+        middleright.setPower(power);
+    }
+
+    public void moveLeft(double power){
+        frontleft.setPower(-power);
+        backleft.setPower(power);
+        frontright.setPower(power);
+        backright.setPower(-power);
+        //middleleft.setPower(-power);
+        //middleright.setPower(-power);
+    }
+
+    public void moveRight(double power){
+        frontleft.setPower(power);
+        backleft.setPower(-power);
+        frontright.setPower(-power);
+        backright.setPower(power);
+        //middleleft.setPower(power);
+        //middleright.setPower(power);
     }
 
     public void moveForward() {
@@ -175,4 +235,5 @@ public class Mecanum_Wheels  {
         backleft.setVelocity(-700);
 
     }
+
 }
