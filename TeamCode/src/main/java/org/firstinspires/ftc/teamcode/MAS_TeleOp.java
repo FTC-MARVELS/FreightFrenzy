@@ -116,6 +116,7 @@ public class MAS_TeleOp extends LinearOpMode {
             if(modeTwo==true){
                // move_side();
                 mecanumWheels.move_side(leftx, rightx);
+                mecanumWheels.middleForwardback(lefty, righty);
                 //middle_forwardback();
             }
 
@@ -124,6 +125,7 @@ public class MAS_TeleOp extends LinearOpMode {
                 //slow_side();
                 mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
                 mecanumWheels.move_side(leftx/2, rightx/2);
+
             }
             mecanumWheels.move_forwardback_rotate(lefty, righty);
           //  move_forwardback_rotate();

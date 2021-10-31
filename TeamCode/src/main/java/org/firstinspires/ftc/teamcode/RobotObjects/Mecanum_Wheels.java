@@ -141,6 +141,10 @@ public class Mecanum_Wheels  {
         //middleleft.setPower(power);
         //middleright.setPower(power);
     }
+    public void middleForwardback(double leftPower, double rightPower){
+        middleleft.setPower(leftPower);
+        middleright.setPower(rightPower);
+    }
 
     public void moveForward() {
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
