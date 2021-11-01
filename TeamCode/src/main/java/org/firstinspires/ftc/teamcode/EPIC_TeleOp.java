@@ -24,6 +24,8 @@ public class EPIC_TeleOp extends LinearOpMode {
         //Hardware Mapping
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
+        //double wheelPower = 0.6;
+        double carouselPower = 0.6;
 
         waitForStart();
         while (opModeIsActive()) {
@@ -44,17 +46,11 @@ public class EPIC_TeleOp extends LinearOpMode {
 
             if(!gamepad1.left_bumper)
             {
-                if(lefty>0 && rightx==0) {
-                    mecanumWheels.moveForward(lefty);
+                if(lefty!=0  && rightx==0) {
+                    mecanumWheels.moveY(lefty);
                 }
-                else if(lefty<0 && rightx==0) {
-                    mecanumWheels.moveBackward(lefty);
-                }
-                else if(lefty==0 && rightx>0) {
-                    mecanumWheels.moveRight(rightx);
-                }
-                else if(lefty==0 && rightx<0) {
-                    mecanumWheels.moveLeft(rightx);
+                else if(lefty==0 && rightx!=0) {
+                    mecanumWheels.moveX(rightx);
                 }
                 else if(dpad_left == true){
                     mecanumWheels.Expand();
@@ -70,10 +66,13 @@ public class EPIC_TeleOp extends LinearOpMode {
 
                 }
                 else if(y == true){
-                    spinner.spinCarouselLeft();
+                    spinner.setPower(carouselPower);
                 }
                 else if(a == true) {
-                    spinner.spinCarouselRight();
+                    spinner.setPower(-carouselPower);
+                }
+                else{
+                    spinner.setPower(0);
                 }
 
 

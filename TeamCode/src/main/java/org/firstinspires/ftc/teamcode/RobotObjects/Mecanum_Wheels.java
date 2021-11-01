@@ -106,16 +106,25 @@ public class Mecanum_Wheels  {
         backright.setPower(rightPower);
     }
 
-    public void moveForward(double power){
-        frontleft.setPower(power);
-        backleft.setPower(power);
-        frontright.setPower(-power);
-        backright.setPower(-power);
-        middleleft.setPower(power);
-        middleright.setPower(-power);
-    }
+//    public void moveForward(double power){
+//        frontleft.setPower(power);
+//        backleft.setPower(power);
+//        frontright.setPower(-power);
+//        backright.setPower(-power);
+//        middleleft.setPower(power);
+//        middleright.setPower(-power);
+//    }
+//
+//    public void moveBackward(double power){
+//        frontleft.setPower(-power);
+//        backleft.setPower(-power);
+//        frontright.setPower(power);
+//        backright.setPower(power);
+//        middleleft.setPower(-power);
+//        middleright.setPower(power);
+//    }
 
-    public void moveBackward(double power){
+    public void moveY(double power){
         frontleft.setPower(-power);
         backleft.setPower(-power);
         frontright.setPower(power);
@@ -123,24 +132,31 @@ public class Mecanum_Wheels  {
         middleleft.setPower(-power);
         middleright.setPower(power);
     }
-
-    public void moveLeft(double power){
-        frontleft.setPower(-power);
-        backleft.setPower(power);
-        frontright.setPower(-power);
-        backright.setPower(power);
-        //middleleft.setPower(-power);
-        //middleright.setPower(-power);
-    }
-
-    public void moveRight(double power){
+    public void moveX(double power){
         frontleft.setPower(power);
         backleft.setPower(-power);
         frontright.setPower(power);
         backright.setPower(-power);
-        //middleleft.setPower(power);
-        //middleright.setPower(power);
+        //middleleft.setPower(-power);
+        //middleright.setPower(-power);
     }
+//    public void moveLeft(double power){
+//        frontleft.setPower(-power);
+//        backleft.setPower(power);
+//        frontright.setPower(-power);
+//        backright.setPower(power);
+//        //middleleft.setPower(-power);
+//        //middleright.setPower(-power);
+//    }
+//
+//    public void moveRight(double power){
+//        frontleft.setPower(power);
+//        backleft.setPower(-power);
+//        frontright.setPower(power);
+//        backright.setPower(-power);
+//        //middleleft.setPower(power);
+//        //middleright.setPower(power);
+//    }
     public void middleForwardback(double leftPower, double rightPower){
         middleleft.setPower(leftPower);
         middleright.setPower(rightPower);

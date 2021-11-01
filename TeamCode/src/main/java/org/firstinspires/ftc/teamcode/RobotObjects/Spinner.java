@@ -16,12 +16,6 @@ public class Spinner {
         CarouselWheel = hardwareMap.get(DcMotorEx .class, "carouselMotor");
 
     }
-    public void spinCarouselLeft() {
-        CarouselWheel.setPower(0.6);
-    }
-    public void spinCarouselRight() {
-        CarouselWheel.setPower(-0.6);
-    }
     public void setPower(double power){
         this.CarouselWheel.setPower(power);
     }
