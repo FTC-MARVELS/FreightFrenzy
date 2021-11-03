@@ -23,6 +23,7 @@ public class EPIC_TeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
+        mecanumWheels.rightErrorAdjustment = 0.93;//1;
         Spinner spinner = new Spinner(hardwareMap);
         //double wheelPower = 0.6;
         double carouselPower = 0.6;
