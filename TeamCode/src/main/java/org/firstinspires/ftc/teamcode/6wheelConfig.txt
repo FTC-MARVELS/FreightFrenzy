@@ -5,6 +5,10 @@ DC Motors
 2: Backright
 3: carouselMotor
 
+Servos
+0: finger1
+1: finger2
+
 Expansion Hub
 DC Motors
 0: Frontleft

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
+import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Claw;
 
 @Autonomous(name="EPIC_Autonomous")
 public class EPIC_Autonomous extends LinearOpMode {
@@ -16,6 +17,7 @@ public class EPIC_Autonomous extends LinearOpMode {
 
         double speed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         mecanum.IsAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
@@ -38,7 +40,9 @@ public class EPIC_Autonomous extends LinearOpMode {
         mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
         //expand
         mecanum.encoderDrive(speed,-3.15,0,3.15,-3.1,0,3.1, 1.0);
-
+        claw.grab();
+        sleep(2000);
+        claw.release();
 //        mecanum.moveForward();
 //        //mecanum.TestMechanumWheels(0.5);
 //        //mecanum.TestOmniWheels(0.5);
