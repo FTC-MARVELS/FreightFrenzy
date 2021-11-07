@@ -82,7 +82,7 @@ public class MAS_TeleOp extends LinearOpMode {
         Middleright = hardwareMap.get(DcMotor.class, "Middleright");
         Middleleft = hardwareMap.get(DcMotor.class, "Middleleft");*/
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
-
+        mecanumWheels.rightErrorAdjustment = 0.93;//1;
         waitForStart();
         while (opModeIsActive()) {
             /*double reset = 0;
@@ -114,7 +114,7 @@ public class MAS_TeleOp extends LinearOpMode {
                 modeThree=false;
             }
             if(modeTwo==true){
-               // move_side();
+                // move_side();
                 mecanumWheels.move_side(leftx, rightx);
                 mecanumWheels.middleForwardback(lefty, righty);
                 //middle_forwardback();
@@ -128,7 +128,7 @@ public class MAS_TeleOp extends LinearOpMode {
 
             }
             mecanumWheels.move_forwardback_rotate(lefty, righty);
-          //  move_forwardback_rotate();
+            //  move_forwardback_rotate();
 
 
         }
@@ -136,9 +136,9 @@ public class MAS_TeleOp extends LinearOpMode {
 
 
 
-            //diagonal();
+        //diagonal();
 
-            //Displays power of each motor on the robot controller
+        //Displays power of each motor on the robot controller
             /*telemetry.addData("front left motor", "%.2f", Frontleft.getPower());
             telemetry.addData("front right motor", "%.2f", Frontright.getPower());
             telemetry.addData("back left motor", "%.2f", Backleft.getPower());
@@ -146,14 +146,14 @@ public class MAS_TeleOp extends LinearOpMode {
             telemetry.addData("middle left motor", "%.2f", Middleleft.getPower());
             telemetry.addData("middle right motor", "%.2f", Middleright.getPower());*/
 
-            telemetry.addData("lefty", "%.2f", lefty);
-            telemetry.addData("leftx", "%.2f", leftx);
+        telemetry.addData("lefty", "%.2f", lefty);
+        telemetry.addData("leftx", "%.2f", leftx);
 
-            telemetry.addData("rightx", "%.2f", rightx);
-            telemetry.addData("righty", "%.2f", righty);
+        telemetry.addData("rightx", "%.2f", rightx);
+        telemetry.addData("righty", "%.2f", righty);
 
-            telemetry.update();
-        }
+        telemetry.update();
     }
+}
 
 
