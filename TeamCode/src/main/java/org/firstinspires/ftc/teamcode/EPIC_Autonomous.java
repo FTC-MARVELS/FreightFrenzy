@@ -16,33 +16,38 @@ public class EPIC_Autonomous extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         double speed = 0.2;
-        Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
+        //Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
-        mecanum.IsAutonomous = true;
-        mecanum.velocity = 400;
-        mecanum.telemetry = this.telemetry;
-        mecanum.parent = this;
-        mecanum.initialize();
+        claw.parent = this;
+        claw.telemetry = this.telemetry;
+        //sleep(5000);
+        //mecanum.IsAutonomous = true;
+        //mecanum.velocity = 400;
+        //mecanum.telemetry = this.telemetry;
+        //mecanum.parent = this;
+        //mecanum.initialize();
         waitForStart();
         //forward
-        mecanum.encoderDrive(speed,12,12,12,12,12,12, 1.0);
+        //mecanum.encoderDrive(speed,12,12,12,12,12,12, 1.0);
         //backward
-        mecanum.encoderDrive(speed,-12,-12,-12,-12,-12,-12, 1.0);
+        //mecanum.encoderDrive(speed,-12,-12,-12,-12,-12,-12, 1.0);
         //left
-        mecanum.encoderDrive(speed,-12,0,12,12,0,-12, 1.0);
+        //mecanum.encoderDrive(speed,-12,0,12,12,0,-12, 1.0);
         //right
-        mecanum.encoderDrive(speed,12,0,-12,-12,0,12, 1.0);
+        //mecanum.encoderDrive(speed,12,0,-12,-12,0,12, 1.0);
         //left turn
-        mecanum.encoderDrive(speed,-12,0,-12,12,0,12, 1.0);
+        //mecanum.encoderDrive(speed,-12,0,-12,12,0,12, 1.0);
         //right turn
-        mecanum.encoderDrive(speed,12,0,12,-12,0,-12, 1.0);
+        //mecanum.encoderDrive(speed,12,0,12,-12,0,-12, 1.0);
         //contract
-        mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
+        //mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
         //expand
-        mecanum.encoderDrive(speed,-3.15,0,3.15,-3.1,0,3.1, 1.0);
+        //mecanum.encoderDrive(speed,-3.15,0,3.15,-3.1,0,3.1, 1.0);
         claw.grab();
         sleep(2000);
         claw.release();
+        sleep(5000);
+
 //        mecanum.moveForward();
 //        //mecanum.TestMechanumWheels(0.5);
 //        //mecanum.TestOmniWheels(0.5);
