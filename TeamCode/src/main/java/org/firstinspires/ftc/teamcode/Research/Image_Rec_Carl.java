@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Research;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -26,12 +28,15 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "ImageRecCarl", group = "Concept")
+@Autonomous(name = "ImageRecCarl", group = "Concept")
 
 public class Image_Rec_Carl extends LinearOpMode {
-    private static final String TFOD_MODEL_FILE = "TeamCode/src/main/res/raw/RED CAROUSEL MODEL NEAR.tflite";
-    private static final String TFOD_MODEL_LABELS = "TeamCode/src/main/res/raw/labels.txt";
+//    private static final String TFOD_MODEL_FILE = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\red_carousel_model.tflite";
+//    private static final String TFOD_MODEL_LABELS = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\labels.txt";
+    private static final String TFOD_MODEL_FILE = "red_carousel_model.tflite";
+    private static final String TFOD_MODEL_LABELS = "labels.txt";
     private String[] labels;
+    WebcamName webcamName = null;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -46,7 +51,7 @@ public class Image_Rec_Carl extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " AdpZTN7/////AAABmduxMuKIWUoOs+zsyycUbH92REK+ilCZjslOo/FlsH3ATsZUFPH4PgtEewDSdRhA7ugj6NNkRK27Z5RSBtxN0gKz9trfftLdmSyzu4W3/6zft3Xjd9MqsPI+OMmh3HeTj036J2taJVZe2hte9UImeWILXu55MjdNP9ahD7GiTInVSNba5oLOwwvWYygop/cH3dUhZAItNVzTR+dBDndJGCFL6LUAvU30EqM4R1d2GL3RsgJLO9Fiph9VIztRfZNeRQNI3TI+tCp+OaHqZracI4k7tLoJdxRWH3BLponaBiax9pdhGDqPReFRxmzHVHtxcsdM5f4g99B3w7xVTb4wZTJ0DUc5DIWs22fd7XE4PX/q";
+            "AV4DWg3/////AAABmQ6n5OzGwUYalTyB5uR46wxwDEO+PdJwv/KbeSDh+Frtn/FdN8pU2XERVvNAfgckS4NCo0L4YzGYhYUrTJfio23+zD2tl7J4NCF8IZ1hWtVmh1lx1p1+nv0cL/ZFOQb1k6O009NkKi/t+nLHTtZrswnCFC3Pasiw8IwoDPUjjnY08gU4IVRByn+DwgQL+1jrEo4/twIWe5UB65TztGdTXPOEcCzn5ZbjJqaCadFnYI0sMiWmMDoEfgFglWBoA55GOSuKrr1/fRuYXFuCqEqMBx7SzPYopF8vfM0qQ5h2EFEykKUSsre3OY3heH6ewwkpy7PRFE4MBaJoggv9dogm82m0dHu75KV2MbhRm75AkwB3";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -125,11 +130,11 @@ public class Image_Rec_Carl extends LinearOpMode {
     /**
      * Initialize the Vuforia localization engine.
      */
-    private void initVuforia() {
+    /*private void initVuforia() {
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          */
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+      /*  VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraDirection = CameraDirection.BACK;
@@ -138,7 +143,32 @@ public class Image_Rec_Carl extends LinearOpMode {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
         // Loading trackables is not necessary for the TensorFlow Object Detection engine.
-    }
+    }*/
+
+    private void initVuforia() {
+        // Retrieve the camera we are to use
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
+         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
+         */
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        // VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
+
+        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
+
+        // We also indicate which camera on the RC we wish to use
+        vparameters.cameraName = webcamName;
+
+        // Make sure extended tracking is disabled for this example.
+        vparameters.useExtendedTracking = false;
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
+        }
 
     /**
      * Initialize the TensorFlow Object Detection engine.

@@ -17,6 +17,7 @@ public class Mecanum_Wheels  {
     public DcMotorEx backleft;
     public DcMotorEx middleright;
     public DcMotorEx middleleft;
+    public DcMotorEx xRail;
 
     public boolean IsAutonomous = false;
 
@@ -43,6 +44,7 @@ public class Mecanum_Wheels  {
         backleft = hardwareMap.get(DcMotorEx.class,"Backleft");
         middleright = hardwareMap.get(DcMotorEx.class,"Middleright");
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
+        xRail = hardwareMap.get(DcMotorEx.class, "xRail");
     }
 
     //initialize for TeleOp
@@ -87,6 +89,11 @@ public class Mecanum_Wheels  {
             backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
+    public void liftXrail(double power) {
+        xRail.setPower(power);
+
+    }
+
     public void TestMechanumWheels(double power) {
         frontleft.setPower(power);
         backleft.setPower(power);
