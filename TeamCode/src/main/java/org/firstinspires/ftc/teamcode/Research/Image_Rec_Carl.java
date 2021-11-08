@@ -26,11 +26,11 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "TFOD Everyday Objects", group = "Concept")
-//@Disabled
+@TeleOp(name = "ImageRecCarl", group = "Concept")
+
 public class Image_Rec_Carl extends LinearOpMode {
-    private static final String TFOD_MODEL_FILE = "TeamCode/src/main/java/org.firstinspires.ftc.teamcode/tflite/model_unquant.tflite";
-    private static final String TFOD_MODEL_LABELS = "TeamCode/src/main/java/org.firstinspires.ftc.teamcode/tflite/labels.txt";
+    private static final String TFOD_MODEL_FILE = "TeamCode/src/main/res/raw/RED CAROUSEL MODEL NEAR.tflite";
+    private static final String TFOD_MODEL_LABELS = "TeamCode/src/main/res/raw/labels.txt";
     private String[] labels;
 
     /*
