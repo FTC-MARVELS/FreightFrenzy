@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.Research;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import java.util.List;
+import com.qualcomm.robotcore.util.RobotLog;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,13 +25,13 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name = "ImageRecCarl", group = "Concept")
+@Autonomous(name = "ImageRecCarl_Epic0000", group = "Concept")
 
-public class Image_Rec_Carl extends LinearOpMode {
+public class Image_Rec_Carl_Epic extends LinearOpMode {
 //    private static final String TFOD_MODEL_FILE = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\red_carousel_model.tflite";
 //    private static final String TFOD_MODEL_LABELS = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\locationLabels.txt";
-    private static final String TFOD_MODEL_FILE = "red_carousel_model.tflite";
-    private static final String TFOD_MODEL_LABELS = "locationLabels.txt";
+    private static final String TFOD_MODEL_FILE = "C:\\Users\\rchou\\OneDrive\\Documents\\GitHub\\FreightFrenzy\\TeamCode\\src\\main\\java\\org\\firstinspires\\ftc\\teamcode\\Research\\locationTflite.tflite";
+    private static final String TFOD_MODEL_LABELS = "C:\\Users\\rchou\\OneDrive\\Documents\\GitHub\\FreightFrenzy\\TeamCode\\src\\main\\java\\org\\firstinspires\\ftc\\teamcode\\Research\\locationLabels.txt";
     private String[] labels;
     WebcamName webcamName = null;
 
