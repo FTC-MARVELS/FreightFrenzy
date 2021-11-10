@@ -30,8 +30,8 @@ import java.util.List;
 public class Image_Rec_Carl_Epic extends LinearOpMode {
 //    private static final String TFOD_MODEL_FILE = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\red_carousel_model.tflite";
 //    private static final String TFOD_MODEL_LABELS = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\locationLabels.txt";
-    private static final String TFOD_MODEL_FILE = "C:\\Users\\rchou\\OneDrive\\Documents\\GitHub\\FreightFrenzy\\TeamCode\\src\\main\\java\\org\\firstinspires\\ftc\\teamcode\\Research\\locationTflite.tflite";
-    private static final String TFOD_MODEL_LABELS = "C:\\Users\\rchou\\OneDrive\\Documents\\GitHub\\FreightFrenzy\\TeamCode\\src\\main\\java\\org\\firstinspires\\ftc\\teamcode\\Research\\locationLabels.txt";
+    private static final String TFOD_MODEL_FILE = "..\\tflite\\locationTflite.tflite";
+    private static final String TFOD_MODEL_LABELS = "..\\tflite\\locationLabels.txt";
     private String[] labels;
     WebcamName webcamName = null;
 
