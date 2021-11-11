@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Research;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -25,13 +28,14 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
+@Config
 @Autonomous(name = "ImageRecCarl_Epic0000", group = "Concept")
 
 public class Image_Rec_Carl_Epic extends LinearOpMode {
 //    private static final String TFOD_MODEL_FILE = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\red_carousel_model.tflite";
 //    private static final String TFOD_MODEL_LABELS = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\locationLabels.txt";
-    private static final String TFOD_MODEL_FILE = "..\\tflite\\locationTflite.tflite";
-    private static final String TFOD_MODEL_LABELS = "..\\tflite\\locationLabels.txt";
+    private static final String TFOD_MODEL_FILE = "locationTflite.tflite";
+    private static final String TFOD_MODEL_LABELS = "locationLabels.txt";
     private String[] labels;
     WebcamName webcamName = null;
 
@@ -64,6 +68,19 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+
+// declare dashboard telelmetry
+        TelemetryPacket packet = new TelemetryPacket();
+
+
+        // send telemetry to Driver Station using standard SDK interface
+        telemetry.addData("Mode", "proceeding");
+        telemetry.update();
+        // send same telemetry to dashboard using packet interface
+        packet.put("Mode", "proceeding");
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
+
         // read the label map text files.
         readLabels();
 
@@ -93,6 +110,8 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
+
+        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
         waitForStart();
 
         if (opModeIsActive()) {
@@ -211,7 +230,9 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
             telemetry.addData("Exception", e.getLocalizedMessage());
             telemetry.update();
         }
-
+//        labelList.add("Red left duck left");
+//        labelList.add("Red left duck middle");
+//        labelList.add("Red left duck right");
         if (labelList.size() > 0) {
             labels = getStringArray(labelList);
             RobotLog.vv("readLabels()", "%d labels read.", labels.length);
