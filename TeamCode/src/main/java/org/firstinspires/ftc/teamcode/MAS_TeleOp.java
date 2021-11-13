@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 
 @TeleOp(name = "MAS_TeleOp")
@@ -125,10 +126,17 @@ public class MAS_TeleOp extends LinearOpMode {
                 //slow_side();
                 mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
                 mecanumWheels.move_side(leftx/2, rightx/2);
+                //For testing only
+                //Spinner spinner = new Spinner(hardwareMap);
+                //spinner.setPower(-0.58);
+                //sleep(1000);
 
             }
+
+           // mecanumWheels.liftXrail(gamepad2.left_stick_y);
             mecanumWheels.move_forwardback_rotate(lefty, righty);
             //  move_forwardback_rotate();
+            mecanumWheels.move_side(leftx, rightx);
 
 
         }
