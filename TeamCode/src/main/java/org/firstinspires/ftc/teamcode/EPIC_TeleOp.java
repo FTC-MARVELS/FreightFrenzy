@@ -48,7 +48,7 @@ public class EPIC_TeleOp extends LinearOpMode {
             //telemetry.update();
             //mecanumWheels.initialize();
 
-            lefty = gamepad1.left_stick_y;
+            lefty = -gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
@@ -60,11 +60,11 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
 
-
-            wheels.leftMotorY(-lefty);
-            wheels.rightMotorY(-righty);
-            wheels.rightMotorX(rightx);
-            wheels.leftMotorX(leftx);
+            wheels.move(lefty,righty,leftx,rightx);
+//            wheels.leftMotorY(-lefty);
+//            wheels.rightMotorY(-righty);
+//            wheels.rightMotorX(rightx);
+//            wheels.leftMotorX(leftx);
 
 
 
