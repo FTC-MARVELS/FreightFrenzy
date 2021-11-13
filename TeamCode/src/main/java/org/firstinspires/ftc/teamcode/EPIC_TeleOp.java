@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 @TeleOp(name = "EPIC_TeleOp")
 public class EPIC_TeleOp extends LinearOpMode {
     //Configuration used: 6wheelConfig
+    Mecanum_Wheels wheels;
     double lefty = 0.0;
     double leftx = 0.0;
     double righty = 0.0;
@@ -25,25 +26,29 @@ public class EPIC_TeleOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
-        //Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
-        //mecanumWheels.rightErrorAdjustment = 0.93;//1;
+        wheels = new Mecanum_Wheels(hardwareMap);
+        wheels.initialize();
+        //wheels.rightErrorAdjustment = 0.93;//1;
+        wheels.telemetry = telemetry;
+        wheels.parent = this;
         //Spinner spinner = new Spinner(hardwareMap);
         //double wheelPower = 0.6;
+        //wheels = new Mecanum_Wheels(hardwareMap);
         double carouselPower = 0.6;
-        Claw claw = new Claw(hardwareMap);
-        claw.parent = this;
-        claw.telemetry = this.telemetry;
+        //Claw claw = new Claw(hardwareMap);
+        //claw.parent = this;
+        //claw.telemetry = this.telemetry;
 
 
         waitForStart();
         while (opModeIsActive()) {
 
-            telemetry.addData("Finger 1 position", claw.clawFinger1.getPosition());
-            telemetry.addData("Finger 2 position", claw.clawFinger2.getPosition());
-            telemetry.update();
+            //telemetry.addData("Finger 1 position", claw.clawFinger1.getPosition());
+            //telemetry.addData("Finger 2 position", claw.clawFinger2.getPosition());
+            //telemetry.update();
             //mecanumWheels.initialize();
 
-            //lefty = gamepad1.left_stick_y;
+            lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
@@ -56,117 +61,14 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean a = gamepad1.a;
 
 
-//            if(!gamepad1.left_bumper)
-//            {
-//                if(lefty!=0  && rightx==0) {
-//                    mecanumWheels.moveY(lefty);
-//                }
-//                else if(lefty==0 && rightx!=0) {
-//                    mecanumWheels.moveX(rightx);
-//                }
-//                else if(dpad_left == true){
-//                    mecanumWheels.Expand();
-//                }
-//                else if(dpad_right == true) {
-//                    mecanumWheels.Collapse();
-//                }
-//                else if(x == true) {
-//                    mecanumWheels.TurnLeft();
-//                }
-//                else if(b == true) {
-//                    mecanumWheels.TurnRight();
-//
-//                }
-//                else if(y == true){
-//                    spinner.setPower(carouselPower);
-//                }
-//                else if(a == true) {
-//                    spinner.setPower(-carouselPower);
-//                }
-//                else{
-//                    spinner.setPower(0);
-//                }
-            if(gamepad1.dpad_left){
-            //    if(gamepad1.y==true){
-                    telemetry.addData("lefty", "%.2f", lefty);
-
-                    telemetry.update();
-                    lefty = claw.clawFinger1.getPosition() + 0.1;
-                    if (lefty>1)
-                        lefty = 1;
-                    claw.clawFinger1.setPosition(lefty);
-                    lefty = claw.clawFinger2.getPosition() + 0.1;
-                    if (lefty>1)
-                        lefty = 1;
-                    claw.clawFinger2.setPosition(lefty);
-
-                    telemetry.addData("lefty", "%.2f", lefty);
-
-                    telemetry.update();
-                    gamepad1.y = false;
-                }
-            //if(gamepad1.a==true){
-            if(gamepad1.dpad_right){
-                telemetry.addData("lefty", "%.2f", lefty);
-
-                telemetry.update();
-                lefty=lefty - 0.1;
-                if (lefty<-0.4)
-                    lefty = -0.4;
-                claw.clawFinger1.setPosition(lefty);
-                claw.clawFinger2.setPosition(lefty);
-
-                telemetry.addData("lefty", "%.2f", lefty);
-
-                telemetry.update();
-                gamepad1.a = false;
-            }
-            //}
-
-
-//            boolean modeTwo = false;
-//            if(gamepad1.right_bumper) {
-//                modeTwo = true;
-//            } else{
-//                modeTwo = false;
-//            }
-//            boolean modeThree = false;
-//            if(gamepad1.left_bumper){
-//                modeThree = true;
-//            }
-//            else{
-//                modeThree=false;
-//            }
-//            if(modeTwo==true){
-//               // move_side();
-//                mecanumWheels.move_side(leftx, rightx);
-//                //middle_forwardback();
-//            }
-//
-//            if(modeThree==true) {
-//                //slow_forwardback();
-//                //slow_side();
-//                mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
-//                mecanumWheels.move_side(leftx/2, rightx/2);
-//            }
-//            mecanumWheels.move_forwardback_rotate(lefty, righty);
-//          //  move_forwardback_rotate();
-
-
-        //}
+            wheels.leftMotorY(-lefty);
+            wheels.rightMotorY(-righty);
+            wheels.rightMotorX(rightx);
+            wheels.leftMotorX(leftx);
 
 
 
 
-            //diagonal();
-
-            //Displays power of each motor on the robot controller
-            /*telemetry.addData("front left motor", "%.2f", Frontleft.getPower());
-            telemetry.addData("front right motor", "%.2f", Frontright.getPower());
-            telemetry.addData("back left motor", "%.2f", Backleft.getPower());
-            telemetry.addData("back right motor", "%.2f", Backright.getPower());
-            telemetry.addData("middle left motor", "%.2f", Middleleft.getPower());
-            telemetry.addData("middle right motor", "%.2f", Middleright.getPower());*/
 
             telemetry.addData("lefty", "%.2f", lefty);
             telemetry.addData("leftx", "%.2f", leftx);

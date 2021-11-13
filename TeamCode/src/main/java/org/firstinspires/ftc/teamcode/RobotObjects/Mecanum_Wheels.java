@@ -279,6 +279,31 @@ public class Mecanum_Wheels  {
         backright.setPower(rightPower);
     }
 
+    public void rightMotorY(double rightPowerY)
+    {
+        frontright.setPower(-rightPowerY);
+        middleright.setPower(-rightPowerY);
+        backright.setPower(-rightPowerY);
+    }
+
+    public void leftMotorY(double leftPowerY)
+    {
+        frontleft.setPower(leftPowerY);
+        middleleft.setPower(leftPowerY);
+    }
+
+    public void rightMotorX(double rightPowerX)
+    {
+        frontright.setPower(rightPowerX);
+        backright.setPower(-rightPowerX);
+    }
+
+    public void leftMotorX(double leftPowerX)
+    {
+        frontleft.setPower(-leftPowerX);
+        backleft.setPower(leftPowerX);
+    }
+
 //    public void moveForward(double power){
 //        frontleft.setPower(power);
 //        backleft.setPower(power);
