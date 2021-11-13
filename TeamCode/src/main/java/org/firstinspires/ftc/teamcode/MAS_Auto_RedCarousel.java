@@ -57,7 +57,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         waitForStart();
 
         // move right to go to spinner - 5 inches for eg
-       double spinnerDistance = 25;
+       double spinnerDistance = 40;
         //sleep();
 
         mecanum.encoderDrive(speed,spinnerDistance,0,-spinnerDistance,-spinnerDistance,0,spinnerDistance, 10.0);
@@ -66,23 +66,23 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         double rotateWheelDistance = 12.5;
 
         spinner.setPower(-0.58);
-        sleep(25565);
+        sleep(100);
         spinner.setPower(0);
         //going back to starting position
-        //mecanum.encoderDrive(speed,-spinnerDistance,0,spinnerDistance,spinnerDistance,0,-spinnerDistance, 10.0);
+        mecanum.encoderDrive(speed,-spinnerDistance,0,spinnerDistance,spinnerDistance,0,-spinnerDistance, 10.0);
 
 
 
         //Scan for position of the element- eisha and hamza!
-
-      // double rotateParkDistance = 20;
+/*
+       double rotateParkDistance = 20;
         //rotating 90deg to go to warehouse & park
-       // mecanum.encoderDrive(speed,-rotateParkDistance,0,-rotateParkDistance,rotateParkDistance,0,rotateParkDistance, 8.0);
+        mecanum.encoderDrive(speed,-rotateParkDistance,0,-rotateParkDistance,rotateParkDistance,0,rotateParkDistance, 8.0);
 
-
+        double ParkDistance = 10;
         //going forward into warehouse
-        //mecanum.encoderDrive(speed,-ParkDistance,-ParkDistance,-ParkDistance,ParkDistance,ParkDistance,ParkDistance, 15.0);
-
+        mecanum.encoderDrive(speed,-ParkDistance,-ParkDistance,-ParkDistance,ParkDistance,ParkDistance,ParkDistance, 15.0);
+*/
 
 
     }

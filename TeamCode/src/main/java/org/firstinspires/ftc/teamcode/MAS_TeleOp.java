@@ -133,9 +133,10 @@ public class MAS_TeleOp extends LinearOpMode {
 
             }
 
-            mecanumWheels.liftXrail(gamepad2.left_stick_y);
+           // mecanumWheels.liftXrail(gamepad2.left_stick_y);
             mecanumWheels.move_forwardback_rotate(lefty, righty);
             //  move_forwardback_rotate();
+            mecanumWheels.move_side(leftx, rightx);
 
 
         }
