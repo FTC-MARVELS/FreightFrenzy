@@ -47,42 +47,39 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         //Claw claw = new Claw(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
        // Scanner scanner = new Scanner(hardwareMap);
-        mecanum.IsAutonomous = true;
+        mecanum.IsMASAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
         mecanum.initialize();
-        mecanum.rightErrorAdjustment = 0.93;//1;
+       mecanum.rightErrorAdjustment = 0.5;//1;
 
         waitForStart();
 
-        // move right to go to spinner - 5 inches for eg
-       double spinnerDistance = 40;
-        //sleep();
+        //SCAN CODE- EISHA AND HAMZA
 
-        mecanum.encoderDrive(speed,spinnerDistance,0,-spinnerDistance,-spinnerDistance,0,spinnerDistance, 10.0);
-
-        // rotate anticlockwise
-        double rotateWheelDistance = 12.5;
+        double spinnerDistance = 16;
+        // rotate to bring spinner to position
+        double spinnerrotate = 30;
+        mecanum.rotate_anticlock_auto(speed, spinnerrotate, 10.0);
+        //backward to go to caresou l
+        mecanum.move_backward_auto(speed,spinnerDistance , 10.0);
 
         spinner.setPower(-0.58);
-        sleep(100);
+        sleep(1575);
         spinner.setPower(0);
-        //going back to starting position
-        mecanum.encoderDrive(speed,-spinnerDistance,0,spinnerDistance,spinnerDistance,0,-spinnerDistance, 10.0);
-
-
+        //back to position + rotate
+        double parkingdistance = 30;
+       mecanum.move_forward_auto(speed,parkingdistance, 15.0 );
 
         //Scan for position of the element- eisha and hamza!
-/*
-       double rotateParkDistance = 20;
-        //rotating 90deg to go to warehouse & park
-        mecanum.encoderDrive(speed,-rotateParkDistance,0,-rotateParkDistance,rotateParkDistance,0,rotateParkDistance, 8.0);
 
-        double ParkDistance = 10;
-        //going forward into warehouse
-        mecanum.encoderDrive(speed,-ParkDistance,-ParkDistance,-ParkDistance,ParkDistance,ParkDistance,ParkDistance, 15.0);
-*/
+       double rotateParkDistance = 12.5;
+        //rotating 90deg to go to warehouse & park
+        mecanum.rotate_anticlock_auto(speed, rotateParkDistance, 10.0);
+
+        double ParkDistance = 40;//going forward into warehouse
+        mecanum.move_forward_auto(speed, ParkDistance, 20.0);
 
 
     }

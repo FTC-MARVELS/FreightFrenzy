@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Research;
 
+//import android.content.Context;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -14,7 +16,11 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,7 +125,7 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    List<Recognition> updatedRecognitions = tfod.getRecognitions();//tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
 
@@ -196,7 +202,21 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
         tfodParameters.minResultConfidence = 0.6f;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         if(labels != null) {
-            tfod.loadModelFromFile(TFOD_MODEL_FILE, labels);
+            //tfod.loadModelFromFile(TFOD_MODEL_FILE, labels);
+            telemetry.addData("Read model file","reading.....");
+            telemetry.update();
+
+            tfod.loadModelFromAsset(TFOD_MODEL_FILE, labels);
+            //try {
+            //    InputStream stream = hardwareMap.appContext.getAssets().open("TFOD_MODEL_FILE");
+            //    tfod.
+            //tfod.loadModelFromFile(f.,labels);
+            telemetry.addData("Read model file","read.....");
+            telemetry.update();
+            sleep(5000);
+            //} catch (IOException e) {
+            //    e.printStackTrace();
+            //}
         }
     }
 
@@ -207,32 +227,34 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
         ArrayList<String> labelList = new ArrayList<>();
 
         // try to read in the the labels.
-        try (BufferedReader br = new BufferedReader(new FileReader(TFOD_MODEL_LABELS))) {
-            int index = 0;
-            while (br.ready()) {
-                // skip the first row of the labelmap.txt file.
-                // if you look at the TFOD Android example project (https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/android)
-                // you will see that the labels for the inference model are actually extracted (as metadata) from the .tflite model file
-                // instead of from the labelmap.txt file. if you build and run that example project, you'll see that
-                // the label list begins with the label "person" and does not include the first line of the labelmap.txt file ("???").
-                // i suspect that the first line of the labelmap.txt file might be reserved for some future metadata schema
-                // (or that the generated label map file is incorrect).
-                // for now, skip the first line of the label map text file so that your label list is in sync with the embedded label list in the .tflite model.
-                if(index == 0) {
-                    // skip first line.
-                    br.readLine();
-                } else {
-                    labelList.add(br.readLine());
-                }
-                index++;
-            }
-        } catch (Exception e) {
-            telemetry.addData("Exception", e.getLocalizedMessage());
-            telemetry.update();
-        }
-//        labelList.add("Red left duck left");
-//        labelList.add("Red left duck middle");
-//        labelList.add("Red left duck right");
+//        try (BufferedReader br = new BufferedReader(new FileReader(TFOD_MODEL_LABELS))) {
+//            int index = 0;
+//            while (br.ready()) {
+//                // skip the first row of the labelmap.txt file.
+//                // if you look at the TFOD Android example project (https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/android)
+//                // you will see that the labels for the inference model are actually extracted (as metadata) from the .tflite model file
+//                // instead of from the labelmap.txt file. if you build and run that example project, you'll see that
+//                // the label list begins with the label "person" and does not include the first line of the labelmap.txt file ("???").
+//                // i suspect that the first line of the labelmap.txt file might be reserved for some future metadata schema
+//                // (or that the generated label map file is incorrect).
+//                // for now, skip the first line of the label map text file so that your label list is in sync with the embedded label list in the .tflite model.
+//                if(index == 0) {
+//                    // skip first line.
+//                    br.readLine();
+//                } else {
+//                    labelList.add(br.readLine());
+//                }
+//                index++;
+//            }
+//        } catch (Exception e) {
+//            telemetry.addData("Exception", e.getLocalizedMessage());
+//            telemetry.update();
+//        }
+
+        labelList.add("Red left duck left");
+        labelList.add("Red left duck middle");
+        labelList.add("Red left duck right");
+
         if (labelList.size() > 0) {
             labels = getStringArray(labelList);
             RobotLog.vv("readLabels()", "%d labels read.", labels.length);
@@ -243,6 +265,7 @@ public class Image_Rec_Carl_Epic extends LinearOpMode {
             RobotLog.vv("readLabels()", "No labels read!");
         }
     }
+
 
     // Function to convert ArrayList<String> to String[]
     private String[] getStringArray(ArrayList<String> arr)

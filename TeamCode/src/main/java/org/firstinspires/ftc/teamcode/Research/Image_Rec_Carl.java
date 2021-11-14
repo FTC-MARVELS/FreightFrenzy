@@ -30,9 +30,13 @@ import java.util.ArrayList;
 public class Image_Rec_Carl extends LinearOpMode {
 //    private static final String TFOD_MODEL_FILE = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\red_carousel_model.tflite";
 //    private static final String TFOD_MODEL_LABELS = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\locationLabels.txt";
-    private static final String TFOD_MODEL_FILE = "red_carousel_model.tflite";
+    private static final String TFOD_MODEL_ASSET = "red_carousel_model.tflite";
     private static final String TFOD_MODEL_LABELS = "locationLabels.txt";
-    private String[] labels;
+    private String[] labels = {
+            "Left",
+            "Middle",
+            "Right"
+    };
     WebcamName webcamName = null;
 
     /*
@@ -177,7 +181,8 @@ public class Image_Rec_Carl extends LinearOpMode {
         tfodParameters.minResultConfidence = 0.6f;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         if(labels != null) {
-            tfod.loadModelFromFile(TFOD_MODEL_FILE, labels);
+            //tfod.loadModelFromFile(TFOD_MODEL_FILE, labels);
+            tfod.loadModelFromAsset(TFOD_MODEL_ASSET, labels);
         }
     }
 
