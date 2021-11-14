@@ -31,10 +31,10 @@ public class EPIC_TeleOp extends LinearOpMode {
         //wheels.rightErrorAdjustment = 0.93;//1;
         wheels.telemetry = telemetry;
         wheels.parent = this;
-        //Spinner spinner = new Spinner(hardwareMap);
+        Spinner spinner = new Spinner(hardwareMap);
         //double wheelPower = 0.6;
         //wheels = new Mecanum_Wheels(hardwareMap);
-        double carouselPower = 0.6;
+        double carouselPower = 0.58;
         //Claw claw = new Claw(hardwareMap);
         //claw.parent = this;
         //claw.telemetry = this.telemetry;
@@ -59,8 +59,18 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean x = gamepad1.x;
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
-
-            wheels.move(lefty,righty,leftx,rightx);
+            //if(!dpad_left && !dpad_right)
+            //else
+            if(dpad_left)
+                wheels.Collapse();
+            else if(dpad_right)
+                wheels.Expand();
+            else if(b)
+                spinner.setPower(carouselPower);
+            else if(a)
+                spinner.setPower(-carouselPower);
+            else
+                wheels.move(lefty,righty,leftx,rightx);
 //            wheels.leftMotorY(-lefty);
 //            wheels.rightMotorY(-righty);
 //            wheels.rightMotorX(rightx);
