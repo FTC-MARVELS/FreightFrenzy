@@ -288,6 +288,21 @@ public class Mecanum_Wheels  {
         backright.setPower(-0.6);
 
     }
+    public void move(double lefty, double righty, double leftx, double rightx){
+//        frontright.setPower(lefty  -rightx - leftx);
+//        frontleft.setPower(-lefty + rightx + leftx);
+//        backright.setPower(lefty - rightx + leftx);
+//        backleft.setPower(-lefty + rightx - leftx);
+//        middleright.setPower(lefty - rightx);
+//        middleleft.setPower(-lefty + rightx);
+        frontright.setPower(-lefty  +rightx + leftx);
+        frontleft.setPower(lefty + rightx + leftx);
+        backright.setPower(-lefty + rightx - leftx);
+        backleft.setPower(lefty + rightx - leftx);
+        middleright.setPower(-lefty + rightx);
+        middleleft.setPower(lefty + rightx);
+
+    }
 
     public void Collapse() {
         //frontleft.setPower(0.6);
