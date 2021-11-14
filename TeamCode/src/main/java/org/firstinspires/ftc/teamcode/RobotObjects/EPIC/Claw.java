@@ -27,9 +27,6 @@ public class Claw {
         clawFinger1 = hardwareMap.get(Servo.class,"finger1");
         clawFinger2 = hardwareMap.get(Servo.class,"finger2");
 
-//        telemetry.addData("Postion Claw 1:%d", clawFinger1.getPosition());
-//        telemetry.addData("Postion Claw 2:%d", clawFinger2.getPosition());
-//        telemetry.update();
     }
 
     public void lift()
