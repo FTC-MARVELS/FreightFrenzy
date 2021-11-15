@@ -57,13 +57,13 @@ public class Claw {
     }
 
     public void open() {
-        leftfinger.setPosition(0.3);
+        leftfinger.setPosition(0.5);
         rightfinger.setPosition(1);
     }
 
     public void close() {
-        leftfinger.setPosition(0.8);
-        rightfinger.setPosition(0);
+        leftfinger.setPosition(0.7);
+        rightfinger.setPosition(0.7);
     }
 }
 

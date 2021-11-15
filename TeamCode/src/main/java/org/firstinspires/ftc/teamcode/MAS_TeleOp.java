@@ -159,20 +159,20 @@ public class MAS_TeleOp extends LinearOpMode {
                 claw.restWrist();
             }
 
-            spinner.setPower(gamepad2.right_stick_x);
+            spinner.setPower(gamepad2.right_stick_x*0.7);
 
-            mecanumWheels.liftXrail(gamepad2.left_stick_y);
+            mecanumWheels.liftXrail(-gamepad2.left_stick_y + 0.01);
             mecanumWheels.move_forwardback_rotate(lefty, righty);
 
             //  move_forwardback_rotate();
-            if(test){
+           /* if(test){
                 mecanumWheels.liftXrail(0.2);
 
 
             } else {
                 mecanumWheels.liftXrail(0.0001);
 
-            }
+            }*/
 
             }
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Research;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -75,6 +76,7 @@ public class Image_Rec_Carl extends LinearOpMode {
         // first.
         initVuforia();
         initTfod();
+        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
 
         /**
          * Activate TensorFlow Object Detection before we wait for the start command.
@@ -82,6 +84,9 @@ public class Image_Rec_Carl extends LinearOpMode {
          **/
         if (tfod != null) {
             tfod.activate();
+            telemetry.addData(">", "Activated");
+            sleep(2000);
+            telemetry.update();
 
             // The TensorFlow software will scale the input images from the camera to a lower resolution.
             // This can result in lower detection accuracy at longer distances (> 55cm or 22").
@@ -183,7 +188,15 @@ public class Image_Rec_Carl extends LinearOpMode {
         if(labels != null) {
             //tfod.loadModelFromFile(TFOD_MODEL_FILE, labels);
             tfod.loadModelFromAsset(TFOD_MODEL_ASSET, labels);
+            telemetry.addData(">", "Loaded assets from file");
+            telemetry.update();
+            sleep(1000);
+
         }
+        telemetry.addData(">", "After loading assets %s", tfod.getRecognitions());
+        telemetry.update();
+        sleep(2000);
+
     }
 
     /**
