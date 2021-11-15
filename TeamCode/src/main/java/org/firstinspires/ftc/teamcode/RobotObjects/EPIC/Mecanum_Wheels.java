@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.RobotObjects;
+package org.firstinspires.ftc.teamcode.RobotObjects.EPIC;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Mecanum_Wheels  {
+public class Mecanum_Wheels {
     //Configuration used: 6wheelConfig
     public DcMotorEx frontright;
     public DcMotorEx frontleft;

@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Claw;
-import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 
@@ -22,6 +22,8 @@ public class EPIC_TeleOp extends LinearOpMode {
     double leftx = 0.0;
     double righty = 0.0;
     double rightx = 0.0;
+    double liftPower = 0.0;
+    double rotateArm = 0.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,25 +35,29 @@ public class EPIC_TeleOp extends LinearOpMode {
         wheels.parent = this;
         Spinner spinner = new Spinner(hardwareMap);
         //double wheelPower = 0.6;
-        //wheels = new Mecanum_Wheels(hardwareMap);
         double carouselPower = 0.58;
-        //Claw claw = new Claw(hardwareMap);
-        //claw.parent = this;
-        //claw.telemetry = this.telemetry;
+        Claw claw = new Claw(hardwareMap);
+        claw.parent = this;
+        claw.telemetry = this.telemetry;
 
 
         waitForStart();
+        //claw.initiateLift();
         while (opModeIsActive()) {
 
-            //telemetry.addData("Finger 1 position", claw.clawFinger1.getPosition());
-            //telemetry.addData("Finger 2 position", claw.clawFinger2.getPosition());
-            //telemetry.update();
-            //mecanumWheels.initialize();
-
+//            //telemetry.addData("Finger 1 position", claw.clawFinger1.getPosition());
+//            //telemetry.addData("Finger 2 position", claw.clawFinger2.getPosition());
+//            //telemetry.update();
+//            //mecanumWheels.initialize();
+//
             lefty = -gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
+
+            liftPower = -gamepad2.left_stick_y;
+            rotateArm = -gamepad2.right_stick_y;
+
             //lefty = gamepad2.left_stick_y;
             boolean dpad_left = gamepad1.dpad_left;
             boolean dpad_right = gamepad1.dpad_right;
@@ -59,22 +65,35 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean x = gamepad1.x;
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
-            //if(!dpad_left && !dpad_right)
-            //else
-            if(dpad_left)
+//            //if(!dpad_left && !dpad_right)
+//            //else
+            if(dpad_left) {
                 wheels.Collapse();
-            else if(dpad_right)
+                spinner.setPower(0);
+            }
+            else if(dpad_right) {
                 wheels.Expand();
+                spinner.setPower(0);
+            }
             else if(b)
                 spinner.setPower(carouselPower);
             else if(a)
                 spinner.setPower(-carouselPower);
-            else
+            else{
                 wheels.move(lefty,righty,leftx,rightx);
-//            wheels.leftMotorY(-lefty);
-//            wheels.rightMotorY(-righty);
-//            wheels.rightMotorX(rightx);
-//            wheels.leftMotorX(leftx);
+                spinner.setPower(0);
+            }
+
+            if(liftPower!=0)
+                claw.lift(liftPower);
+
+            if(rotateArm!=0)
+                claw.rotate(rotateArm);
+//
+////            wheels.leftMotorY(-lefty);
+////            wheels.rightMotorY(-righty);
+////            wheels.rightMotorX(rightx);
+////            wheels.leftMotorX(leftx);
 
 
 
