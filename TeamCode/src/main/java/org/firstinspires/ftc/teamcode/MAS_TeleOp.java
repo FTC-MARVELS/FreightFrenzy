@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
@@ -83,6 +84,8 @@ public class MAS_TeleOp extends LinearOpMode {
         Middleright = hardwareMap.get(DcMotor.class, "Middleright");
         Middleleft = hardwareMap.get(DcMotor.class, "Middleleft");*/
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
+        Spinner spinner = new Spinner(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         mecanumWheels.rightErrorAdjustment = 0.93;//1;
         waitForStart();
         while (opModeIsActive()) {
@@ -100,6 +103,13 @@ public class MAS_TeleOp extends LinearOpMode {
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
+
+            boolean test = false;
+            if(gamepad1.x) {
+                test = true;
+            }else {
+                test = false;
+            }
 
             boolean modeTwo = false;
             if(gamepad1.right_bumper) {
@@ -127,18 +137,46 @@ public class MAS_TeleOp extends LinearOpMode {
                 mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
                 mecanumWheels.move_side(leftx/2, rightx/2);
                 //For testing only
-                //Spinner spinner = new Spinner(hardwareMap);
-                //spinner.setPower(-0.58);
-                //sleep(1000);
+                spinner.setPower(-0.58);
+                sleep(1000);
+                spinner.setPower(0);
+
+                //End testing only
+            } else {
+                spinner.setPower(0);
+            }
+
+            if (gamepad2.right_bumper) {
+                claw.open();
+            }
+            else {
+                claw.close();
+            }
+
+            if(gamepad2.left_bumper) {
+                claw.raiseWrist();
+            } else {
+                claw.restWrist();
+            }
+
+            spinner.setPower(gamepad2.right_stick_x*0.7);
+
+            mecanumWheels.liftXrail(-gamepad2.left_stick_y + 0.01);
+            mecanumWheels.move_forwardback_rotate(lefty, righty);
+
+            //  move_forwardback_rotate();
+           /* if(test){
+                mecanumWheels.liftXrail(0.2);
+
+
+            } else {
+                mecanumWheels.liftXrail(0.0001);
+
+            }*/
 
             }
 
-            mecanumWheels.liftXrail(gamepad2.left_stick_y);
-            mecanumWheels.move_forwardback_rotate(lefty, righty);
-            //  move_forwardback_rotate();
 
-
-        }
 
 
 
@@ -152,14 +190,14 @@ public class MAS_TeleOp extends LinearOpMode {
             telemetry.addData("back right motor", "%.2f", Backright.getPower());
             telemetry.addData("middle left motor", "%.2f", Middleleft.getPower());
             telemetry.addData("middle right motor", "%.2f", Middleright.getPower());*/
-
+/*
         telemetry.addData("lefty", "%.2f", lefty);
         telemetry.addData("leftx", "%.2f", leftx);
 
         telemetry.addData("rightx", "%.2f", rightx);
         telemetry.addData("righty", "%.2f", righty);
 
-        telemetry.update();
+        telemetry.update();*/
     }
 }
 

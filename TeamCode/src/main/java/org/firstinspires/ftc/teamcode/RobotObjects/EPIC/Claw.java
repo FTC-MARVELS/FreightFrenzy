@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.RobotObjects.EPIC;
 
+import android.util.Range;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -10,6 +13,7 @@ public class Claw {
     public Servo clawFinger1;
     public Servo clawFinger2;
     public Servo arm;
+    public DcMotorEx liftMotor;
 
     public double armInit = 0.0;
     public double finger1Init = 0.4;
@@ -20,26 +24,54 @@ public class Claw {
     public double finger2Min = 0.2;
     public double finger1Max = 0.4;
     public double finger2Max = 0.4;
+    public double liftPower = -0.6;
     public LinearOpMode parent;
     public Telemetry telemetry;
 
     public Claw(HardwareMap hardwareMap) {
         clawFinger1 = hardwareMap.get(Servo.class,"finger1");
         clawFinger2 = hardwareMap.get(Servo.class,"finger2");
+        arm = hardwareMap.get(Servo.class,"arm");
+        liftMotor = hardwareMap.get(DcMotorEx.class,"Lift");
 
-//        telemetry.addData("Postion Claw 1:%d", clawFinger1.getPosition());
-//        telemetry.addData("Postion Claw 2:%d", clawFinger2.getPosition());
-//        telemetry.update();
     }
 
-    public void lift()
+    public void initiateLift(){
+        //int currentPosition = liftMotor.getCurrentPosition();
+        //int targetPosition = 6
+        telemetry.addData("Postion lift 2:%d", liftMotor.getCurrentPosition());
+        telemetry.update();
+        liftMotor.setPower(liftPower);
+        parent.sleep(6000);
+        liftMotor.setPower(0);
+        telemetry.addData("Postion lift 2:%d", liftMotor.getCurrentPosition());
+        telemetry.update();
+        //arm.setPosition(0.5);
+        liftMotor.setPower(-liftPower);
+        parent.sleep(3500);
+        liftMotor.setPower(0);
+        telemetry.addData("Postion lift 2:%d", liftMotor.getCurrentPosition());
+        telemetry.update();
+    }
+
+    public void initiateClaw() {
+
+    }
+
+    public void lift(double power)
     {
 
+        liftMotor.setPower(power);
+    }
+
+    public void rotate(double power)
+    {
+        arm.setPosition(power);
     }
 
     public void rest()
     {
-
+        liftMotor.setPower(-liftPower);
     }
 
     public void grab()

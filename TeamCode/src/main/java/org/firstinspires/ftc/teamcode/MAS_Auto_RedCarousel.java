@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 //import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 //import org.firstinspires.ftc.teamcode.RobotObjects.Scanner;
@@ -44,45 +45,55 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double speed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
-        //Claw claw = new Claw(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
        // Scanner scanner = new Scanner(hardwareMap);
-        mecanum.IsAutonomous = true;
+        mecanum.IsMASAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
         mecanum.initialize();
-        mecanum.rightErrorAdjustment = 0.93;//1;
+       mecanum.rightErrorAdjustment = 0.5;//1;
 
         waitForStart();
 
-        // move right to go to spinner - 5 inches for eg
-       double spinnerDistance = 25;
-        //sleep();
+        //SCAN CODE- EISHA AND HAMZA
 
-        mecanum.encoderDrive(speed,spinnerDistance,0,-spinnerDistance,-spinnerDistance,0,spinnerDistance, 10.0);
-
-        // rotate anticlockwise
-        double rotateWheelDistance = 12.5;
+       double spinnerDistance = 20;
+        // rotate to bring spinner to position
+        double spinnerrotate = 22;
+        mecanum.rotate_anticlock_auto(speed, spinnerrotate, 10.0);
+        //backward to go to carousel
+        mecanum.move_forward_auto(speed,spinnerDistance , 10.0);
 
         spinner.setPower(-0.58);
-        sleep(25565);
+        sleep(2300);
         spinner.setPower(0);
-        //going back to starting position
-        //mecanum.encoderDrive(speed,-spinnerDistance,0,spinnerDistance,spinnerDistance,0,-spinnerDistance, 10.0);
+        //back to position + rotate
+        double shippingHubDistance = 30;
 
+        //come back to original position
+        mecanum.move_backward_auto(speed,spinnerDistance , 10.0);
+        mecanum.rotate_clock_auto(speed, spinnerrotate, 10.0);
+        mecanum.move_forward_auto(speed,shippingHubDistance, 15.0 );
 
+        mecanum.liftXrail(0.4);
+        sleep(1400);
+        mecanum.liftXrail(0);
+        claw.open();
+        sleep(150);
+        mecanum.rotate_clock_auto(speed, spinnerrotate, 10.0);
+
+        mecanum.move_forward_auto(speed,shippingHubDistance, 15.0 );
 
         //Scan for position of the element- eisha and hamza!
 
-      // double rotateParkDistance = 20;
+       double rotateParkDistance = 11.5;
         //rotating 90deg to go to warehouse & park
-       // mecanum.encoderDrive(speed,-rotateParkDistance,0,-rotateParkDistance,rotateParkDistance,0,rotateParkDistance, 8.0);
+       // mecanum.rotate_clock_auto(speed, rotateParkDistance, 10.0);
 
-
-        //going forward into warehouse
-        //mecanum.encoderDrive(speed,-ParkDistance,-ParkDistance,-ParkDistance,ParkDistance,ParkDistance,ParkDistance, 15.0);
-
+        double ParkDistance = 60;//going forward into warehouse
+       // mecanum.move_backward_auto(speed*2, ParkDistance, 20.0);
 
 
     }
