@@ -17,7 +17,7 @@ public class Mecanum_Wheels  {
     public DcMotorEx backleft;
     public DcMotorEx middleright;
     public DcMotorEx middleleft;
-    //public DcMotorEx xRail;
+    public DcMotorEx xRail;
 
     public boolean IsAutonomous = false;
     public boolean IsMASAutonomous = false;
@@ -45,7 +45,7 @@ public class Mecanum_Wheels  {
         backleft = hardwareMap.get(DcMotorEx.class,"Backleft");
         middleright = hardwareMap.get(DcMotorEx.class,"Middleright");
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
-        //xRail = hardwareMap.get(DcMotorEx.class, "xRail");
+        xRail = hardwareMap.get(DcMotorEx.class, "xRail");
     }
 
     //initialize for TeleOp
@@ -121,7 +121,7 @@ public class Mecanum_Wheels  {
         }
     }
    public void liftXrail(double power) {
-        //xRail.setPower(power);
+            xRail.setPower(power);
 
    }
 
@@ -340,18 +340,18 @@ public class Mecanum_Wheels  {
         encoderDrive(speed,distance,0,-distance,-distance,0,distance, timeOut);
     }
 
-    public void rotate_anticlock_auto(double speed, double distance, double timeOut) {
+    public void rotate_clock_auto(double speed, double distance, double timeOut) {
         encoderDrive(speed,-distance,0,-distance,distance,0,distance, timeOut);
     }
 
-    public void rotate_clock_auto(double speed, double distance, double timeOut) {
+    public void rotate_anti_clock_auto(double speed, double distance, double timeOut) {
         encoderDrive(speed,distance,0,distance,-distance,0,-distance, timeOut);
     }
-    public void move_forward_auto(double speed, double distance, double timeOut){
+    public void move_backward_auto(double speed, double distance, double timeOut){
         encoderDrive(speed,distance,distance,distance,distance,distance, distance, timeOut);
     }
 
-    public void move_backward_auto(double speed, double distance, double timeOut){
+    public void move_forward_auto(double speed, double distance, double timeOut){
         encoderDrive(speed,-distance,-distance,-distance,-distance,-distance, -distance, timeOut);
     }
 
