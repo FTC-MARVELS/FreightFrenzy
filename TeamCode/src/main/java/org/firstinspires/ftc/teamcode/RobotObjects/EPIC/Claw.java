@@ -79,7 +79,6 @@ public class Claw {
         telemetry.addData("Postion Claw 1:%d", clawFinger1.getPosition());
         telemetry.addData("Postion Claw 2:%d", clawFinger2.getPosition());
         telemetry.update();
-        parent.sleep(5000);
         //double fingerPosition = Range.clip()
         clawFinger1.setPosition(finger1Min);
         clawFinger2.setPosition(finger2Min);
