@@ -24,6 +24,7 @@ public class EPIC_TeleOp extends LinearOpMode {
     double rightx = 0.0;
     double liftPower = 0.0;
     double rotateArm = 0.0;
+    double powerfactor = 0.6;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -36,9 +37,9 @@ public class EPIC_TeleOp extends LinearOpMode {
         Spinner spinner = new Spinner(hardwareMap);
         //double wheelPower = 0.6;
         double carouselPower = 0.58;
-        Claw claw = new Claw(hardwareMap);
-        claw.parent = this;
-        claw.telemetry = this.telemetry;
+//        Claw claw = new Claw(hardwareMap);
+//        claw.parent = this;
+//        claw.telemetry = this.telemetry;
 
 
         waitForStart();
@@ -50,10 +51,10 @@ public class EPIC_TeleOp extends LinearOpMode {
 //            //telemetry.update();
 //            //mecanumWheels.initialize();
 //
-            lefty = -gamepad1.left_stick_y;
-            leftx = gamepad1.left_stick_x;
-            righty = gamepad1.right_stick_y;
-            rightx = gamepad1.right_stick_x;
+            lefty = -gamepad1.left_stick_y*powerfactor;
+            leftx = gamepad1.left_stick_x*powerfactor;
+            righty = gamepad1.right_stick_y*powerfactor;
+            rightx = gamepad1.right_stick_x*powerfactor;
 
             liftPower = -gamepad2.left_stick_y;
             rotateArm = -gamepad2.right_stick_y;
@@ -75,20 +76,24 @@ public class EPIC_TeleOp extends LinearOpMode {
                 wheels.Expand();
                 spinner.setPower(0);
             }
-            else if(b)
-                spinner.setPower(carouselPower);
+            else if(y)
+                powerfactor=0.6;
             else if(a)
+                powerfactor=0.25;
+            else if(x)
+                spinner.setPower(carouselPower);
+            else if(b)
                 spinner.setPower(-carouselPower);
             else{
                 wheels.move(lefty,righty,leftx,rightx);
                 spinner.setPower(0);
             }
 
-            if(liftPower!=0)
-                claw.lift(liftPower);
-
-            if(rotateArm!=0)
-                claw.rotate(rotateArm);
+//            if(liftPower!=0)
+//                claw.lift(liftPower);
+//
+//            if(rotateArm!=0)
+//                claw.rotate(rotateArm);
 //
 ////            wheels.leftMotorY(-lefty);
 ////            wheels.rightMotorY(-righty);

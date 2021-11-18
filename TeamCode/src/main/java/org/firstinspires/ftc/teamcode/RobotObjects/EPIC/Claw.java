@@ -27,6 +27,7 @@ public class Claw {
     public double liftPower = -0.6;
     public LinearOpMode parent;
     public Telemetry telemetry;
+    public double pos = 0.0;
 
     public Claw(HardwareMap hardwareMap) {
         clawFinger1 = hardwareMap.get(Servo.class,"finger1");
@@ -66,7 +67,18 @@ public class Claw {
 
     public void rotate(double power)
     {
-        arm.setPosition(power);
+        //arm.setPosition(power);
+        if(power<0) {
+            pos = pos - 0.1;
+            if (pos < -1)
+                pos = -1;
+        }
+        else if (power > 0){
+        pos = pos + 0.1;
+        if (pos >1)
+            pos = 1;
+    }
+
     }
 
     public void rest()
