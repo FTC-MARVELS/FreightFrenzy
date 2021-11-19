@@ -1,0 +1,4 @@
+
+0 Red left duck left
+1 Red left duck middle
+2 Red left duck right

@@ -20,10 +20,10 @@ public class Claw {
     public double finger2Init = 0.4;
     public double armMin = 0.0;
     public double armMax = 0.5;
-    public double finger1Min = 0.2;
-    public double finger2Min = 0.2;
-    public double finger1Max = 0.4;
-    public double finger2Max = 0.4;
+    public double finger1Min = 0.0;
+    public double finger2Min = 0.0;
+    public double finger1Max = 0.7;
+    public double finger2Max = 0.7;
     public double liftPower = -0.6;
     public LinearOpMode parent;
     public Telemetry telemetry;
@@ -65,19 +65,26 @@ public class Claw {
         liftMotor.setPower(power);
     }
 
+    public void swing(double position){
+        pos = position;
+        arm.setPosition(pos);
+        parent.sleep(750);
+    }
+
     public void rotate(double power)
     {
         //arm.setPosition(power);
         if(power<0) {
             pos = pos - 0.1;
-            if (pos < -1)
-                pos = -1;
+            if (pos < -1.5)
+                pos = -1.5;
         }
         else if (power > 0){
         pos = pos + 0.1;
-        if (pos >1)
-            pos = 1;
-    }
+        if (pos >1.5)
+            pos = 1.5;
+        }
+        arm.setPosition(pos);
 
     }
 

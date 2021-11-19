@@ -32,14 +32,16 @@ public class EPIC_TeleOp extends LinearOpMode {
         wheels = new Mecanum_Wheels(hardwareMap);
         wheels.initialize();
         //wheels.rightErrorAdjustment = 0.93;//1;
+        wheels.leftErrorAdjustment = 0.81;
+        wheels.rightErrorAdjustment = 1.2;
         wheels.telemetry = telemetry;
         wheels.parent = this;
         Spinner spinner = new Spinner(hardwareMap);
         //double wheelPower = 0.6;
         double carouselPower = 0.58;
-//        Claw claw = new Claw(hardwareMap);
-//        claw.parent = this;
-//        claw.telemetry = this.telemetry;
+        Claw claw = new Claw(hardwareMap);
+        claw.parent = this;
+        claw.telemetry = this.telemetry;
 
 
         waitForStart();
@@ -56,8 +58,8 @@ public class EPIC_TeleOp extends LinearOpMode {
             righty = gamepad1.right_stick_y*powerfactor;
             rightx = gamepad1.right_stick_x*powerfactor;
 
-            liftPower = -gamepad2.left_stick_y;
-            rotateArm = -gamepad2.right_stick_y;
+            liftPower = gamepad2.right_stick_y;
+            rotateArm = gamepad2.left_stick_y;
 
             //lefty = gamepad2.left_stick_y;
             boolean dpad_left = gamepad1.dpad_left;
@@ -66,6 +68,9 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean x = gamepad1.x;
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
+
+            boolean a2 = gamepad2.a;
+            boolean y2 = gamepad2.y;
 //            //if(!dpad_left && !dpad_right)
 //            //else
             if(dpad_left) {
@@ -89,11 +94,20 @@ public class EPIC_TeleOp extends LinearOpMode {
                 spinner.setPower(0);
             }
 
-//            if(liftPower!=0)
-//                claw.lift(liftPower);
-//
-//            if(rotateArm!=0)
-//                claw.rotate(rotateArm);
+            if(liftPower!=0) {
+                claw.lift(liftPower);
+                sleep(250);
+                claw.lift(0);
+            }
+
+            if(rotateArm!=0)
+                claw.rotate(rotateArm);
+
+            if(a2)
+                claw.release();
+            else if (y2)
+                claw.grab();
+
 //
 ////            wheels.leftMotorY(-lefty);
 ////            wheels.rightMotorY(-righty);
