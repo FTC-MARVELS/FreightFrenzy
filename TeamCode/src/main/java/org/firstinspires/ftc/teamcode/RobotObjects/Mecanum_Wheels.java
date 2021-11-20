@@ -17,7 +17,7 @@ public class Mecanum_Wheels  {
     public DcMotorEx backleft;
     public DcMotorEx middleright;
     public DcMotorEx middleleft;
-    public DcMotorEx xRail;
+    public DcMotorEx arm;
 
     public boolean IsAutonomous = false;
     public boolean IsMASAutonomous = false;
@@ -45,7 +45,7 @@ public class Mecanum_Wheels  {
         backleft = hardwareMap.get(DcMotorEx.class,"Backleft");
         middleright = hardwareMap.get(DcMotorEx.class,"Middleright");
         middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
-        xRail = hardwareMap.get(DcMotorEx.class, "xRail");
+        arm = hardwareMap.get(DcMotorEx.class, "xRail");
     }
 
     //initialize for TeleOp
@@ -120,8 +120,8 @@ public class Mecanum_Wheels  {
             }
         }
     }
-   public void liftXrail(double power) {
-            xRail.setPower(power);
+   public void liftArm(double power) {
+            arm.setPower(power);
 
    }
 
@@ -326,10 +326,10 @@ public class Mecanum_Wheels  {
     //moveSide for TeleOp
     //The left and right powers are controlled by the left and right x axes
     public void move_side( double leftPower, double rightPower){
-        frontleft.setPower(leftPower*leftErrorAdjustment);
-        backleft.setPower(-leftPower*leftErrorAdjustment);
-        frontright.setPower(rightPower*rightErrorAdjustment);
-        backright.setPower(rightPower*rightErrorAdjustment);
+        frontleft.setPower(-leftPower*leftErrorAdjustment);
+        backleft.setPower(leftPower*leftErrorAdjustment);
+        frontright.setPower(-rightPower*rightErrorAdjustment);
+        backright.setPower(-rightPower*rightErrorAdjustment);
     }
 
     public void move_right_auto(double speed, double distance, double timeOut) {

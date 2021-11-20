@@ -6,10 +6,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
-import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 
@@ -21,81 +20,16 @@ public class MAS_TeleOp extends LinearOpMode {
     double righty = 0.0;
     double rightx = 0.0;
 
-    //Declaring Motors
-   /* private DcMotor Frontleft;
-    private DcMotor Frontright;
-    private DcMotor Backleft;
-    private DcMotor Backright;
-    private DcMotor Middleright;
-    private DcMotor Middleleft;
-
-
-    public void move_forwardback_rotate(){
-        Frontleft.setPower(-lefty);
-        Backleft.setPower(-lefty);
-        Frontright.setPower(righty);
-        Backright.setPower(righty);
-        Middleleft.setPower(-lefty);
-        Middleright.setPower(righty);
-    }
-
-    public void move_side(){
-        Frontleft.setPower(-leftx);
-        Backleft.setPower(leftx);
-        Frontright.setPower(-rightx);
-        Backright.setPower(rightx);
-    }
-    public void slow_forwardback(){
-        Frontleft.setPower(-righty/2);
-        Backleft.setPower(-righty/2);
-        Frontright.setPower(righty/2);
-        Backright.setPower(righty/2);
-    }
-    public void slow_side(){
-        Frontleft.setPower(-leftx/2);
-        Backleft.setPower(leftx/2);
-        Frontright.setPower(-rightx/2);
-        Backright.setPower(rightx/2);
-    }
-    public void middle_forwardback(){
-        Middleright.setPower(righty);
-        Middleleft.setPower(lefty);
-        }
-*/
-
-    /*public void diagonal(){
-        if (rightx>0 && lefty>0||rightx<0 && lefty<0) {
-            Frontleft.setPower(lefty);
-            Backright.setPower(-lefty);
-        }
-        else if (rightx>0 && lefty<0 ||rightx<0 && lefty>0){
-            Backleft.setPower(lefty);
-            Frontright.setPower(-lefty);
-        }*/
-
 
     @Override
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
-      /*  Frontright = hardwareMap.get(DcMotor.class, "Frontright");
-        Frontleft = hardwareMap.get(DcMotor.class, "Frontleft");
-        Backright = hardwareMap.get(DcMotor.class, "Backright");
-        Backleft = hardwareMap.get(DcMotor.class, "Backleft");
-        Middleright = hardwareMap.get(DcMotor.class, "Middleright");
-        Middleleft = hardwareMap.get(DcMotor.class, "Middleleft");*/
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         mecanumWheels.rightErrorAdjustment = 0.93;//1;
         waitForStart();
         while (opModeIsActive()) {
-            /*double reset = 0;
-            Frontright.setPower(reset);
-            Frontleft.setPower(reset);
-            Backleft.setPower(reset);
-            Backright.setPower(reset);
-            Middleleft.setPower(reset);
-            Middleright.setPower(reset);*/
 
             mecanumWheels.initialize();
 
@@ -127,78 +61,56 @@ public class MAS_TeleOp extends LinearOpMode {
             if(modeTwo==true){
                 // move_side();
                 mecanumWheels.move_side(leftx, rightx);
-                mecanumWheels.middleForwardback(lefty, righty);
+                //mecanumWheels.middleForwardback(lefty, righty);
                 //middle_forwardback();
             }
 
             if(modeThree==true) {
                 //slow_forwardback();
                 //slow_side();
-                mecanumWheels.move_forwardback_rotate(lefty/2,righty/2);
-                mecanumWheels.move_side(leftx/2, rightx/2);
+                mecanumWheels.move_forwardback_rotate(lefty*0.5,righty*0.5);
+                mecanumWheels.move_side(leftx*0.5, rightx*0.5);
                 //For testing only
-                spinner.setPower(-0.58);
-                sleep(1000);
-                spinner.setPower(0);
+                //spinner.setPower(-0.58);
+                //sleep(1000);
+                //spinner.setPower(0);
 
                 //End testing only
-            } else {
-                spinner.setPower(0);
+            //} else {
+             //   spinner.setPower(0);
             }
 
             if (gamepad2.right_bumper) {
-                claw.open();
+                claw.openClaws();
             }
             else {
-                claw.close();
+                claw.closeClaws();
             }
 
-            if(gamepad2.left_bumper) {
-                claw.raiseWrist();
-            } else {
+            //if(gamepad2.left_bumper) {
+            claw.raiseWrist(gamepad2.right_stick_y);
+            //}
+            //
+            //
+            /*else {
                 claw.restWrist();
-            }
-
-            spinner.setPower(gamepad2.right_stick_x*0.7);
-
-            mecanumWheels.liftXrail(-gamepad2.left_stick_y + 0.01);
-            mecanumWheels.move_forwardback_rotate(lefty, righty);
-
-            //  move_forwardback_rotate();
-           /* if(test){
-                mecanumWheels.liftXrail(0.2);
-
-
-            } else {
-                mecanumWheels.liftXrail(0.0001);
-
             }*/
 
+            if(gamepad2.a) {
+                spinner.setPower(0.74);
+            } else if(gamepad2.b) {
+                spinner.setPower(-0.74);
+            } else {
+                spinner.setPower(0);
             }
 
+            //spinner.setPower(gamepad2.right_stick_x*0.7);
 
+            mecanumWheels.liftArm(-gamepad2.left_stick_y *0.75 + 0.05);
+            mecanumWheels.move_forwardback_rotate(lefty, righty);
+          //  mecanumWheels.middleForwardback(lefty, righty); //adding omni wheel motion in regular mode
 
-
-
-
-        //diagonal();
-
-        //Displays power of each motor on the robot controller
-            /*telemetry.addData("front left motor", "%.2f", Frontleft.getPower());
-            telemetry.addData("front right motor", "%.2f", Frontright.getPower());
-            telemetry.addData("back left motor", "%.2f", Backleft.getPower());
-            telemetry.addData("back right motor", "%.2f", Backright.getPower());
-            telemetry.addData("middle left motor", "%.2f", Middleleft.getPower());
-            telemetry.addData("middle right motor", "%.2f", Middleright.getPower());*/
-/*
-        telemetry.addData("lefty", "%.2f", lefty);
-        telemetry.addData("leftx", "%.2f", leftx);
-
-        telemetry.addData("rightx", "%.2f", rightx);
-        telemetry.addData("righty", "%.2f", righty);
-
-        telemetry.update();*/
+            }
     }
 }
-
 
