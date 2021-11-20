@@ -30,18 +30,20 @@ public class EPIC_TeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
         wheels = new Mecanum_Wheels(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         wheels.initialize();
         //wheels.rightErrorAdjustment = 0.93;//1;
-        wheels.leftErrorAdjustment = 0.81;
-        wheels.rightErrorAdjustment = 1.2;
+        Spinner spinner = new Spinner(hardwareMap);
         wheels.telemetry = telemetry;
         wheels.parent = this;
-        Spinner spinner = new Spinner(hardwareMap);
+        wheels.leftErrorAdjustment = 0.81;
+        wheels.rightErrorAdjustment = 1.2;
         //double wheelPower = 0.6;
         double carouselPower = 0.58;
-        Claw claw = new Claw(hardwareMap);
         claw.parent = this;
         claw.telemetry = this.telemetry;
+        double clawPower = lefty/10;
+        double needPos = clawPower+claw.arm.getPosition();
 
 
         waitForStart();
@@ -57,6 +59,7 @@ public class EPIC_TeleOp extends LinearOpMode {
             leftx = gamepad1.left_stick_x*powerfactor;
             righty = gamepad1.right_stick_y*powerfactor;
             rightx = gamepad1.right_stick_x*powerfactor;
+
 
             liftPower = gamepad2.right_stick_y;
             rotateArm = gamepad2.left_stick_y;
@@ -81,10 +84,7 @@ public class EPIC_TeleOp extends LinearOpMode {
                 wheels.Expand();
                 spinner.setPower(0);
             }
-            else if(y)
-                powerfactor=0.6;
-            else if(a)
-                powerfactor=0.25;
+
             else if(x)
                 spinner.setPower(carouselPower);
             else if(b)
@@ -94,20 +94,17 @@ public class EPIC_TeleOp extends LinearOpMode {
                 spinner.setPower(0);
             }
 
-            if(liftPower!=0) {
-                claw.lift(liftPower);
-                sleep(250);
-                claw.lift(0);
-            }
+            boolean leftBumper = gamepad2.left_bumper;
+            boolean rightBumper = gamepad2.right_bumper;
 
-            if(rotateArm!=0)
-                claw.rotate(rotateArm);
+            claw.rotate(leftBumper, rightBumper);
 
-            if(a2)
-                claw.release();
-            else if (y2)
+            if(y2) {
                 claw.grab();
-
+            }
+                else{
+                    claw.release();
+            }
 //
 ////            wheels.leftMotorY(-lefty);
 ////            wheels.rightMotorY(-righty);
@@ -117,6 +114,7 @@ public class EPIC_TeleOp extends LinearOpMode {
 
 
 
+            
 
             telemetry.addData("lefty", "%.2f", lefty);
             telemetry.addData("leftx", "%.2f", leftx);
