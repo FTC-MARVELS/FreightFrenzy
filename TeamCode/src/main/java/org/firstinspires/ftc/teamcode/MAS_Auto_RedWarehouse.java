@@ -51,18 +51,25 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
         mecanum.move_forward_auto(speed, shippingHubDistance*1.5,20.0);
 
         //Raise Arm and wrist to drop
-        mecanum.liftArm(0.5);
+        mecanum.liftArm(-0.4);
         claw.raiseWrist(0.5);
+        sleep(4200);
+        mecanum.arm.setPower(0.0);
+        sleep(100);
         claw.openClaws();
         sleep(500);
+        claw.closeClaws();
+        mecanum.liftArm(0.3);
+        claw.restWrist();
+        sleep(2100);
 
         mecanum.move_backward_auto(speed,shippingHubDistance/1.25, 20.0 );
 
         mecanum.rotate_clock_auto(speed, rotateNinety, 10.0);
 
-        double ParkDistance = 20;//going forward into warehouse
+        double ParkDistance = 40;//going forward into warehouse
         //Increase the speed if we are going over the obstacle
-        mecanum.move_forward_auto(speed*2,ParkDistance, 25.0 );
+        mecanum.move_forward_auto(speed*2.5,ParkDistance, 25.0 );
         //else will need logic to collapse and then move right to park
     }
 

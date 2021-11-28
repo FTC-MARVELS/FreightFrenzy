@@ -30,8 +30,8 @@ public class Claw {
         leftwrist = hardwareMap.get(Servo.class,"leftwrist");
         rightclaw = hardwareMap.get(Servo.class,"rightclaw");
         leftclaw = hardwareMap.get(Servo.class,"leftclaw");
-        rightwrist.setPosition(rightWristInit);
-        leftwrist.setPosition(leftWristInit);
+        //rightwrist.setPosition(rightWristInit);
+        //leftwrist.setPosition(leftWristInit);
         rightclaw.setPosition(rightClawInit);
         leftclaw.setPosition(leftClawInit);
     }
@@ -63,13 +63,13 @@ public class Claw {
     }
 
     public void openClaws() {
-        leftclaw.setPosition(0.2);
-        rightclaw.setPosition(0.7);
+        leftclaw.setPosition(0.6);
+        rightclaw.setPosition(0.4);
     }
 
     public void closeClaws() {
-        leftclaw.setPosition(1.0);
-        rightclaw.setPosition(0.0);
+        leftclaw.setPosition(0.85);
+        rightclaw.setPosition(0.1);
     }
 }
 

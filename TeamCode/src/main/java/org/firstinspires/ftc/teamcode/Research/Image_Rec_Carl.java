@@ -105,15 +105,6 @@ public class Image_Rec_Carl extends LinearOpMode {
                     sleep(2000);
                     telemetry.update();
 
-                    // The TensorFlow software will scale the input images from the camera to a lower resolution.
-                    // This can result in lower detection accuracy at longer distances (> 55cm or 22").
-                    // If your target is at distance greater than 50 cm (20") you can adjust the magnification value
-                    // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
-                    // should be set to the value of the images used to create the TensorFlow Object Detection model
-                    // (typically 1.78 or 16/9).
-
-                    // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
-                    //tfod.setZoom(2.5, 1.78);
                 }
 
                 if (tfod != null) {

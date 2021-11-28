@@ -41,7 +41,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     //Configuration used: 6wheelConfig
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 0.35;
+        double speed = 0.38;
         double rotationSpeed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
@@ -55,17 +55,20 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         mecanum.rightErrorAdjustment = 0.5;//1;
 
         waitForStart();
-        double spinnerDistance = 22.6;
-        double spinnerRotate = 21;
-        double shippingHubDistance = 14;
+        double spinnerDistance = 22.35;
+        double spinnerRotate = 20;
+        double shippingHubDistance = 15;
         double rotateNinety = 21;
 
         //SCAN CODE- EISHA AND HAMZA
-        mecanum.move_forward_auto(speed,6.5, 10.0 );
+        mecanum.move_forward_auto(speed,6.7, 10.0 );
         // rotate to bring spinner to position
         mecanum.rotate_clock_auto(rotationSpeed, spinnerRotate, 20.0);
         //backward to go to carousel
-        mecanum.move_backward_auto(speed,spinnerDistance , 20.0);
+        mecanum.move_backward_auto(speed * 0.85, spinnerDistance * 1.1, 20.5);
+
+        sleep(100);
+        mecanum.move_backward_auto(0.03, 0.5, 1.0);
         //Spin
         spinner.setPower(-0.58);
         sleep(2600);
@@ -75,33 +78,38 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         //come back to original position
         mecanum.move_forward_auto(speed,spinnerDistance , 20.0);
         //rotate to position the camera to scan
-        mecanum.rotate_anti_clock_auto(rotationSpeed, rotateNinety, 20.0);
+        mecanum.rotate_anti_clock_auto(rotationSpeed, rotateNinety*0.88, 20.0);
         //move back a bit to scan
         mecanum.move_backward_auto(speed,4, 10.0 );
         //Scan for position of the element- eisha and hamza!
 
         //move right a bit then forward a bit to drop
-        mecanum.move_right_auto(speed, shippingHubDistance/1.05, 20.0);
-        mecanum.move_forward_auto(speed, shippingHubDistance*1.41,20.0);
+        mecanum.move_right_auto(speed, shippingHubDistance*1.35, 20.0);
+        mecanum.move_forward_auto(speed, shippingHubDistance*0.85,20.0);
 
         //Raise Arm and wrist to drop
         mecanum.liftArm(-0.4);
-        sleep(4000);
         claw.raiseWrist(0.5);
+        sleep(4800);
+        mecanum.arm.setPower(0.0);
+        sleep(100);
         claw.openClaws();
-        sleep(1000);
+        sleep(500);
         mecanum.liftArm(0.3);
         claw.restWrist();
+        //claw.closeClaws();
+        sleep(2100);
 
-        mecanum.move_backward_auto(speed,shippingHubDistance/0.95, 20.0 );
+        mecanum.move_backward_auto(speed,shippingHubDistance * 0.9, 20.0 );
 
         mecanum.rotate_clock_auto(speed, rotateNinety, 10.0);
 
         double ParkDistance = 34;//going forward into warehouse
         //Increase the speed if we are going over the obstacle
-        mecanum.move_backward_auto(speed*2,ParkDistance*1.05, 25.0 );
+        mecanum.move_backward_auto(speed*2,ParkDistance*1.145, 25.0 );
         //else will need logic to collapse and then move right to park
-        mecanum.move_left_auto(speed, shippingHubDistance*1.1, 20.0);
+        mecanum.move_left_auto(speed, shippingHubDistance*1.75, 20.0);
+        mecanum.move_backward_auto(speed * 0.75,  5.0, 20.5);
 
     }
 

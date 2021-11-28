@@ -88,7 +88,7 @@ public class MAS_TeleOp extends LinearOpMode {
             }
 
             //if(gamepad2.left_bumper) {
-            claw.raiseWrist(gamepad2.right_stick_y);
+             claw.raiseWrist(gamepad2.right_stick_y);
             //}
             //
             //
@@ -97,16 +97,16 @@ public class MAS_TeleOp extends LinearOpMode {
             }*/
 
             if(gamepad2.a) {
-                spinner.setPower(0.74);
+                spinner.setPower(0.55);
             } else if(gamepad2.b) {
-                spinner.setPower(-0.74);
+                spinner.setPower(-0.55);
             } else {
                 spinner.setPower(0);
             }
 
             //spinner.setPower(gamepad2.right_stick_x*0.7);
 
-            mecanumWheels.liftArm(-gamepad2.left_stick_y *0.75 + 0.05);
+             mecanumWheels.liftArm(-gamepad2.left_stick_y *0.75 + 0.05);
             mecanumWheels.move_forwardback_rotate(lefty, righty);
           //  mecanumWheels.middleForwardback(lefty, righty); //adding omni wheel motion in regular mode
 
