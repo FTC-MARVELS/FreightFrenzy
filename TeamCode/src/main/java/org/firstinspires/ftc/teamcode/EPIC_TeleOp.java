@@ -8,6 +8,7 @@ import android.util.Range;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Mecanum_Wheels;
@@ -16,19 +17,30 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 @TeleOp(name = "EPIC_TeleOp")
 public class EPIC_TeleOp extends LinearOpMode {
-    //Configuration used: 6wheelConfig
+    //Configuration used: EPIC4Wheel
     Mecanum_Wheels wheels;
     double lefty = 0.0;
     double leftx = 0.0;
     double righty = 0.0;
     double rightx = 0.0;
-    double liftPower = 0.0;
-    double rotateArm = 0.0;
-    double powerfactor = 0.6;
+//    public DcMotorEx frontright;
+//    public DcMotorEx frontleft;
+//    public DcMotorEx backright;
+//    public DcMotorEx backleft;
+
+
+//    double liftPower = 0.0;
+//    double rotateArm = 0.0;
+//    double powerfactor = 0.6;
 
     @Override
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
+
+//        frontright = hardwareMap.get(DcMotorEx.class,"Frontright");
+//        frontleft = hardwareMap.get(DcMotorEx.class,"Frontleft");
+//        backright = hardwareMap.get(DcMotorEx.class,"Backright");
+//        backleft = hardwareMap.get(DcMotorEx.class,"Backleft");
         wheels = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         wheels.initialize();
@@ -36,17 +48,18 @@ public class EPIC_TeleOp extends LinearOpMode {
         Spinner spinner = new Spinner(hardwareMap);
         wheels.telemetry = telemetry;
         wheels.parent = this;
-        wheels.leftErrorAdjustment = 0.81;
-        wheels.rightErrorAdjustment = 1.2;
-        //double wheelPower = 0.6;
+//        wheels.leftErrorAdjustment = 0.81;
+//        wheels.rightErrorAdjustment = 1.2;
+        double wheelPower = 0.6;
         double carouselPower = 0.58;
         claw.parent = this;
         claw.telemetry = this.telemetry;
         double clawPower = lefty/10;
-        double needPos = clawPower+claw.arm.getPosition();
+        //double needPos = clawPower+claw.arm.getPosition();
 
 
         waitForStart();
+
         //claw.initiateLift();
         while (opModeIsActive()) {
 
@@ -55,56 +68,70 @@ public class EPIC_TeleOp extends LinearOpMode {
 //            //telemetry.update();
 //            //mecanumWheels.initialize();
 //
-            lefty = -gamepad1.left_stick_y*powerfactor;
-            leftx = gamepad1.left_stick_x*powerfactor;
-            righty = gamepad1.right_stick_y*powerfactor;
-            rightx = gamepad1.right_stick_x*powerfactor;
+            lefty = -gamepad1.left_stick_y;
+            leftx = gamepad1.left_stick_x;
+            righty = gamepad1.right_stick_y;
+            rightx = gamepad1.right_stick_x;
 
 
-            liftPower = gamepad2.right_stick_y;
-            rotateArm = gamepad2.left_stick_y;
+//            liftPower = gamepad2.right_stick_y;
+//            rotateArm = gamepad2.left_stick_y;
 
             //lefty = gamepad2.left_stick_y;
-            boolean dpad_left = gamepad1.dpad_left;
-            boolean dpad_right = gamepad1.dpad_right;
+//            boolean dpad_left = gamepad1.dpad_left;
+//            boolean dpad_right = gamepad1.dpad_right;
             boolean b = gamepad1.b;
             boolean x = gamepad1.x;
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
-
-            boolean a2 = gamepad2.a;
-            boolean y2 = gamepad2.y;
+//
+//            boolean a2 = gamepad2.a;
+//            boolean y2 = gamepad2.y;
 //            //if(!dpad_left && !dpad_right)
 //            //else
-            if(dpad_left) {
-                wheels.Collapse();
-                spinner.setPower(0);
+//            if(dpad_left) {
+////                wheels.Collapse();
+//
+//            }
+//            else if(dpad_right) {
+////                wheels.Expand();
+//                spinner.setPower(0);
+//            }
+            if(y)
+            {
+                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.1);
+                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.1);
             }
-            else if(dpad_right) {
-                wheels.Expand();
-                spinner.setPower(0);
+            else if(a)
+            {
+                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.1);
+                //claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()-0.1);
             }
-
             else if(x)
                 spinner.setPower(carouselPower);
             else if(b)
                 spinner.setPower(-carouselPower);
             else{
                 wheels.move(lefty,righty,leftx,rightx);
+//                frontright.setPower(-lefty  +rightx + leftx);
+//                frontleft.setPower(lefty + rightx + leftx);
+//                backright.setPower(-lefty + rightx - leftx);
+//                backleft.setPower(lefty + rightx - leftx);
+
                 spinner.setPower(0);
             }
 
-            boolean leftBumper = gamepad2.left_bumper;
-            boolean rightBumper = gamepad2.right_bumper;
+//            boolean leftBumper = gamepad2.left_bumper;
+//            boolean rightBumper = gamepad2.right_bumper;
 
-            claw.rotate(leftBumper, rightBumper);
-
-            if(y2) {
-                claw.grab();
-            }
-                else{
-                    claw.release();
-            }
+//            claw.rotate(leftBumper, rightBumper);
+//
+//            if(y2) {
+//                claw.grab();
+//            }
+//                else{
+//                    claw.release();
+//            }
 //
 ////            wheels.leftMotorY(-lefty);
 ////            wheels.rightMotorY(-righty);

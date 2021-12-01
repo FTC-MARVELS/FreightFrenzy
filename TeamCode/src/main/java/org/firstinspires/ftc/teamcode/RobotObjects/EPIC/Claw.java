@@ -12,8 +12,10 @@ public class Claw {
     //Configuration used: 6wheelConfig
     public Servo clawFinger1;
     public Servo clawFinger2;
-    public Servo arm;
-    public DcMotorEx liftMotor;
+    public Servo clawBucket1;
+    public Servo clawBucket2;
+    public DcMotorEx arm;
+    //public DcMotorEx liftMotor;
 
     public double armInit = 0.0;
     public double finger1Init = 0.4;
@@ -24,7 +26,7 @@ public class Claw {
     public double finger2Min = 0.0;
     public double finger1Max = 0.7;
     public double finger2Max = 0.7;
-    public double liftPower = -0.6;
+    public double liftPower = -0.2;
     public LinearOpMode parent;
     public Telemetry telemetry;
     public double pos = 0.0;
@@ -32,26 +34,28 @@ public class Claw {
     public Claw(HardwareMap hardwareMap) {
         clawFinger1 = hardwareMap.get(Servo.class,"finger1");
         clawFinger2 = hardwareMap.get(Servo.class,"finger2");
-        arm = hardwareMap.get(Servo.class,"arm");
-        liftMotor = hardwareMap.get(DcMotorEx.class,"Lift");
+        clawBucket1 = hardwareMap.get(Servo.class,"bucket1");
+        clawBucket2 = hardwareMap.get(Servo.class,"bucket2");
+        arm = hardwareMap.get(DcMotorEx.class,"arm");
+        //liftMotor = hardwareMap.get(DcMotorEx.class,"Lift");
 
     }
 
     public void initiateLift(){
         //int currentPosition = liftMotor.getCurrentPosition();
         //int targetPosition = 6
-        telemetry.addData("Postion lift 2:%d", liftMotor.getCurrentPosition());
+        telemetry.addData("Postion lift 2:%d", arm.getCurrentPosition());
         telemetry.update();
-        liftMotor.setPower(liftPower);
-        parent.sleep(6000);
-        liftMotor.setPower(0);
-        telemetry.addData("Postion lift 2:%d", liftMotor.getCurrentPosition());
+        arm.setPower(liftPower);
+        parent.sleep(1000);
+        arm.setPower(0);
+        telemetry.addData("Postion lift 2:%d", arm.getCurrentPosition());
         telemetry.update();
         //arm.setPosition(0.5);
-        liftMotor.setPower(-liftPower);
-        parent.sleep(3500);
-        liftMotor.setPower(0);
-        telemetry.addData("Postion lift 2:%d", liftMotor.getCurrentPosition());
+        arm.setPower(-liftPower);
+        parent.sleep(1000);
+        arm.setPower(0);
+        telemetry.addData("Postion lift 2:%d", arm.getCurrentPosition());
         telemetry.update();
     }
 
@@ -62,35 +66,35 @@ public class Claw {
     public void lift(double power)
     {
 
-        liftMotor.setPower(power);
+        arm.setPower(power);
     }
 
-    public void swing(double position){
-        pos = position;
-        arm.setPosition(pos);
-        parent.sleep(750);
-    }
+//    public void swing(double position){
+//        pos = position;
+//        arm.setPosition(pos);
+//        parent.sleep(750);
+//    }
 
-    public void rotate(double power)
-    {
-        //arm.setPosition(power);
-        if(power<0) {
-            pos = pos - 0.1;
-            if (pos < -1.5)
-                pos = -1.5;
-        }
-        else if (power > 0){
-        pos = pos + 0.1;
-        if (pos >1.5)
-            pos = 1.5;
-        }
-        arm.setPosition(pos);
-
-    }
+//    public void rotate(double power)
+//    {
+//        //arm.setPosition(power);
+//        if(power<0) {
+//            pos = pos - 0.1;
+//            if (pos < -1.5)
+//                pos = -1.5;
+//        }
+//        else if (power > 0){
+//        pos = pos + 0.1;
+//        if (pos >1.5)
+//            pos = 1.5;
+//        }
+//        arm.setPosition(pos);
+//
+//    }
 
     public void rest()
     {
-        liftMotor.setPower(-liftPower);
+        arm.setPower(-liftPower);
     }
 
     public void grab()

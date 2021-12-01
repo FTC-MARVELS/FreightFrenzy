@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -18,6 +19,8 @@ public class Mecanum_Wheels  {
     public DcMotorEx middleright;
     public DcMotorEx middleleft;
     public DcMotorEx arm;
+    public Servo rightFinger;
+    public Servo leftFinger;
 
     public boolean IsAutonomous = false;
     public boolean IsMASAutonomous = false;

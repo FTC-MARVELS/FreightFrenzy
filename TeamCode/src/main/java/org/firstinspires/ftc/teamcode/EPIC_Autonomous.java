@@ -36,7 +36,7 @@ public class EPIC_Autonomous extends LinearOpMode {
         }
         //negative power to swing out
         double armpower = 1.5;
-        claw.swing(armpower);
+        //claw.swing(armpower);
         //claw.arm.setPosition(1.0);
         //sleep(500);
         //forward
