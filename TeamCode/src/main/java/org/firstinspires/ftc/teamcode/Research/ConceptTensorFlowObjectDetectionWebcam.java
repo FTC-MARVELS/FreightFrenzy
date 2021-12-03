@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.Research;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -64,11 +65,16 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
    *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
    *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
    */
-    private static final String TFOD_MODEL_ASSET = "red_carousel_model.tflite";
+    //private static final String TFOD_MODEL_ASSET = "sample_model.tflite";
+    //private static final String TFOD_MODEL_ASSET = "model.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_unquant.tflite";
     private static final String[] LABELS = {
-      "Left",
-      "Middle",
-      "Right"
+      "left",
+          //"emptymr",
+      "middle",
+         // "emptylr",
+      "right" //,
+          //"emptylm"
     };
 
     /*
@@ -118,12 +124,13 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tfod.setZoom(2.5, 16.0/9.0);
+            //tfod.setZoom(2.5, 16.0/9.0);
         }
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
+        FtcDashboard.getInstance().startCameraStream(vuforia, 0);
         waitForStart();
 
         if (opModeIsActive()) {
@@ -158,7 +165,8 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          */
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
@@ -176,9 +184,9 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-       tfodParameters.minResultConfidence = 0.8f;
-       tfodParameters.isModelTensorFlow2 = true;
-       tfodParameters.inputSize = 320;
+       tfodParameters.minResultConfidence = 0.6f;
+//       tfodParameters.isModelTensorFlow2 = true;
+//       tfodParameters.inputSize = 320;
        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
