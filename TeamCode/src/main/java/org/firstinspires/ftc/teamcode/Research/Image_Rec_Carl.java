@@ -32,11 +32,11 @@ public class Image_Rec_Carl extends LinearOpMode {
 //    private static final String TFOD_MODEL_FILE = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\red_carousel_model.tflite";
 //    private static final String TFOD_MODEL_LABELS = "C:\\Users\\aasiy\\StudioProjects\\FreightFrenzy\\TeamCode\\src\\main\\res\\raw\\locationLabels.txt";
     private static final String TFOD_MODEL_ASSET = "red_carousel_model.tflite";
-    private static final String TFOD_MODEL_LABELS = "locationLabels.txt";
+    //private static final String TFOD_MODEL_LABELS = "locationLabels.txt";
     private String[] labels = {
-            "Left",
-            "Middle",
-            "Right"
+            "left",
+            "middle",
+            "right"
     };
     WebcamName webcamName = null;
 
@@ -70,34 +70,20 @@ public class Image_Rec_Carl extends LinearOpMode {
     @Override
     public void runOpMode() {
         // read the label map text files.
-        readLabels();
+        //readLabels();
 
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
-        initTfod();
+
         FtcDashboard.getInstance().startCameraStream(vuforia, 0);
+
+        initTfod();
 
         /**
          * Activate TensorFlow Object Detection before we wait for the start command.
          * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
          **/
-        if (tfod != null) {
-            tfod.activate();
-            telemetry.addData(">", "Activated");
-            sleep(2000);
-            telemetry.update();
-
-            // The TensorFlow software will scale the input images from the camera to a lower resolution.
-            // This can result in lower detection accuracy at longer distances (> 55cm or 22").
-            // If your target is at distance greater than 50 cm (20") you can adjust the magnification value
-            // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
-            // should be set to the value of the images used to create the TensorFlow Object Detection model
-            // (typically 1.78 or 16/9).
-
-            // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
-            //tfod.setZoom(2.5, 1.78);
-        }
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
@@ -107,6 +93,21 @@ public class Image_Rec_Carl extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 if (tfod != null) {
+                    tfod.activate();
+                    // The TensorFlow software will scale the input images from the camera to a lower resolution.
+                    // This can result in lower detection accuracy at longer distances (> 55cm or 22").
+                    // If your target is at distance greater than 50 cm (20") you can adjust the magnification value
+                    // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
+                    // should be set to the value of the images used to create the TensorFlow Object Detection model
+                    // (typically 16/9).
+                    //tfod.setZoom(2.5, 16.0/9.0);
+                    telemetry.addData(">", "Activated");
+                    sleep(2000);
+                    telemetry.update();
+
+                }
+
+                if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -115,12 +116,31 @@ public class Image_Rec_Carl extends LinearOpMode {
 
                         // step through the list of recognitions and display boundary info.
                         int i = 0;
+                        String objectPosition = "0";
                         for (Recognition recognition : updatedRecognitions) {
+//                            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+//                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+//                                    recognition.getLeft(), recognition.getTop());
+//                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+//                                    recognition.getRight(), recognition.getBottom());
+//                        }
                             telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                             telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                                     recognition.getLeft(), recognition.getTop());
                             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                     recognition.getRight(), recognition.getBottom());
+                            i++;
+
+                            // check label to see if the camera now sees a Duck
+                            if (recognition.getLabel().equals("left")) {
+                                objectPosition = "1";
+                                telemetry.addData("Object Detected", "Left");
+                            } else if (recognition.getLabel().equals("middle")) {
+                                objectPosition = "2";
+                                telemetry.addData("Object Detected", "Middle");
+                            } else {
+                                objectPosition = "3";
+                            }
                         }
                         telemetry.update();
                     }
@@ -174,7 +194,12 @@ public class Image_Rec_Carl extends LinearOpMode {
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(vparameters);
-        }
+
+        telemetry.addData(">", "Vuforia %s", vuforia);
+        telemetry.update();
+        sleep(2000);
+
+    }
 
     /**
      * Initialize the TensorFlow Object Detection engine.
@@ -182,18 +207,27 @@ public class Image_Rec_Carl extends LinearOpMode {
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+
+        telemetry.addData(">", "Loading TFOD");
+        telemetry.update();
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.6f;
+        tfodParameters.minResultConfidence = 0.1f;
+        //tfodParameters.isModelTensorFlow2 = true;
+        //tfodParameters.inputSize = 320;
+        telemetry.addData(">", "Setting TFOD Params");
+        telemetry.update();
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        if(labels != null) {
+        telemetry.addData(">", "TFOD Initialized %s" , tfod);
+        telemetry.update();
+        //if(labels != null) {
             //tfod.loadModelFromFile(TFOD_MODEL_FILE, labels);
-            tfod.loadModelFromAsset(TFOD_MODEL_ASSET, labels);
-            telemetry.addData(">", "Loaded assets from file");
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, labels);
+            telemetry.addData(">", "Loaded assets from model");
             telemetry.update();
             sleep(1000);
 
-        }
-        telemetry.addData(">", "After loading assets %s", tfod.getRecognitions());
+        //}
+        telemetry.addData(">", "After loading assets %s", tfod.getUpdatedRecognitions());
         telemetry.update();
         sleep(2000);
 
@@ -202,7 +236,7 @@ public class Image_Rec_Carl extends LinearOpMode {
     /**
      * Read the labels for the object detection model from a file.
      */
-    private void readLabels() {
+    /*private void readLabels() {
         ArrayList<String> labelList = new ArrayList<>();
 
         // try to read in the the labels.
@@ -215,7 +249,8 @@ public class Image_Rec_Carl extends LinearOpMode {
                 // instead of from the labelmap.txt file. if you build and run that example project, you'll see that
                 // the label list begins with the label "person" and does not include the first line of the labelmap.txt file ("???").
                 // i suspect that the first line of the labelmap.txt file might be reserved for some future metadata schema
-                // (or that the generated label map file is incorrect).
+                // (or that the generated label
+                 map file is incorrect).
                 // for now, skip the first line of the label map text file so that your label list is in sync with the embedded label list in the .tflite model.
                 if(index == 0) {
                     // skip first line.
@@ -239,7 +274,7 @@ public class Image_Rec_Carl extends LinearOpMode {
         } else {
             RobotLog.vv("readLabels()", "No labels read!");
         }
-    }
+    }*/
 
     // Function to convert ArrayList<String> to String[]
     private String[] getStringArray(ArrayList<String> arr)

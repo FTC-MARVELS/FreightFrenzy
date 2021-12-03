@@ -5,15 +5,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Claw {
     //Configuration used: 6wheelConfig
-    public Servo leftfinger;
-    public Servo wrist;
-    public Servo rightfinger;
+    public Servo leftclaw;
+    public Servo rightclaw;
+    public Servo rightwrist;
+    public Servo leftwrist;
     public Servo arm;
 
     public double armInit = 0.0;
-    public double leftFingerInit = 0.4;
-    public double wristInit = 0.4;
-    public double rightFingerInit = 0.4;
+    public double leftClawInit = 1.0;
+    public double rightWristInit = 0.0;
+    public double rightClawInit = 0.0;
+    public double leftWristInit = 0.0;
     public double armMin = 0.0;
     public double armMax = 0.5;
     public double finger1Min = 0.2;
@@ -24,46 +26,50 @@ public class Claw {
     public double finger3Max = 0.4;
 
     public Claw(HardwareMap hardwareMap) {
-        leftfinger = hardwareMap.get(Servo.class,"leftfinger");
-        wrist = hardwareMap.get(Servo.class,"wrist");
-        rightfinger = hardwareMap.get(Servo.class,"rightfinger");
-        leftfinger.setPosition(leftFingerInit);
-        wrist.setPosition(wristInit);
-        rightfinger.setPosition(rightFingerInit);
+        rightwrist = hardwareMap.get(Servo.class,"rightwrist");
+        leftwrist = hardwareMap.get(Servo.class,"leftwrist");
+        rightclaw = hardwareMap.get(Servo.class,"rightclaw");
+        leftclaw = hardwareMap.get(Servo.class,"leftclaw");
+        //rightwrist.setPosition(rightWristInit);
+        //leftwrist.setPosition(leftWristInit);
+        rightclaw.setPosition(rightClawInit);
+        leftclaw.setPosition(leftClawInit);
     }
 
-    public void raiseWrist()
+    public void raiseWrist(double power)
     {
-        wrist.setPosition(1);
+        rightwrist.setPosition(-power);
+        leftwrist.setPosition(power);
     }
 
     public void restWrist()
     {
-        wrist.setPosition(0);
+        rightwrist.setPosition(0);
+        leftwrist.setPosition(0);
     }
 
     public void grab()
     {
         //double fingerPosition = Range.clip()
-        leftfinger.setPosition(finger1Min);
-        wrist.setPosition(finger2Min);
-        rightfinger.setPosition(finger3Min);
+        //leftclaw.setPosition(finger1Min);
+        //rightwrist.setPosition(finger2Min);
+        //rightclaw.setPosition(finger3Min);
     }
 
     public void release() {
-        leftfinger.setPosition(finger1Max);
-        wrist.setPosition(finger2Max);
-        rightfinger.setPosition(finger3Max);
+        //leftclaw.setPosition(finger1Max);
+        //rightwrist.setPosition(finger2Max);
+        //rightclaw.setPosition(finger3Max);
     }
 
-    public void open() {
-        leftfinger.setPosition(0.5);
-        rightfinger.setPosition(1);
+    public void openClaws() {
+        leftclaw.setPosition(0.6);
+        rightclaw.setPosition(0.4);
     }
 
-    public void close() {
-        leftfinger.setPosition(0.7);
-        rightfinger.setPosition(0.7);
+    public void closeClaws() {
+        leftclaw.setPosition(0.85);
+        rightclaw.setPosition(0.1);
     }
 }
 
