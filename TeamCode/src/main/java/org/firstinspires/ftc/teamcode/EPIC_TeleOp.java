@@ -49,8 +49,8 @@ public class EPIC_TeleOp extends LinearOpMode {
         Spinner spinner = new Spinner(hardwareMap);
         wheels.telemetry = telemetry;
         wheels.parent = this;
-//        wheels.leftErrorAdjustment = 0.81;
-//        wheels.rightErrorAdjustment = 1.2;
+        wheels.leftErrorAdjustment = 0.5;
+        wheels.rightErrorAdjustment = 0.5;
         double wheelPower = 0.6;
         double carouselPower = 0.58;
         claw.parent = this;
@@ -87,8 +87,9 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean a = gamepad1.a;
 //
             boolean a2 = gamepad2.a;
-            boolean y2 = gamepad2.y;
             boolean b2 = gamepad2.b;
+            boolean y2 = gamepad2.y;
+            boolean x2 = gamepad2.x;
 //            //if(!dpad_left && !dpad_right)
 //            //else
 //            if(dpad_left) {
@@ -106,6 +107,13 @@ public class EPIC_TeleOp extends LinearOpMode {
                 claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.005);
 
             }
+            else if(x2)
+            {
+
+                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()-0.005);
+                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()+0.005);
+
+            }
             else if(a2)
             {
                 claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.005);
@@ -116,7 +124,7 @@ public class EPIC_TeleOp extends LinearOpMode {
             else if(b2) {
                 //spinner.setPower(-carouselPower);
                 claw.clawBucket1.setPosition(claw.clawBucket1.getPosition() - 0.001);
-                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() - 0.001);
+                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() + 0.001);
             }
             else if(lefty2!=0){
                 claw.lift(lefty2);
@@ -134,7 +142,7 @@ public class EPIC_TeleOp extends LinearOpMode {
             else if(b)
                 spinner.setPower(-carouselPower);
             else {
-                wheels.move(lefty,righty,leftx,rightx);
+                wheels.move(lefty,righty,-leftx,rightx);
                 spinner.setPower(0);
             }
 
@@ -163,8 +171,8 @@ public class EPIC_TeleOp extends LinearOpMode {
             telemetry.addData("lefty", "%.2f", lefty);
             telemetry.addData("leftx", "%.2f", leftx);
 
-            telemetry.addData("rightx", "%.2f", rightx);
-            telemetry.addData("righty", "%.2f", righty);
+            telemetry.addData("rightx", "%.2f", gamepad1.right_stick_x);
+            telemetry.addData("righty", "%.2f", gamepad1.right_stick_y);
 
             telemetry.update();
         }
