@@ -68,7 +68,7 @@ public class EPIC_TeleOp extends LinearOpMode {
 //            //telemetry.update();
 //            //mecanumWheels.initialize();
 //
-            lefty = -gamepad1.left_stick_y;
+            lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
@@ -99,8 +99,11 @@ public class EPIC_TeleOp extends LinearOpMode {
 //            }
             if(y)
             {
-                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.1);
-                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.1);
+                //claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.1);
+                //claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.1);
+                claw.clawFinger1.setPosition(0.5);
+                claw.clawFinger2.setPosition(0.5);
+
             }
             else if(a)
             {
