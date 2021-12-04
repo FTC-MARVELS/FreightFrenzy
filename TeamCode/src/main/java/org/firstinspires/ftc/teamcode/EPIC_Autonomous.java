@@ -40,17 +40,17 @@ public class EPIC_Autonomous extends LinearOpMode {
         //claw.arm.setPosition(1.0);
         //sleep(500);
         //forward
-        mecanum.encoderDrive(speed,15,15,15,15,15,15, 2.0);
+        //mecanum.encoderDrive(speed,15,15,15,15,15,15, 2.0);
         //backward
         //mecanum.encoderDrive(speed,-5,-5,-5,-5,-5,-5, 1.0);
         //left
-        mecanum.encoderDrive(speed,-40,0,40,40,0,-40, 4.0);
+        //mecanum.encoderDrive(speed,-40,0,40,40,0,-40, 4.0);
         //right
         //mecanum.encoderDrive(speed,24,0,-24,-24,0,24, 3.0);
         //left turn
         //mecanum.encoderDrive(speed,-6,0,-6,6,0,6, 1.0);
         //right turn
-        mecanum.encoderDrive(speed,6,0,6,-6,0,-6, 1.0);
+        //mecanum.encoderDrive(speed,6,0,6,-6,0,-6, 1.0);
         //contract
         //mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
         //expand
