@@ -20,6 +20,7 @@ public class EPIC_TeleOp extends LinearOpMode {
     //Configuration used: EPIC4Wheel
     Mecanum_Wheels wheels;
     double lefty = 0.0;
+    double lefty2 = 0.0;
     double leftx = 0.0;
     double righty = 0.0;
     double rightx = 0.0;
@@ -77,7 +78,7 @@ public class EPIC_TeleOp extends LinearOpMode {
 //            liftPower = gamepad2.right_stick_y;
 //            rotateArm = gamepad2.left_stick_y;
 
-            //lefty = gamepad2.left_stick_y;
+            lefty2 = gamepad2.left_stick_y;
 //            boolean dpad_left = gamepad1.dpad_left;
 //            boolean dpad_right = gamepad1.dpad_right;
             boolean b = gamepad1.b;
@@ -85,8 +86,9 @@ public class EPIC_TeleOp extends LinearOpMode {
             boolean y = gamepad1.y;
             boolean a = gamepad1.a;
 //
-//            boolean a2 = gamepad2.a;
-//            boolean y2 = gamepad2.y;
+            boolean a2 = gamepad2.a;
+            boolean y2 = gamepad2.y;
+            boolean b2 = gamepad2.b;
 //            //if(!dpad_left && !dpad_right)
 //            //else
 //            if(dpad_left) {
@@ -97,27 +99,40 @@ public class EPIC_TeleOp extends LinearOpMode {
 ////                wheels.Expand();
 //                spinner.setPower(0);
 //            }
-            if(y)
+            if(y2)
             {
-                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.1);
-                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.1);
+                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.005);
+                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.005);
             }
-            else if(a)
+            else if(a2)
             {
-                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.1);
-                //claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()-0.1);
+                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.005);
+                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()-0.005);
             }
-            else if(x)
-                spinner.setPower(carouselPower);
-            else if(b)
-                spinner.setPower(-carouselPower);
-            else{
-                wheels.move(lefty,righty,leftx,rightx);
+            //else if(x)
+                //spinner.setPower(carouselPower);
+            else if(b2) {
+                //spinner.setPower(-carouselPower);
+                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition() - 0.001);
+                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() - 0.001);
+            }
+            else if(lefty2!=0){
+                claw.lift(lefty2);
+                //wheels.move(lefty,righty,leftx,rightx);
 //                frontright.setPower(-lefty  +rightx + leftx);
 //                frontleft.setPower(lefty + rightx + leftx);
 //                backright.setPower(-lefty + rightx - leftx);
 //                backleft.setPower(lefty + rightx - leftx);
 
+                //spinner.setPower(0);
+            }
+
+            if(x)
+                spinner.setPower(carouselPower);
+            else if(b)
+                spinner.setPower(-carouselPower);
+            else {
+                wheels.move(lefty,righty,leftx,rightx);
                 spinner.setPower(0);
             }
 
