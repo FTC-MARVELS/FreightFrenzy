@@ -19,7 +19,6 @@ public class Mecanum_Wheels {
     //public DcMotorEx xRail;
 
     public boolean IsAutonomous = false;
-    public boolean IsMASAutonomous = false;
 
     public double leftErrorAdjustment = 1.0;
     public double rightErrorAdjustment = 1.0;
@@ -54,7 +53,11 @@ public class Mecanum_Wheels {
         frontleft.setPower(reset);
         backleft.setPower(reset);
         backright.setPower(reset);
-        //backright.setDirection(DcMotorSimple.Direction.REVERSE);
+        backright.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        backleft.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //middleright.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -85,48 +88,6 @@ public class Mecanum_Wheels {
 
             backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-
-        if(IsMASAutonomous) {
-            {
-//            frontright.setDirection(DcMotorSimple.Direction.REVERSE);
-//            middleright.setDirection(DcMotorSimple.Direction.REVERSE);
-//            backright.setDirection(DcMotorSimple.Direction.REVERSE);
-
-                frontleft.setDirection(DcMotor.Direction.FORWARD);
-                frontright.setDirection(DcMotor.Direction.REVERSE);
-
-                backright.setDirection(DcMotor.Direction.FORWARD);
-                backleft.setDirection(DcMotor.Direction.FORWARD);
-
-                frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-                frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-        }
-    }
-   public void liftXrail(double power) {
-        //xRail.setPower(power);
-
-   }
-
-    public void TestMechanumWheels(double power) {
-        frontleft.setPower(power);
-        backleft.setPower(power);
-        frontright.setPower(-power);
-        backright.setPower(-power);
-
-
     }
 
 
@@ -210,307 +171,28 @@ public class Mecanum_Wheels {
         //  sleep(250);   // optional pause after each move
     }
 
-    public void moveY(int distance){
-        double circumference = mecanumWheelCircumference; //inches
-        double rotations = (double) distance/circumference;
-        double Ticks = (int)(rotations * 537.6);
-        int direction = 1;
-        if (distance<0)
-            direction = -1;
-        frontleft.setTargetPosition((int)Ticks*direction);
-
-        backleft.setTargetPosition((int)Ticks*direction);
-        frontright.setTargetPosition(-(int)Ticks*direction);
-
-        backright.setTargetPosition(-(int)Ticks*direction);
-        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontleft.setVelocity(velocity*direction);
-        //middleleft.setVelocity(velocity*direction);
-        backleft.setVelocity(velocity*direction);
-        frontright.setVelocity(-velocity*direction);
-        //middleright.setVelocity(-velocity*direction);
-        backright.setVelocity(-velocity*direction);
-    }
-
-
-
-    public void TestOmniWheelsBackward(double power) {
-        //middleleft.setDirection(DcMotorSimple.Direction.REVERSE);
-        //middleleft.setPower(power);
-        //middleright.setPower(power - 0.4);
+    public void move2 (double lefty, double righty, double leftx, double rightx){
 
     }
-    public void TurnLeft() {
-        frontleft.setPower(-0.6*leftErrorAdjustment);
-        backleft.setPower(-0.6*leftErrorAdjustment);
-        frontright.setPower(-0.6*rightErrorAdjustment);
-        backright.setPower(-0.6*rightErrorAdjustment);
-    }
-    public void TurnRight() {
-        frontleft.setPower(0.6*leftErrorAdjustment);
-        backleft.setPower(0.6*leftErrorAdjustment);
-        frontright.setPower(0.6*rightErrorAdjustment);
-        backright.setPower(0.6*rightErrorAdjustment);
-    }
 
-    public void Expand() {
-        //frontleft.setPower(-0.6);
-        //backleft.setPower(0.6);
-        frontright.setPower(0.6);
-        backright.setPower(-0.6);
-
-    }
     public void move(double lefty, double righty, double leftx, double rightx){
-//        frontright.setPower(lefty  -rightx - leftx);
+//        frontright.setPower((lefty  -rightx - leftx));
 //        frontleft.setPower(-lefty + rightx + leftx);
 //        backright.setPower(lefty - rightx + leftx);
 //        backleft.setPower(-lefty + rightx - leftx);
 //        //middleright.setPower(lefty - rightx);
 //        //middleleft.setPower(-lefty + rightx);
-//        frontright.setPower((-lefty  +rightx + leftx)*rightErrorAdjustment);
-//        frontleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
-//        backright.setPower((-lefty + rightx - leftx)*rightErrorAdjustment);
+        //frontright.setPower((lefty  +rightx + leftx)*rightErrorAdjustment);
+//        frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment);
+//        backright.setPower((lefty + rightx - leftx)*rightErrorAdjustment);
 //        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
 
-        frontright.setPower((-lefty  +rightx + leftx));
-        frontleft.setPower((lefty + rightx + leftx));
-        backright.setPower((-lefty + rightx - leftx));
-        backleft.setPower((-lefty + rightx - leftx));
+        frontright.setPower((-lefty  +rightx + leftx)*rightErrorAdjustment);
+        frontleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
+        backright.setPower((-lefty + rightx - leftx)*rightErrorAdjustment);
+        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
         //middleright.setPower((-lefty + rightx)*rightErrorAdjustment);
         //middleleft.setPower((lefty + rightx)*leftErrorAdjustment);
 
     }
-
-    public void Collapse() {
-        //frontleft.setPower(0.6);
-        //backleft.setPower(-0.6);
-        frontright.setPower(-0.6);
-        backright.setPower(0.6);
-
-    }
-
-    //moveForward for TeleOp
-    //The left and right powers are controlled by the left and right y axes
-    public void move_forwardback_rotate( double leftPower, double rightPower){
-        frontleft.setPower(leftPower*leftErrorAdjustment);
-        backleft.setPower(leftPower*leftErrorAdjustment);
-        frontright.setPower(-rightPower*rightErrorAdjustment);
-        backright.setPower(rightPower*rightErrorAdjustment);
-        //middleleft.setPower(-leftPower*leftErrorAdjustment);
-        //middleright.setPower(rightPower*rightErrorAdjustment);
-    }
-
-    //moveSide for TeleOp
-    //The left and right powers are controlled by the left and right x axes
-    public void move_side( double leftPower, double rightPower){
-        frontleft.setPower(leftPower*leftErrorAdjustment);
-        backleft.setPower(-leftPower*leftErrorAdjustment);
-        frontright.setPower(rightPower*rightErrorAdjustment);
-        backright.setPower(rightPower*rightErrorAdjustment);
-    }
-
-    public void move_right_auto(double speed, double distance, double timeOut) {
-        encoderDrive(speed,-distance,0,distance,distance,0,-distance, timeOut);
-    }
-
-    public void move_left_auto(double speed, double distance, double timeOut) {
-        encoderDrive(speed,distance,0,-distance,-distance,0,distance, timeOut);
-    }
-
-    public void rotate_anticlock_auto(double speed, double distance, double timeOut) {
-        encoderDrive(speed,-distance,0,-distance,distance,0,distance, timeOut);
-    }
-
-    public void rotate_clock_auto(double speed, double distance, double timeOut) {
-        encoderDrive(speed,distance,0,distance,-distance,0,-distance, timeOut);
-    }
-    public void move_forward_auto(double speed, double distance, double timeOut){
-        encoderDrive(speed,distance,distance,distance,distance,distance, distance, timeOut);
-    }
-
-    public void move_backward_auto(double speed, double distance, double timeOut){
-        encoderDrive(speed,-distance,-distance,-distance,-distance,-distance, -distance, timeOut);
-    }
-
-//    public void moveForward(double power){
-//        frontleft.setPower(power);
-//        backleft.setPower(power);
-//        frontright.setPower(-power);
-//        backright.setPower(-power);
-//        //middleleft.setPower(power);
-//        //middleright.setPower(-power);
-//    }
-//
-//    public void moveBackward(double power){
-//        frontleft.setPower(-power);
-//        backleft.setPower(-power);
-//        frontright.setPower(power);
-//        backright.setPower(power);
-//        //middleleft.setPower(-power);
-//        //middleright.setPower(power);
-//    }
-
-    public void moveY(double power){
-        frontleft.setPower(-power*leftErrorAdjustment);
-        backleft.setPower(-power*leftErrorAdjustment);
-        frontright.setPower(power*rightErrorAdjustment);
-        backright.setPower(power*rightErrorAdjustment);
-        //middleleft.setPower(-power*leftErrorAdjustment);
-        //middleright.setPower(power*rightErrorAdjustment);
-    }
-    public void moveX(double power){
-        frontleft.setPower(power*leftErrorAdjustment);
-        backleft.setPower(-power*leftErrorAdjustment);
-        frontright.setPower(power*rightErrorAdjustment);
-        backright.setPower(-power*rightErrorAdjustment);
-        //middleleft.setPower(-power*leftErrorAdjustment);
-        //middleright.setPower(-power*rightErrorAdjustment);
-    }
-//    public void moveLeft(double power){
-//        frontleft.setPower(-power);
-//        backleft.setPower(power);
-//        frontright.setPower(-power);
-//        backright.setPower(power);
-//        ////middleleft.setPower(-power);
-//        ////middleright.setPower(-power);
-//    }
-//
-//    public void moveRight(double power){
-//        frontleft.setPower(power);
-//        backleft.setPower(-power);
-//        frontright.setPower(power);
-//        backright.setPower(-power);
-//        ////middleleft.setPower(power);
-//        ////middleright.setPower(power);
-//    }
-
-
-    public void moveForward() {
-        frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontright.setTargetPosition(537);
-        //middleright.setTargetPosition(537);
-        backright.setTargetPosition(537);
-        frontleft.setTargetPosition(537);
-        //middleleft.setTargetPosition(537);
-        backleft.setTargetPosition(537);
-
-
-        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontright.setVelocity(700);
-        //middleright.setVelocity(700);
-        backright.setVelocity(700);
-        frontleft.setVelocity(700);
-        //middleleft.setVelocity(700);
-        backleft.setVelocity(700);
-    }
-    public void moveLeft() {
-        frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-        frontright.setTargetPosition(537);
-        //middleright.setTargetPosition(537);
-        backright.setTargetPosition(537);
-        frontleft.setTargetPosition(-537);
-        //middleleft.setTargetPosition(-537);
-        backleft.setTargetPosition(-537);
-
-        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontright.setVelocity(700);
-        //middleright.setVelocity(700);
-        backright.setVelocity(700);
-        frontleft.setVelocity(-700);
-        //middleleft.setVelocity(-700);
-        backleft.setVelocity(-700);
-
-    }
-    public void moveRight() {
-
-        frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-        frontright.setTargetPosition(-537);
-        //middleright.setTargetPosition(-537);
-        backright.setTargetPosition(-537);
-        frontleft.setTargetPosition(537);
-        //middleleft.setTargetPosition(537);
-        backleft.setTargetPosition(537);
-
-        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontright.setVelocity(-700);
-        //middleright.setVelocity(-700);
-        backright.setVelocity(-700);
-        frontleft.setVelocity(700);
-        //middleleft.setVelocity(700);
-        backleft.setVelocity(700);
-    }
-    public void moveCollaspe() {
-        frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
-        frontright.setTargetPosition(537);
-        //middleright.setTargetPosition(0);
-        backright.setTargetPosition(-537);
-        frontleft.setTargetPosition(537);
-        //middleleft.setTargetPosition(0);
-        backleft.setTargetPosition(-537);
-
-        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //middleleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontright.setVelocity(700);
-        //middleright.setVelocity(0);
-        backright.setVelocity(-700);
-        frontleft.setVelocity(700);
-        //middleleft.setVelocity(0);
-        backleft.setVelocity(-700);
-
-    }
-
 }

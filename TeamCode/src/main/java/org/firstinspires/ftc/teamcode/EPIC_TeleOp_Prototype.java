@@ -66,11 +66,11 @@ public class EPIC_TeleOp_Prototype extends LinearOpMode {
 //            //if(!dpad_left && !dpad_right)
 //            //else
             if(dpad_left) {
-                wheels.Collapse();
+                //wheels.Collapse();
                 spinner.setPower(0);
             }
             else if(dpad_right) {
-                wheels.Expand();
+                //wheels.Expand();
                 spinner.setPower(0);
             }
             else if(y)
