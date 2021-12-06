@@ -1,0 +1,18 @@
+Control Hub
+DC Motors
+0: Frontright
+1: Middleright
+2: Backright
+3: Lift
+
+Servos
+0: finger1
+1: finger2
+2: arm
+
+Expansion Hub
+DC Motors
+0: Frontleft
+1: Middleleft
+2: Backleft
+3: carouselMotor

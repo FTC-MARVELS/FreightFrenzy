@@ -16,6 +16,14 @@ apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 
 android {
+
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src\\main\\assets'
+            }
+        }
+    }
     signingConfigs {
         release {
             storeFile file('libs\\ftc.debug.keystore')
@@ -29,6 +37,4 @@ android {
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
-
-    implementation (group: 'com.acmerobotics.dashboard', name: 'dashboard', version :'0.4.0', ext:'aar')
 }

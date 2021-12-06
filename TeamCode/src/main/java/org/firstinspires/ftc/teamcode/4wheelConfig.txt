@@ -1,0 +1,23 @@
+Control Hub
+        DC Motors
+        0: frontRight
+        1: frontLeft
+        2: backRight
+        3: backLeft
+
+        Servos
+        0: finger1
+        1: bucket1
+
+
+
+Expansion Hub
+    DC Motors
+    0: arm
+    1: carouselMotor
+
+    Servos
+    0: finger2
+    1: bucket2
+
+ http://192.168.43.1:8080/
