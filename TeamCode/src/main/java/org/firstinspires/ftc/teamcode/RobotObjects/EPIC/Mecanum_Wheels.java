@@ -187,10 +187,19 @@ public class Mecanum_Wheels {
 //        backright.setPower((lefty + rightx - leftx)*rightErrorAdjustment);
 //        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
 
-        frontright.setPower((-lefty  +rightx + leftx)*rightErrorAdjustment);
-        frontleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
-        backright.setPower((-lefty + rightx - leftx)*rightErrorAdjustment);
-        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
+/////        frontright.setPower((-lefty  +rightx + leftx)*rightErrorAdjustment);
+/////       frontleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
+/////        backright.setPower((-lefty + rightx - leftx)*rightErrorAdjustment);
+/////        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
+
+           frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
+             frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
+             backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
+             backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
+
+
+
+
         //middleright.setPower((-lefty + rightx)*rightErrorAdjustment);
         //middleleft.setPower((lefty + rightx)*leftErrorAdjustment);
 
