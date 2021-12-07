@@ -5,14 +5,20 @@ the robot just like an Rc Car.
 package org.firstinspires.ftc.teamcode;
 
 import android.util.Range;
-
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 
 @TeleOp(name = "EPIC_TeleOp")
@@ -34,8 +40,25 @@ public class EPIC_TeleOp extends LinearOpMode {
 //    double rotateArm = 0.0;
 //    double powerfactor = 0.6;
 
+    private static void logGamepad(Telemetry telemetry, Gamepad gamepad, String prefix) {
+        telemetry.addData(prefix + "Synthetic",
+                gamepad.getGamepadId() == Gamepad.ID_UNASSOCIATED);
+        for (Field field : gamepad.getClass().getFields()) {
+            if (Modifier.isStatic(field.getModifiers())) continue;
+
+            try {
+                telemetry.addData(prefix + field.getName(), field.get(gamepad));
+            } catch (IllegalAccessException e) {
+                // ignore for now
+            }
+        }
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
+
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         //Hardware Mapping
 
 //        frontright = hardwareMap.get(DcMotorEx.class,"Frontright");
@@ -56,8 +79,9 @@ public class EPIC_TeleOp extends LinearOpMode {
         claw.parent = this;
         claw.telemetry = this.telemetry;
         double clawPower = lefty/10;
+        boolean lifted = false;
         //double needPos = clawPower+claw.arm.getPosition();
-
+        claw.new_frontLeftTarget = 0;
 
         waitForStart();
 
@@ -127,7 +151,7 @@ public class EPIC_TeleOp extends LinearOpMode {
                 claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() + 0.001);
             }
             else if(lefty2!=0){
-                claw.lift(lefty2);
+                claw.lift(0.5,(int)(lefty2*10),2);
                 //wheels.move(lefty,righty,leftx,rightx);
 //                frontright.setPower(-lefty  +rightx + leftx);
 //                frontleft.setPower(lefty + rightx + leftx);
@@ -170,11 +194,25 @@ public class EPIC_TeleOp extends LinearOpMode {
             
 
             telemetry.addData("lefty", "%.2f", lefty);
+            telemetry.addData("lefty2", "%.2f", lefty2);
             telemetry.addData("leftx", "%.2f", leftx);
 
             telemetry.addData("rightx", "%.2f", gamepad1.right_stick_x);
             telemetry.addData("righty", "%.2f", gamepad1.right_stick_y);
 
+
+            telemetry.addData("arm current position", claw.arm.getCurrentPosition());
+            telemetry.addData("arm target position", claw.arm.getTargetPosition());
+            telemetry.addData("arm target position set", claw.new_frontLeftTarget);
+
+            telemetry.addData("b2", b2);
+
+            telemetry.update();
+
+
+
+            //logGamepad(telemetry, gamepad1, "gamepad1");
+            //logGamepad(telemetry, gamepad2, "gamepad2");
             telemetry.update();
         }
     }
