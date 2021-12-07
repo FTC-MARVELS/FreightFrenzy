@@ -151,7 +151,7 @@ public class EPIC_TeleOp extends LinearOpMode {
                 claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() + 0.001);
             }
             else if(lefty2!=0){
-                claw.lift(0.5,(int)(lefty2*10),2);
+                claw.lift(1,(int)(lefty2*10),2);
                 //wheels.move(lefty,righty,leftx,rightx);
 //                frontright.setPower(-lefty  +rightx + leftx);
 //                frontleft.setPower(lefty + rightx + leftx);

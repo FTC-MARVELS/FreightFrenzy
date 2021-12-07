@@ -68,7 +68,7 @@ public class Claw {
             //arm.setTargetPosition(arm.getCurrentPosition() + position);
             arm.setTargetPosition(new_frontLeftTarget);
             arm.setPower(speed);
-            parent.sleep(500);
+            parent.sleep(100);
         }
         else if(new_frontLeftTarget<0)
             new_frontLeftTarget =0;
