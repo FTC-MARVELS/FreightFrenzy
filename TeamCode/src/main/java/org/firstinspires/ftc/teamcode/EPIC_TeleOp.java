@@ -96,7 +96,7 @@ public class EPIC_TeleOp extends LinearOpMode {
             lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
-            rightx = gamepad1.right_stick_x;
+            rightx = -gamepad1.right_stick_x;
 
 
 //            liftPower = gamepad2.right_stick_y;
