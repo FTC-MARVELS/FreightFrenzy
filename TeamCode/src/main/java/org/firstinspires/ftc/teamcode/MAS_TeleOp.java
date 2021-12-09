@@ -81,14 +81,14 @@ public class MAS_TeleOp extends LinearOpMode {
             }
 
             if (gamepad2.right_bumper) {
-                claw.openClaws();
+             //   claw.openClaws();
             }
             else {
-                claw.closeClaws();
+             //   claw.closeClaws();
             }
 
             //if(gamepad2.left_bumper) {
-             claw.raiseWrist(gamepad2.right_stick_y);
+             //claw.raiseWrist(gamepad2.right_stick_y);
             //}
             //
             //

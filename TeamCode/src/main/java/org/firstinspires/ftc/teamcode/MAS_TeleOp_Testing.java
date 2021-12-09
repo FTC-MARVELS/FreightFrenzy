@@ -25,8 +25,8 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Hardware Mapping
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
-        //Spinner spinner = new Spinner(hardwareMap);
-        //Claw claw = new Claw(hardwareMap);
+        Spinner spinner = new Spinner(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         mecanumWheels.rightErrorAdjustment = 0.93;//1;
         waitForStart();
         while (opModeIsActive()) {
@@ -59,57 +59,36 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
                 modeThree=false;
             }
             if(modeTwo==true){
-                // move_side();
                 mecanumWheels.move_side(leftx, rightx);
-                //mecanumWheels.middleForwardback(lefty, righty);
-                //middle_forwardback();
             }
 
             if(modeThree==true) {
-                //slow_forwardback();
-                //slow_side();
                 mecanumWheels.move_forwardback_rotate(lefty*0.5,righty*0.5);
                 mecanumWheels.move_side(leftx*0.5, rightx*0.5);
-                //For testing only
-                //spinner.setPower(-0.58);
-                //sleep(1000);
-                //spinner.setPower(0);
-
-                //End testing only
-            //} else {
-             //   spinner.setPower(0);
             }
 
             if (gamepad2.right_bumper) {
-          //      claw.openClaws();
-            }
-            else {
-            //    claw.closeClaws();
-            }
-
-            //if(gamepad2.left_bumper) {
-             //claw.raiseWrist(gamepad2.right_stick_y);
-            //}
-            //
-            //
-            /*else {
-                claw.restWrist();
-            }*/
-
-            if(gamepad2.a) {
-               // spinner.setPower(0.55);
-            } else if(gamepad2.b) {
-               // spinner.setPower(-0.55);
+                claw.grabObject();
+            } else if(gamepad2.left_bumper) {
+                claw.dropObject();
             } else {
-               // spinner.setPower(0);
+                claw.stopGripper();
+            }
+            if(gamepad2.a) {
+                spinner.setPower(0.55);
+                //spinner.setVelocity(2000);
+            } else if(gamepad2.b) {
+                spinner.setPower(-0.55);
+                //spinner.setVelocity(-2000);
+            } else {
+                spinner.setPower(0);
+                //spinner.setVelocity(0);
             }
 
             //spinner.setPower(gamepad2.right_stick_x*0.7);
 
-             //mecanumWheels.liftArm(-gamepad2.left_stick_y *0.75 + 0.05);
+            mecanumWheels.liftArm(-gamepad2.left_stick_y);
             mecanumWheels.move_forwardback_rotate(lefty, righty);
-          //  mecanumWheels.middleForwardback(lefty, righty); //adding omni wheel motion in regular mode
-
             }
     }
 }

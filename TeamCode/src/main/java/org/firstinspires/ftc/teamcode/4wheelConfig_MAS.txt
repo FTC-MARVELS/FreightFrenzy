@@ -1,0 +1,15 @@
+Control Hub
+DC Motors
+0: Frontright
+2: Backright
+3: carouselMotor
+
+Servos
+0: bucket
+
+Expansion Hub
+DC Motors
+0: Frontleft
+1: arm
+2: Backleft
+3: rotatingGripper

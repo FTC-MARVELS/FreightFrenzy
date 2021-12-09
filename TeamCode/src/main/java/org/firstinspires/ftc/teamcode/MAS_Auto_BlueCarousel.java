@@ -89,15 +89,15 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
 
         //Raise Arm and wrist to drop
         mecanum.liftArm(-0.4);
-        claw.raiseWrist(0.5);
+        //claw.raiseWrist(0.5);
         sleep(4200);
-        mecanum.arm.setPower(0.0);
+        //mecanum.arm.setPower(0.0);
         sleep(100);
-        claw.openClaws();
+        //claw.openClaws();
         sleep(500);
-        claw.closeClaws();
-        mecanum.liftArm(0.3);
-        claw.restWrist();
+        //claw.closeClaws();
+        //mecanum.liftArm(0.3);
+        //claw.restWrist();
         sleep(2100);
 
 

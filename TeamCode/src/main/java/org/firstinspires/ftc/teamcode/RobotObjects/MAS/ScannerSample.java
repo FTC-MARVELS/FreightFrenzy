@@ -27,32 +27,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Research;
+package org.firstinspires.ftc.teamcode.RobotObjects.MAS;
 
-import android.hardware.camera2.CameraCharacteristics;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-//import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-//import org.firstinspires.ftc.teamcode.bots.DummyBot;
 import org.firstinspires.ftc.teamcode.tfrec.Detector;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 
 import java.util.List;
 
 //Opmode for quick testing of motors
-@TeleOp(name="TFDetector", group="Robot19587")
+@TeleOp(name="MASScanner", group="Robot19564")
 //@Disabled
-public class DetectorTest extends LinearOpMode{
+public class ScannerSample extends LinearOpMode{
 
     // Declare OpMode members.
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "model_unquant_dec5.tflite";
+    private static String MODEL_FILE_NAME = "model_unquant.tflite";
     //private static String MODEL_FILE_NAME = "model.tflite";
     //private static String MODEL_FILE_NAME = "sample_model.tflite";
     private static String LABEL_FILE_NAME = "labels.txt";
@@ -60,6 +55,8 @@ public class DetectorTest extends LinearOpMode{
 
     @Override
     public void runOpMode() {
+        int detectedLevel = 3;
+
         try {
             try {
                 tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
