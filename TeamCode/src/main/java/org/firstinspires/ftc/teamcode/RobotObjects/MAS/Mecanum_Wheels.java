@@ -42,7 +42,7 @@ public class Mecanum_Wheels {
         backleft = hardwareMap.get(DcMotorEx.class,"Backleft");
         //middleright = hardwareMap.get(DcMotorEx.class,"Middleright");
         //middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
-        arm = hardwareMap.get(DcMotorEx.class, "xRail");
+        arm = hardwareMap.get(DcMotorEx.class, "arm");
     }
 
     //initialize for TeleOp
@@ -60,10 +60,10 @@ public class Mecanum_Wheels {
 //            backright.setDirection(DcMotorSimple.Direction.REVERSE);
 
                 frontleft.setDirection(DcMotor.Direction.FORWARD);
-                frontright.setDirection(DcMotor.Direction.FORWARD);
+                frontright.setDirection(DcMotor.Direction.REVERSE);
                 //middleright.setDirection(DcMotor.Direction.FORWARD);
                 //middleleft.setDirection(DcMotor.Direction.REVERSE);
-                backright.setDirection(DcMotor.Direction.FORWARD);
+                backright.setDirection(DcMotor.Direction.REVERSE);
                 backleft.setDirection(DcMotor.Direction.FORWARD);
 
                 frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -86,6 +86,20 @@ public class Mecanum_Wheels {
    public void liftArm(double power) {
             arm.setPower(power);
 
+   }
+
+   public void moveArm(int level, int currentLevel) {
+        if (level == 0) {
+            if (currentLevel == 1) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(600);
+                arm.setPower(-0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            }
+
+            currentLevel = 0;
+        }
    }
 
     public void encoderDrive(double speed,
@@ -185,8 +199,8 @@ public class Mecanum_Wheels {
     public void move_forwardback_rotate( double leftPower, double rightPower){
         frontleft.setPower(leftPower*leftErrorAdjustment);
         backleft.setPower(leftPower*leftErrorAdjustment);
-        frontright.setPower(rightPower*rightErrorAdjustment);
-        backright.setPower(rightPower*rightErrorAdjustment);
+        frontright.setPower(-rightPower*rightErrorAdjustment);
+        backright.setPower(-rightPower*rightErrorAdjustment);
     //    middleleft.setPower(-leftPower*leftErrorAdjustment);
     //    middleright.setPower(rightPower*rightErrorAdjustment);
     }
@@ -199,6 +213,7 @@ public class Mecanum_Wheels {
         frontright.setPower(rightPower*rightErrorAdjustment);
         backright.setPower(-rightPower*rightErrorAdjustment);
     }
+
 
     //frontleft backleft frontright backright
     public void move_right_auto(double speed, double distance, double timeOut) {

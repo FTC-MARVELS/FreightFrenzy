@@ -47,15 +47,15 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
 
         //Raise Arm and wrist to drop
         mecanum.liftArm(-0.4);
-        claw.raiseWrist(0.5);
+        //claw.raiseWrist(0.5);
         sleep(4200);
         mecanum.arm.setPower(0.0);
         sleep(100);
-        claw.openClaws();
+        //claw.openClaws();
         sleep(500);
-        claw.closeClaws();
+        //claw.closeClaws();
         mecanum.liftArm(0.3);
-        claw.restWrist();
+        //claw.restWrist();
         sleep(2100);
 
         mecanum.move_backward_auto(speed,shippingHubDistance/1.25, 20.0 );

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.RobotObjects.MAS;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -25,18 +26,36 @@ public class Claw {
     public double finger2Max = 0.4;
     public double finger3Max = 0.4;
 
+    public DcMotorEx rotatingGripper;
+
     public Claw(HardwareMap hardwareMap) {
-        rightwrist = hardwareMap.get(Servo.class,"rightwrist");
+      /*  rightwrist = hardwareMap.get(Servo.class,"rightwrist");
         leftwrist = hardwareMap.get(Servo.class,"leftwrist");
         rightclaw = hardwareMap.get(Servo.class,"rightclaw");
-        leftclaw = hardwareMap.get(Servo.class,"leftclaw");
+        leftclaw = hardwareMap.get(Servo.class,"leftclaw");*/
+        rotatingGripper = hardwareMap.get(DcMotorEx.class, "rotatingGripper");
         //rightwrist.setPosition(rightWristInit);
         //leftwrist.setPosition(leftWristInit);
-        rightclaw.setPosition(rightClawInit);
-        leftclaw.setPosition(leftClawInit);
+        //rightclaw.setPosition(rightClawInit);
+        //leftclaw.setPosition(leftClawInit);
     }
 
-    public void raiseWrist(double power)
+    public void grabObject() {
+        rotatingGripper.setPower(0.5);
+        //rotatingGripper.setVelocity(2000);
+    }
+
+    public void dropObject() {
+        rotatingGripper.setPower(-0.5);
+        //rotatingGripper.setVelocity(-2000);
+    }
+
+    public void stopGripper() {
+        rotatingGripper.setPower(0);
+        //rotatingGripper.setVelocity(0);
+    }
+
+    /*public void raiseWrist(double power)
     {
         rightwrist.setPosition(-power);
         leftwrist.setPosition(power);
@@ -46,7 +65,7 @@ public class Claw {
     {
         rightwrist.setPosition(0);
         leftwrist.setPosition(0);
-    }
+    }*/
 
     public void grab()
     {
@@ -62,7 +81,7 @@ public class Claw {
         //rightclaw.setPosition(finger3Max);
     }
 
-    public void openClaws() {
+    /*public void openClaws() {
         leftclaw.setPosition(0.6);
         rightclaw.setPosition(0.4);
     }
@@ -70,6 +89,6 @@ public class Claw {
     public void closeClaws() {
         leftclaw.setPosition(0.85);
         rightclaw.setPosition(0.1);
-    }
+    }*/
 }
 

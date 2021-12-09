@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Spinner {
     //Configuration used: 6wheelConfig
-    private DcMotor CarouselWheel;
+    private DcMotorEx CarouselWheel;
     //private double power = 0;
     private int time = 0;
 
@@ -29,5 +29,6 @@ public class Spinner {
         return this.time;
     }
 
+    public void setVelocity(double velocity) { this.CarouselWheel.setVelocity(velocity);}
 
 }

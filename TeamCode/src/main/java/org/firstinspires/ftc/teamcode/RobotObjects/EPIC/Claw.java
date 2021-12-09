@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.RobotObjects.EPIC;
 import android.util.Range;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -31,14 +33,57 @@ public class Claw {
     public Telemetry telemetry;
     public double pos = 0.0;
 
+    public int new_frontLeftTarget = 0;
+
     public Claw(HardwareMap hardwareMap) {
         clawFinger1 = hardwareMap.get(Servo.class,"finger1");
         clawFinger2 = hardwareMap.get(Servo.class,"finger2");
         clawBucket1 = hardwareMap.get(Servo.class,"bucket1");
         clawBucket2 = hardwareMap.get(Servo.class,"bucket2");
         arm = hardwareMap.get(DcMotorEx.class,"arm");
+        arm.setDirection(DcMotor.Direction.REVERSE);
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        arm.setTargetPosition(0);
+        arm.setPower(0.2);
         //liftMotor = hardwareMap.get(DcMotorEx.class,"Lift");
 
+    }
+
+    public void lift(double speed, int direction,double timeoutS) {
+        //double ticksPerInchMecanum = (537.7 / 1);
+        //if (parent.opModeIsActive()) {
+            //new_frontLeftTarget = arm.getCurrentPosition() + (int)(frontLeftInches * ticksPerInchMecanum);
+            //while(arm.getCurrentPosition() < new_frontLeftTarget) {
+            int position=-10;
+            if(direction<0)
+                position = -1*position;
+
+        new_frontLeftTarget += position;
+        if(new_frontLeftTarget>=0 && new_frontLeftTarget<130){
+            //arm.setTargetPosition(arm.getCurrentPosition() + position);
+            arm.setTargetPosition(new_frontLeftTarget);
+            arm.setPower(speed);
+            parent.sleep(100);
+        }
+        else if(new_frontLeftTarget<0)
+            new_frontLeftTarget =0;
+        else if(new_frontLeftTarget > 100)
+            new_frontLeftTarget = 100;
+            //}
+            //else{
+                //arm.setPower(0.0);
+        //}
+            telemetry.addData("Path1",  "Running to %7d ", new_frontLeftTarget);
+
+            telemetry.addData("Path2",  "Running at %7d ",
+                    arm.getCurrentPosition());
+            telemetry.update();
+        //}
     }
 
     public void initiateLift(){
