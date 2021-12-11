@@ -54,7 +54,7 @@ public class Claw {
 
     }
 
-    public void lift(double speed, int direction,double timeoutS) {
+    public void lift(double speed, int direction,int limit) {
         //double ticksPerInchMecanum = (537.7 / 1);
         //if (parent.opModeIsActive()) {
             //new_frontLeftTarget = arm.getCurrentPosition() + (int)(frontLeftInches * ticksPerInchMecanum);
@@ -64,7 +64,7 @@ public class Claw {
                 position = -1*position;
 
         new_frontLeftTarget += position;
-        if(new_frontLeftTarget>=0 && new_frontLeftTarget<130){
+        if(new_frontLeftTarget>=0 && new_frontLeftTarget<limit){
             //arm.setTargetPosition(arm.getCurrentPosition() + position);
             arm.setTargetPosition(new_frontLeftTarget);
             arm.setPower(speed);
@@ -72,8 +72,8 @@ public class Claw {
         }
         else if(new_frontLeftTarget<0)
             new_frontLeftTarget =0;
-        else if(new_frontLeftTarget > 100)
-            new_frontLeftTarget = 100;
+        else if(new_frontLeftTarget > limit)
+            new_frontLeftTarget = limit;
             //}
             //else{
                 //arm.setPower(0.0);
