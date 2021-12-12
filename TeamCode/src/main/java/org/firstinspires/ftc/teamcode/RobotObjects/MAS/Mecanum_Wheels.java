@@ -62,12 +62,12 @@ public class Mecanum_Wheels {
 //            middleright.setDirection(DcMotorSimple.Direction.REVERSE);
 //            backright.setDirection(DcMotorSimple.Direction.REVERSE);
 
-                frontleft.setDirection(DcMotor.Direction.FORWARD);
-                frontright.setDirection(DcMotor.Direction.REVERSE);
+                frontleft.setDirection(DcMotor.Direction.REVERSE);
+                frontright.setDirection(DcMotor.Direction.FORWARD);
                 //middleright.setDirection(DcMotor.Direction.FORWARD);
                 //middleleft.setDirection(DcMotor.Direction.REVERSE);
-                backright.setDirection(DcMotor.Direction.REVERSE);
-                backleft.setDirection(DcMotor.Direction.FORWARD);
+                backright.setDirection(DcMotor.Direction.FORWARD);
+                backleft.setDirection(DcMotor.Direction.REVERSE);
 
                 frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 //middleleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -204,14 +204,14 @@ public class Mecanum_Wheels {
 
             // reset the timeout time and start motion.
             runtime.reset();
-            frontleft.setPower(speed);
+            frontleft.setPower(speed*0.9);
             frontright.setPower(speed);
             /*if(new_middleLeftTarget!=0)
                 middleleft.setPower(speed);
             if(new_middleRightTarget!=0)
                 middleright.setPower(speed);*/
-            backleft.setPower(speed);
-            backright.setPower(speed);
+            backleft.setPower(speed*0.9);
+            backright.setPower(speed*0.9);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
@@ -272,7 +272,7 @@ public class Mecanum_Wheels {
 
     //frontleft backleft frontright backright
     public void move_right_auto(double speed, double distance, double timeOut) {
-        encoderDrive(speed,-distance,distance,distance,-distance, timeOut);
+        encoderDrive(speed,-distance,distance,-distance,distance, timeOut);
     }
 
     public void move_left_auto(double speed, double distance, double timeOut) {

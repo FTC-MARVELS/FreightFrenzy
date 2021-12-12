@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
      */
 
 @Autonomous(name="MAS_Auto_BlueWarehouse")
-@Disabled
+//@Disabled
 public class MAS_Auto_BlueWarehouse extends LinearOpMode {
     //Configuration used: 6wheelConfig
     @Override

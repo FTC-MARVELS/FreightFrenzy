@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.RobotObjects.MAS;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -10,9 +12,8 @@ public class Claw {
     public Servo rightclaw;
     public Servo rightwrist;
     public Servo leftwrist;
-    public Servo bucket1;
-    public Servo bucket2;
-
+    public CRServo bucket1;
+    public CRServo bucket2;
 
     public double armInit = 0.0;
     public double leftClawInit = 1.0;
@@ -36,10 +37,12 @@ public class Claw {
         rightclaw = hardwareMap.get(Servo.class,"rightclaw");
         leftclaw = hardwareMap.get(Servo.class,"leftclaw");*/
         rotatingGripper = hardwareMap.get(DcMotorEx.class, "rotatingGripper");
-        bucket1 = hardwareMap.get(Servo.class,"bucket1");
-        bucket2 = hardwareMap.get(Servo.class,"bucket2");
-        bucket1.setPosition(0);
-        bucket2.setPosition(0);
+        bucket1 = hardwareMap.get(CRServo.class,"bucket1");
+        bucket2 = hardwareMap.get(CRServo.class,"bucket2");
+        bucket1.setPower(0);
+        bucket2.setPower(0);
+        bucket1.setDirection(DcMotorSimple.Direction.FORWARD);
+        bucket2.setDirection(DcMotorSimple.Direction.FORWARD);
         //rightwrist.setPosition(rightWristInit);
         //leftwrist.setPosition(leftWristInit);
         //rightclaw.setPosition(rightClawInit);
@@ -50,9 +53,9 @@ public class Claw {
         bucket.setPosition(0.5);
     }*/
 
-    public void moveBucket(double position) {
-        bucket1.setPosition(position);
-        bucket2.setPosition(position);
+    public void moveBucket(double power) {
+        bucket1.setPower(power);
+        bucket2.setPower(power);
     }
 
     public void grabObject() {

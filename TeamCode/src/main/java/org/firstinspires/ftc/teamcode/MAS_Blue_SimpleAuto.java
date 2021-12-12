@@ -63,7 +63,7 @@ public class MAS_Blue_SimpleAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
 
-        double speed = 0.5;
+        double speed = 0.75;
         double rotationSpeed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Scanner scanner = new Scanner();
@@ -77,31 +77,31 @@ public class MAS_Blue_SimpleAuto extends LinearOpMode {
         mecanum.initialize();
         mecanum.rightErrorAdjustment = 0.5;//1;
 
-        try {
+     /*   try {
             tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
             tfDetector.parent = this;
             tfDetector.activate();
-            /*telemetry.addData("TEST STATEMENT", tfDetector);
-            telemetry.update();
-            sleep(1000);*/
+            //telemetry.addData("TEST STATEMENT", tfDetector);
+            //telemetry.update();
+            //sleep(1000);
         } catch (Exception ex) {
             telemetry.addData("Error", String.format("Unable to initialize Detector. %s", ex.getMessage()));
             sleep(3000);
             return;
         }
-
+*/
         waitForStart();
-        runtime.reset();
+       // runtime.reset();
 
-        double spinnerDistance = 22.35;
+        double spinnerDistance = 38;
         double spinnerRotate = 17;
-        double shippingHubDistance = 15;
+        double parkingDistance = 50;
         double rotateNinety = 21;
         // Commented below code for testing scanner
-        //  mecanum.move_forward_auto(speed,15*1.5, 10.0 );
-        //  mecanum.move_right_auto(speed, 20*1.5, 20.0);
+          mecanum.move_forward_auto(speed,spinnerDistance, 10.0 );
+          mecanum.move_right_auto(speed, parkingDistance, 20.0);
 
-        int position = 9;
+       /* int position = 9;
         try {
             position = scanner.scan(hardwareMap, tfDetector, telemetry);
             telemetry.addData("Found in class", position);
@@ -120,7 +120,7 @@ public class MAS_Blue_SimpleAuto extends LinearOpMode {
             position = 2;
             telemetry.addData("Found in class Exception ", position);
             telemetry.update();
-        }
+        }*/
     }
 
 

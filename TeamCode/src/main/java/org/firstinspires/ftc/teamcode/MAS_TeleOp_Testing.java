@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
@@ -54,7 +55,7 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
                 modeThree=false;
             }
             if(modeTwo==true){
-                mecanumWheels.move_side(leftx, rightx);
+                mecanumWheels.move_side(-leftx, -rightx);
             }
 
             if(modeThree==true) {
@@ -92,17 +93,18 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
             //spinner.setPower(gamepad2.right_stick_x*0.7);
 
             mecanumWheels.liftArm(-gamepad2.left_stick_y);
-            mecanumWheels.move_forwardback_rotate(lefty*0.9, righty);
-            //claw.moveBucket(gamepad2.right_stick_y);
+            mecanumWheels.move_forwardback_rotate(lefty*0.85, righty);
+            claw.moveBucket(-gamepad2.left_stick_y);
             if(gamepad2.right_bumper) {
-                claw.moveBucket(0.3);
+                claw.moveBucket(0.8);
             } else if(gamepad2.left_bumper) {
-                claw.moveBucket(1.0);
+                claw.moveBucket(-0.8);
             } else {
-                claw.moveBucket(0.0);
+                claw.moveBucket(0);
             }
 
-            telemetry.addData("Servo position" , claw.bucket1.getPosition());
+            telemetry.addData("Servo power" , claw.bucket1.getPower());
+            telemetry.update();
             /*int currentLevel = 0;
             int dPad = -1;
 

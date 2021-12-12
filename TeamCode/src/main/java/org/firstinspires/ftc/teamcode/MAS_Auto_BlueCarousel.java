@@ -41,7 +41,7 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
     //Configuration used: 6wheelConfig
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 0.38;
+        double speed = 0.75;
         double rotationSpeed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
@@ -57,15 +57,15 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
         waitForStart();
         double spinnerDistance = 22.35;
         double spinnerRotate = 17;
-        double shippingHubDistance = 15;
+        double shippingHubDistance = 25;
         double rotateNinety = 21;
 
         //SCAN CODE- EISHA AND HAMZA
-        mecanum.move_forward_auto(speed,6.3, 10.0 );
+        mecanum.move_forward_auto(speed,7, 10.0 );
         // rotate to bring spinner to position
         mecanum.rotate_anti_clock_auto(rotationSpeed * 0.9, spinnerRotate, 20.0);
         //backward to go to carousel
-        mecanum.move_backward_auto(speed * 0.75, spinnerDistance * 1.08, 20.5);
+        mecanum.move_backward_auto(speed , spinnerDistance * 1.08, 20.5);
 
         sleep(100);
         mecanum.move_backward_auto(0.1, 1, 2.0);
@@ -88,18 +88,18 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
         mecanum.move_forward_auto(speed, shippingHubDistance*1,20.0);
 
         //Raise Arm and wrist to drop
-        mecanum.liftArm(-0.4);
+ //       mecanum.liftArm(0.4);
         //claw.raiseWrist(0.5);
-        sleep(4200);
+    //    sleep(4200);
         //mecanum.arm.setPower(0.0);
-        sleep(100);
+    //    sleep(100);
         //claw.openClaws();
-        sleep(500);
+    //    sleep(500);
         //claw.closeClaws();
         //mecanum.liftArm(0.3);
         //claw.restWrist();
         sleep(2100);
-
+  //      claw.dropObject();
 
         mecanum.move_backward_auto(speed,shippingHubDistance * 0.9, 20.0 );
 
@@ -107,7 +107,7 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
 
         double ParkDistance = 34;//going forward into warehouse
         //Increase the speed if we are going over the obstacle
-        mecanum.move_backward_auto(speed*2,ParkDistance*1.145, 25.0 );
+        mecanum.move_backward_auto(speed*2,ParkDistance*0.9, 25.0 );
         //else will need logic to collapse and then move right to park
         mecanum.move_right_auto(speed, shippingHubDistance*1.82, 20.0);
 
