@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
-import org.firstinspires.ftc.teamcode.RobotObjects.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 /*
 
     Near Warehouse
@@ -26,7 +26,7 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         double speed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
-        mecanum.IsAutonomous = true;
+        mecanum.IsMASAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
@@ -46,7 +46,7 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         mecanum.move_forward_auto(speed, shippingHubDistance*1.5,20.0);
 
         //Raise Arm and wrist to drop
-        mecanum.liftArm(-0.4);
+        /*mecanum.liftArm(-0.4);
         //claw.raiseWrist(0.5);
         sleep(4200);
         mecanum.arm.setPower(0.0);
@@ -57,6 +57,11 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         mecanum.liftArm(0.3);
         //claw.restWrist();
         sleep(2100);
+        */
+
+        mecanum.moveArm(2, 0);
+        claw.dropObject();
+        mecanum.moveArm(0, 2);
 
         mecanum.move_backward_auto(speed,shippingHubDistance/1.25, 20.0 );
 

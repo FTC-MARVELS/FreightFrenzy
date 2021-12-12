@@ -10,7 +10,9 @@ public class Claw {
     public Servo rightclaw;
     public Servo rightwrist;
     public Servo leftwrist;
-    public Servo arm;
+    public Servo bucket1;
+    public Servo bucket2;
+
 
     public double armInit = 0.0;
     public double leftClawInit = 1.0;
@@ -34,10 +36,23 @@ public class Claw {
         rightclaw = hardwareMap.get(Servo.class,"rightclaw");
         leftclaw = hardwareMap.get(Servo.class,"leftclaw");*/
         rotatingGripper = hardwareMap.get(DcMotorEx.class, "rotatingGripper");
+        bucket1 = hardwareMap.get(Servo.class,"bucket1");
+        bucket2 = hardwareMap.get(Servo.class,"bucket2");
+        bucket1.setPosition(0);
+        bucket2.setPosition(0);
         //rightwrist.setPosition(rightWristInit);
         //leftwrist.setPosition(leftWristInit);
         //rightclaw.setPosition(rightClawInit);
         //leftclaw.setPosition(leftClawInit);
+    }
+
+   /* public void holdBucket() {
+        bucket.setPosition(0.5);
+    }*/
+
+    public void moveBucket(double position) {
+        bucket1.setPosition(position);
+        bucket2.setPosition(position);
     }
 
     public void grabObject() {
@@ -53,6 +68,10 @@ public class Claw {
     public void stopGripper() {
         rotatingGripper.setPower(0);
         //rotatingGripper.setVelocity(0);
+    }
+
+    public void rotateGripper(double power) {
+        rotatingGripper.setPower(power);
     }
 
     /*public void raiseWrist(double power)

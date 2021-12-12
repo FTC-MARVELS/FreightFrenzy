@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 
 public class Mecanum_Wheels {
     //Configuration used: 6wheelConfig
@@ -18,7 +19,7 @@ public class Mecanum_Wheels {
     //public DcMotorEx middleright;
     //public DcMotorEx middleleft;
     public DcMotorEx arm;
-
+    public Claw claw;
     public boolean IsMASAutonomous = false;
 
     public double leftErrorAdjustment = 1.0;
@@ -33,6 +34,7 @@ public class Mecanum_Wheels {
 
     private ElapsedTime runtime = new ElapsedTime();
 
+
     public Telemetry telemetry;
 
     public Mecanum_Wheels(HardwareMap hardwareMap) {
@@ -43,6 +45,7 @@ public class Mecanum_Wheels {
         //middleright = hardwareMap.get(DcMotorEx.class,"Middleright");
         //middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
         arm = hardwareMap.get(DcMotorEx.class, "arm");
+        //claw = new Claw(hardwareMap);
     }
 
     //initialize for TeleOp
@@ -88,18 +91,70 @@ public class Mecanum_Wheels {
 
    }
 
-   public void moveArm(int level, int currentLevel) {
+    //AUTOMATED arm control
+    public void armToLevel(double position) {
+
+    }
+
+
+    public void moveArm(int level, int currentLevel) {
         if (level == 0) {
             if (currentLevel == 1) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 arm.setTargetPosition(600);
+                claw.moveBucket(0.0);
                 arm.setPower(-0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             }
 
-            currentLevel = 0;
+            if (currentLevel == 2) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(1500);
+                claw.moveBucket(0.0);
+                arm.setPower(-0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
         }
+
+        if (currentLevel == 1) {
+            if (currentLevel == 0) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(600);
+                claw.moveBucket(0.3);
+                arm.setPower(0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            }
+
+            if (currentLevel == 2) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(1300);
+                claw.moveBucket(0.3);
+                arm.setPower(-0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        }
+
+        if (level == 2) {
+            if (currentLevel == 1) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(1300);
+                claw.moveBucket(0.5);
+                arm.setPower(0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            }
+
+            if (currentLevel == 0) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(1500);
+                claw.moveBucket(0.5);
+                arm.setPower(0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        }
+
    }
 
     public void encoderDrive(double speed,
@@ -197,10 +252,10 @@ public class Mecanum_Wheels {
     //moveForward for TeleOp
     //The left and right powers are controlled by the left and right y axes
     public void move_forwardback_rotate( double leftPower, double rightPower){
-        frontleft.setPower(leftPower*leftErrorAdjustment);
-        backleft.setPower(leftPower*leftErrorAdjustment);
-        frontright.setPower(-rightPower*rightErrorAdjustment);
-        backright.setPower(-rightPower*rightErrorAdjustment);
+        frontleft.setPower(-leftPower*leftErrorAdjustment);
+        backleft.setPower(-leftPower*leftErrorAdjustment);
+        frontright.setPower(rightPower*rightErrorAdjustment);
+        backright.setPower(rightPower*rightErrorAdjustment);
     //    middleleft.setPower(-leftPower*leftErrorAdjustment);
     //    middleright.setPower(rightPower*rightErrorAdjustment);
     }

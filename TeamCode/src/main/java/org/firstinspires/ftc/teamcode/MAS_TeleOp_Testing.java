@@ -27,7 +27,9 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
         Claw claw = new Claw(hardwareMap);
-        mecanumWheels.rightErrorAdjustment = 0.93;//1;
+        //mecanumWheels.rightErrorAdjustment = 0.93;//1;
+        //claw.bucket1.setPosition(0.0);
+        //claw.bucket2.setPosition(0.0);
         waitForStart();
         while (opModeIsActive()) {
 
@@ -37,13 +39,6 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-
-            boolean test = false;
-            if(gamepad1.x) {
-                test = true;
-            }else {
-                test = false;
-            }
 
             boolean modeTwo = false;
             if(gamepad1.right_bumper) {
@@ -67,17 +62,26 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
                 mecanumWheels.move_side(leftx*0.5, rightx*0.5);
             }
 
-            if (gamepad2.right_bumper) {
+            /*if (gamepad2.right_bumper) {
                 claw.grabObject();
             } else if(gamepad2.left_bumper) {
                 claw.dropObject();
             } else {
                 claw.stopGripper();
-            }
+            }*/
+
+            claw.rotateGripper(gamepad2.right_stick_y);
+
             if(gamepad2.a) {
-                spinner.setPower(0.55);
+                spinner.setPower(0.67);
                 //spinner.setVelocity(2000);
             } else if(gamepad2.b) {
+                spinner.setPower(-0.67);
+                //spinner.setVelocity(-2000);
+            } else if(gamepad2.x) {
+                spinner.setPower(0.55);
+                //spinner.setVelocity(2000);
+            } else if(gamepad2.y) {
                 spinner.setPower(-0.55);
                 //spinner.setVelocity(-2000);
             } else {
@@ -88,8 +92,46 @@ public class MAS_TeleOp_Testing extends LinearOpMode {
             //spinner.setPower(gamepad2.right_stick_x*0.7);
 
             mecanumWheels.liftArm(-gamepad2.left_stick_y);
-            mecanumWheels.move_forwardback_rotate(lefty, righty);
+            mecanumWheels.move_forwardback_rotate(lefty*0.9, righty);
+            //claw.moveBucket(gamepad2.right_stick_y);
+            if(gamepad2.right_bumper) {
+                claw.moveBucket(0.3);
+            } else if(gamepad2.left_bumper) {
+                claw.moveBucket(1.0);
+            } else {
+                claw.moveBucket(0.0);
             }
+
+            telemetry.addData("Servo position" , claw.bucket1.getPosition());
+            /*int currentLevel = 0;
+            int dPad = -1;
+
+            if (gamepad2.dpad_up) {
+                dPad = 2;
+            } else if (gamepad2.dpad_right) {
+                dPad = 1;
+            } else if (gamepad2.dpad_down) {
+                dPad = 0;
+            }
+
+            if (dPad == 2) {
+                mecanumWheels.moveArm(2, currentLevel);
+                currentLevel = 2;
+                dPad = -1;
+            } else if (dPad == 1) {
+                mecanumWheels.moveArm(1, currentLevel);
+                currentLevel = 1;
+                dPad = 3;
+            } else if (dPad == 0) {
+                mecanumWheels.moveArm(0, currentLevel);
+                currentLevel = 0;
+                dPad = -4;
+            }
+
+            telemetry.addData("CurrentLevel", currentLevel);
+            telemetry.addData("dPad", dPad);
+            telemetry.update();*/
+        }
     }
 }
 
