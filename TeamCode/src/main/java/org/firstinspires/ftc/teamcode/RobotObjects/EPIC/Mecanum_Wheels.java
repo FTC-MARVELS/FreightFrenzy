@@ -71,7 +71,7 @@ public class Mecanum_Wheels {
             frontright.setDirection(DcMotor.Direction.REVERSE);
 
             backright.setDirection(DcMotor.Direction.REVERSE);
-            backleft.setDirection(DcMotor.Direction.FORWARD);
+            backleft.setDirection(DcMotor.Direction.REVERSE);
 
             frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -92,7 +92,7 @@ public class Mecanum_Wheels {
 
 
     public void encoderDrive(double speed,
-                             double frontLeftInches, double middleLeftInches, double backLeftInches, double frontRightInches,double middleRightInches,
+                             double frontLeftInches, double backLeftInches, double frontRightInches,
                              double backRightInches, double timeoutS) {
         int new_frontLeftTarget;
         int new_frontRightTarget;
@@ -101,23 +101,17 @@ public class Mecanum_Wheels {
         int new_backLeftTarget;
         int new_backRightTarget;
         double ticksPerInchMecanum = (537.7 / mecanumWheelCircumference);
-        double ticksPerInchOmni = (537.7 / omniWheelCircumference);
         // Ensure that the opmode is still active
         if (parent.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            new_frontLeftTarget = frontleft.getCurrentPosition() + (int)(frontLeftInches * ticksPerInchMecanum);
-            new_frontRightTarget = frontright.getCurrentPosition() + (int)(frontRightInches * ticksPerInchMecanum);
-            if(middleLeftInches!=0)
-                new_middleLeftTarget = frontleft.getCurrentPosition() + (int)(middleLeftInches * ticksPerInchOmni);
-            if(middleRightInches!=0)
-                new_middleRightTarget = frontright.getCurrentPosition() + (int)(middleRightInches * ticksPerInchOmni);
+            new_frontLeftTarget = frontleft.getCurrentPosition() + (int) (frontLeftInches * ticksPerInchMecanum);
+            new_frontRightTarget = frontright.getCurrentPosition() + (int) (frontRightInches * ticksPerInchMecanum);
 
-            new_backLeftTarget = backleft.getCurrentPosition() + (int)(backLeftInches * ticksPerInchMecanum);
-            new_backRightTarget = backright.getCurrentPosition() + (int)(backRightInches * ticksPerInchMecanum);
+            new_backLeftTarget = backleft.getCurrentPosition() + (int) (backLeftInches * ticksPerInchMecanum);
+            new_backRightTarget = backright.getCurrentPosition() + (int) (backRightInches * ticksPerInchMecanum);
             frontleft.setTargetPosition(new_frontLeftTarget);
             frontright.setTargetPosition(new_frontRightTarget);
-
 
 
             backleft.setTargetPosition(new_backLeftTarget);
@@ -141,19 +135,18 @@ public class Mecanum_Wheels {
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    ( frontleft.isBusy() && frontright.isBusy()  && backleft.isBusy() && backright.isBusy()))
-
+                    (frontleft.isBusy() || frontright.isBusy() || backleft.isBusy() || backright.isBusy())) {
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d :%7d :%7d", new_frontLeftTarget,  new_frontRightTarget, new_middleLeftTarget, new_middleRightTarget , new_backLeftTarget, new_backRightTarget);
-            telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d :%7d :%7d",
-                    frontleft.getCurrentPosition(),
-                    frontright.getCurrentPosition(),
+                telemetry.addData("Path1", "Running to %7d  :%7d :%7d :%7d", new_frontLeftTarget, new_frontRightTarget, new_backLeftTarget, new_backRightTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+                        frontleft.getCurrentPosition(),
+                        frontright.getCurrentPosition(),
 
-                    backleft.getCurrentPosition(),
-                    backright.getCurrentPosition());
-            telemetry.update();
+                        backleft.getCurrentPosition(),
+                        backright.getCurrentPosition());
+                telemetry.update();
+            }
         }
-
         // Stop all motion;
         frontleft.setPower(0);
         frontright.setPower(0);
@@ -171,37 +164,12 @@ public class Mecanum_Wheels {
         //  sleep(250);   // optional pause after each move
     }
 
-    public void move2 (double lefty, double righty, double leftx, double rightx){
-
-    }
-
     public void move(double lefty, double righty, double leftx, double rightx){
-//        frontright.setPower((lefty  -rightx - leftx));
-//        frontleft.setPower(-lefty + rightx + leftx);
-//        backright.setPower(lefty - rightx + leftx);
-//        backleft.setPower(-lefty + rightx - leftx);
-//        //middleright.setPower(lefty - rightx);
-//        //middleleft.setPower(-lefty + rightx);
-        //frontright.setPower((lefty  +rightx + leftx)*rightErrorAdjustment);
-//        frontleft.setPower((-lefty + rightx + leftx)*leftErrorAdjustment);
-//        backright.setPower((lefty + rightx - leftx)*rightErrorAdjustment);
-//        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
-
-/////        frontright.setPower((-lefty  +rightx + leftx)*rightErrorAdjustment);
-/////       frontleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
-/////        backright.setPower((-lefty + rightx - leftx)*rightErrorAdjustment);
-/////        backleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
 
            frontright.setPower((-lefty  +rightx - leftx)*rightErrorAdjustment); // should work same as above
              frontleft.setPower((lefty + rightx - leftx)*leftErrorAdjustment);
              backright.setPower((-lefty + rightx + leftx)*rightErrorAdjustment);
              backleft.setPower((lefty + rightx + leftx)*leftErrorAdjustment);
-
-
-
-
-        //middleright.setPower((-lefty + rightx)*rightErrorAdjustment);
-        //middleleft.setPower((lefty + rightx)*leftErrorAdjustment);
 
     }
 }

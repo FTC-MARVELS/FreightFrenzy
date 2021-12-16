@@ -47,10 +47,20 @@ public class EpicDetectorTest extends LinearOpMode{
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "Epic_Model.tflite";
+    //private static String MODEL_FILE_NAME = "EPIC_bottom_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_bottom_labels.txt";
+    //private static String MODEL_FILE_NAME = "EPIC_red_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_red_labels.txt";
+
+    //private static String MODEL_FILE_NAME = "EPIC_red_right_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_red_right_labels.txt";
+
+    private static String MODEL_FILE_NAME = "EPIC_red_left_model.tflite";
+    private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
+    //private static String MODEL_FILE_NAME = "Epic_Model.tflite";
     //private static String MODEL_FILE_NAME = "model.tflite";
     //private static String MODEL_FILE_NAME = "sample_model.tflite";
-    private static String LABEL_FILE_NAME = "Epic_Labels.txt";
+    //private static String LABEL_FILE_NAME = "Epic_Labels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     @Override
