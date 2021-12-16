@@ -1,0 +1,6 @@
+0 red_left_left
+1 red_left_middle
+2 red_left_right
+3 blue_right_right
+4 blue_right_middle
+5 blue_right_left
