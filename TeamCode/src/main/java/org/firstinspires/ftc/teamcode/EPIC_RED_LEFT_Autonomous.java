@@ -25,11 +25,13 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double distance = 0;
         double correctionFactor = 1;
+        boolean tfdActivated = false;
         try {
             try {
                 tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
                 tfDetector.parent = this;
                 tfDetector.activate();
+                tfdActivated = true;
 
             } catch (Exception ex) {
                 telemetry.addData("Error", String.format("Unable to initialize Detector. %s", ex.getMessage()));
@@ -54,14 +56,15 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             waitForStart();
             // run until the end of the match (driver presses STOP)
             int i =0;
-            while (opModeIsActive()) {
+            while (opModeIsActive() && tfdActivated) {
                 List<Classifier.Recognition> results = tfDetector.getLastResults();
                 if (results == null || results.size() == 0) {
                     telemetry.addData("Info", "No results");
                 } else {
                     for (Classifier.Recognition r : results) {
                         String item = String.format("%s: %.2f", r.getTitle(), r.getConfidence());
-                        if (r.getConfidence() > 0.5) {
+                        //confidence more than 60
+                        if (r.getConfidence() > 0.6) {
                             id = r.getId();
                             telemetry.addData("id", "[" + id + "]");
                             telemetry.addData("Found", item);
@@ -72,6 +75,8 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
                     }
                 }
                 i++;
+                //detection takes time and is only available after the opMode is active. So if detection is not done withing 100 iterations then use
+                //default level. If detection is completed then brake
                 if(i==100 || !id.equals(""))
                 {
                     break;
@@ -82,17 +87,11 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
 
                 telemetry.addData("Opmode Active", "Yes");
                 telemetry.update();
-//
-//
-//
-//                telemetry.addData("Info", "No results");
-//                telemetry.update();
-//                sleep(1000);
-//                //}
             }
 
             int level = 1;
-            //tfDetector.
+
+            //id is equivalent to the labels
             if(id.contains("0 red_left_left"))
                 level = 1;
             else if(id.contains("1 red_left_middle"))
