@@ -126,11 +126,11 @@ public class Mecanum_Wheels {
 
             // reset the timeout time and start motion.
             runtime.reset();
-            frontleft.setPower(speed);
-            frontright.setPower(speed);
+            frontleft.setPower(speed*leftErrorAdjustment);
+            frontright.setPower(speed*rightErrorAdjustment);
 
-            backleft.setPower(speed);
-            backright.setPower(speed);
+            backleft.setPower(speed*leftErrorAdjustment);
+            backright.setPower(speed*rightErrorAdjustment);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&

@@ -79,28 +79,28 @@ public class Claw {
         double bucket1pos = bucket1Min;
         double bucket2pos = bucket2Min;
         if(level == 1){
-            position = 240;
+            position = 260;
             bucket1pos = bucket1Level1;
             bucket2pos = bucket2Level1;
 
         }
         else if(level == 2){
-            position = 380;
+            position = 400;
             bucket1pos = bucket1Level2;
             bucket2pos = bucket2Level2;
 
         }
         else if(level == 3){
-            position = 540;
+            position = 560;
             bucket1pos = bucket1Level3;
             bucket2pos = bucket2Level3;
 
         }
 
         new_frontLeftTarget = position;
-        parent.sleep(200);
 
         arm.setTargetPosition(new_frontLeftTarget);
+        parent.sleep(200);
         clawBucket1.setPosition(bucket1pos);
         clawBucket2.setPosition(bucket2pos);
         //arm.setTargetPosition(arm.getCurrentPosition() + position);

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 import org.firstinspires.ftc.teamcode.tfrec.Detector;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 
@@ -40,6 +41,10 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             }
             double speed = 0.6;
             Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
+            mecanum.leftErrorAdjustment = 0.991;
+            Spinner spinner = new Spinner(hardwareMap);
+            double spinnerPower = 0.58;
+            double levelDistance = 11;
             mecanum.parent = this;
             Claw claw = new Claw(hardwareMap);
             claw.parent = this;
@@ -89,31 +94,69 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
                 telemetry.update();
             }
 
-            int level = 1;
-
+            int level = 3;
+            distance = 27;
             //id is equivalent to the labels
-            if(id.contains("0 red_left_left"))
+            if(id.contains("0 red_left_left")) {
                 level = 1;
-            else if(id.contains("1 red_left_middle"))
+                levelDistance = 10;
+            }
+            else if(id.contains("1 red_left_middle")) {
                 level = 2;
-            else if(id.contains("2 red_left_right"))
+                levelDistance = 12;
+            }
+            else if(id.contains("2 red_left_right")) {
                 level = 3;
+                levelDistance = 14;
+            }
             telemetry.addData("level", level);
             telemetry.update();
             claw.lift(level);
             sleep(500);
             correctionFactor = 1.444;//.4;
-            distance = 27 * correctionFactor;
-                mecanum.encoderDrive(speed,distance,distance/4,distance/4,distance,2);
-                //sleep(2000);
+            distance = 13.5;
+            distance = distance * correctionFactor;
+                //right
+            mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
+            distance = levelDistance * correctionFactor;
+            //forward
+            mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
+                //sleep(25000);
                 claw.release();
                 sleep(1000);
-                //sleep(2000);
-                mecanum.encoderDrive(speed,-10,-10,-10,-10,2);
+//                //sleep(2000);
+            distance = 7 * correctionFactor;
+//            //back
+            mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
+            claw.lift(0);
+            distance = 30 * correctionFactor;
+            //left
+            mecanum.encoderDrive(speed,-distance,distance,distance,-distance,2);
+            distance = 5 * correctionFactor;
+            //left
+            mecanum.encoderDrive(0.1,-distance,distance,distance,-distance,2);
+            sleep(100);
+            spinner.setPower(-spinnerPower);
+            sleep(2000);
+
+            spinner.setPower(0);
+
+            //distance = 3 * correctionFactor;
+            //right turn
+            //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
+
+            distance = 11 * correctionFactor;
+            //right turn
+            mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
+//
+//            distance = 6 * correctionFactor;
+//            //left
+//            mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
+
                 //sleep(10000);
 
             //}
-            claw.lift(0);
+            //claw.lift(0);
         }
         catch (Exception ex){
             telemetry.addData("Init Error", ex.getMessage());
