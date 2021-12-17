@@ -125,7 +125,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
                 claw.release();
                 sleep(1000);
 //                //sleep(2000);
-            distance = 7 * correctionFactor;
+            distance = 5 * correctionFactor;
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
