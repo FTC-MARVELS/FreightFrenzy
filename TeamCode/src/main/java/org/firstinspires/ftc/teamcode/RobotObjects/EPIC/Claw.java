@@ -32,11 +32,11 @@ public class Claw {
     public double bucket1Min = 0.945;
     public double bucket2Min = 0.945;
     public double bucket1Level1 = 0.6;
-    public double bucket1Level2 = 0.45;
-    public double bucket1Level3 = 0.32;
+    public double bucket1Level2 = 0.41;
+    public double bucket1Level3 = 0.79;
     public double bucket2Level1 = 0.6;
-    public double bucket2Level2 = 0.45;
-    public double bucket2Level3 = 0.32;
+    public double bucket2Level2 = 0.41;
+    public double bucket2Level3 = 0.79;
     public double bucket1Max = 0.7;
     public double bucket2Max = -0.7;
     public double liftPower = -0.2;
@@ -79,13 +79,13 @@ public class Claw {
         double bucket1pos = bucket1Min;
         double bucket2pos = bucket2Min;
         if(level == 1){
-            position = 260;
+            position = 200;
             bucket1pos = bucket1Level1;
             bucket2pos = bucket2Level1;
 
         }
         else if(level == 2){
-            position = 400;
+            position = 360;
             bucket1pos = bucket1Level2;
             bucket2pos = bucket2Level2;
 
