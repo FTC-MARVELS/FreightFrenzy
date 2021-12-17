@@ -29,14 +29,14 @@ public class Claw {
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
 
-    public double bucket1Min = 0.945;
-    public double bucket2Min = 0.945;
-    public double bucket1Level1 = 0.6;
-    public double bucket1Level2 = 0.41;
-    public double bucket1Level3 = 0.79;
-    public double bucket2Level1 = 0.6;
-    public double bucket2Level2 = 0.41;
-    public double bucket2Level3 = 0.79;
+    public double bucket1Min = 0.755;
+    public double bucket2Min = 0.755;
+    public double bucket1Level1 = 0.49;
+    public double bucket1Level2 = 0.25;
+    public double bucket1Level3 = 0.11;
+    public double bucket2Level1 = 0.49;
+    public double bucket2Level2 = 0.25;
+    public double bucket2Level3 = 0.11;
     public double bucket1Max = 0.7;
     public double bucket2Max = -0.7;
     public double liftPower = -0.2;
@@ -85,13 +85,13 @@ public class Claw {
 
         }
         else if(level == 2){
-            position = 360;
+            position = 380;
             bucket1pos = bucket1Level2;
             bucket2pos = bucket2Level2;
 
         }
         else if(level == 3){
-            position = 560;
+            position = 540;
             bucket1pos = bucket1Level3;
             bucket2pos = bucket2Level3;
 
