@@ -29,8 +29,8 @@ public class Claw {
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
-    public double bucket1Min = 0.755;
-    public double bucket2Min = 0.755;
+    public double bucket1Min = 0.850;
+    public double bucket2Min = 0.850;
     //Level 1
     public double bucket1Level1 = 0.83;
     public double bucket2Level1 = 0.83;
