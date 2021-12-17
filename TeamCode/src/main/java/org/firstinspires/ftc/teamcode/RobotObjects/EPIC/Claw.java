@@ -103,6 +103,7 @@ public class Claw {
 
         new_frontLeftTarget = position;
         if(level!=0) {
+            arm.setTargetPosition(new_frontLeftTarget);
             parent.sleep(200);
             clawBucket1.setPosition(bucket1pos);
             clawBucket2.setPosition(bucket2pos);
