@@ -45,6 +45,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             Spinner spinner = new Spinner(hardwareMap);
             double spinnerPower = 0.58;
             double levelDistance = 11;
+            double backDistance = 5;
             mecanum.parent = this;
             Claw claw = new Claw(hardwareMap);
             claw.parent = this;
@@ -100,14 +101,17 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             if(id.contains("0 red_left_left")) {
                 level = 1;
                 levelDistance = 10;
+                backDistance = 2;
             }
             else if(id.contains("1 red_left_middle")) {
                 level = 2;
                 levelDistance = 12;
+                backDistance = 4;
             }
             else if(id.contains("2 red_left_right")) {
                 level = 3;
                 levelDistance = 14;
+                backDistance = 6;
             }
             telemetry.addData("level", level);
             telemetry.update();
@@ -125,7 +129,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
                 claw.release();
                 sleep(1000);
 //                //sleep(2000);
-            distance = 5 * correctionFactor;
+            distance = backDistance * correctionFactor;
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
@@ -145,7 +149,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             //right turn
             //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
 
-            distance = 11 * correctionFactor;
+            distance = 13 * correctionFactor;
             //right turn
             mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
 //
