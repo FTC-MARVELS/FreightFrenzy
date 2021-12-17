@@ -101,17 +101,17 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             if(id.contains("0 red_left_left")) {
                 level = 1;
                 levelDistance = 10;
-                backDistance = 2;
+                backDistance = 4;
             }
             else if(id.contains("1 red_left_middle")) {
                 level = 2;
                 levelDistance = 12;
-                backDistance = 4;
+                backDistance = 6;
             }
             else if(id.contains("2 red_left_right")) {
                 level = 3;
                 levelDistance = 14;
-                backDistance = 6;
+                backDistance = 8;
             }
             telemetry.addData("level", level);
             telemetry.update();
