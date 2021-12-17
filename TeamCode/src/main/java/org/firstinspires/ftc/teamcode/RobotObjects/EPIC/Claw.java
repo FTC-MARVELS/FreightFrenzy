@@ -28,17 +28,21 @@ public class Claw {
     public double finger2Min = -0.3;
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
-
+    //0 position
     public double bucket1Min = 0.755;
     public double bucket2Min = 0.755;
-    public double bucket1Level1 = 0.49;
-    public double bucket1Level2 = 0.25;
-    public double bucket1Level3 = 0.11;
-    public double bucket2Level1 = 0.49;
-    public double bucket2Level2 = 0.25;
-    public double bucket2Level3 = 0.11;
-    public double bucket1Max = 0.7;
-    public double bucket2Max = -0.7;
+    //Level 1
+    public double bucket1Level1 = 0.83;
+    public double bucket2Level1 = 0.83;
+    //Level 2
+    public double bucket1Level2 = 0.52;
+    public double bucket2Level2 = 0.52;
+    //Level 3
+    public double bucket1Level3 = 0.28;
+    public double bucket2Level3 = 0.28;
+
+    //public double bucket1Max = 0.7;
+    //public double bucket2Max = -0.7;
     public double liftPower = -0.2;
     public LinearOpMode parent;
     public Telemetry telemetry;
@@ -98,19 +102,26 @@ public class Claw {
         }
 
         new_frontLeftTarget = position;
+        if(level!=0) {
+            parent.sleep(200);
+            clawBucket1.setPosition(bucket1pos);
+            clawBucket2.setPosition(bucket2pos);
+        }
+        else{
 
-        arm.setTargetPosition(new_frontLeftTarget);
-        parent.sleep(200);
-        clawBucket1.setPosition(bucket1pos);
-        clawBucket2.setPosition(bucket2pos);
+            clawBucket1.setPosition(bucket1pos);
+            clawBucket2.setPosition(bucket2pos);
+            parent.sleep(200);
+            arm.setTargetPosition(new_frontLeftTarget);
+        }
         //arm.setTargetPosition(arm.getCurrentPosition() + position);
 
         if(position==0){
-            arm.setPower(0.4);
+            arm.setPower(0.2);
             parent.sleep(200);
         }
         else
-            arm.setPower(1);
+            arm.setPower(0.6);
         //}
         //else{
         //arm.setPower(0.0);

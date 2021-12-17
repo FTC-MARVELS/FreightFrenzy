@@ -101,16 +101,19 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             if(id.contains("0 red_right_left")) {
                 level = 1;
                 levelDistance = 10;
+                //back distance does not matter for RED RIGHT
                 backDistance = 4.75;
             }
             else if(id.contains("1 red_right_middle")) {
                 level = 2;
                 levelDistance = 12;
+                //back distance does not matter for RED RIGHT
                 backDistance = 6.5;
             }
             else if(id.contains("2 red_right_right")) {
                 level = 3;
                 levelDistance = 14;
+                //back distance does not matter for RED RIGHT
                 backDistance = 8.25;
             }
             telemetry.addData("level", level);
@@ -129,7 +132,7 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             claw.release();
             sleep(1000);
 //                //sleep(2000);
-            distance = backDistance * correctionFactor;
+            distance = levelDistance * correctionFactor;
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
@@ -137,8 +140,6 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             //Right turn
             mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
             distance = 5 * correctionFactor;
-            //Right
-            mecanum.encoderDrive(speed, 5, -5, -5,5,2);
             //Forward
             mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
             sleep(100);
@@ -146,10 +147,11 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
 //            sleep(2000);
 
             //spinner.setPower(0);
-
-            //distance = 3 * correctionFactor;
+            //9 inches is the distance between center of front and back wheels
+            //12.5 inches is the distance between end to end of the wheels
+            distance = 9 * correctionFactor;
             //right turn
-            //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
+            mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
 
             distance = 13 * correctionFactor;
             //right turn

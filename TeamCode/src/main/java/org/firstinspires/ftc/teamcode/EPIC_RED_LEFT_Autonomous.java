@@ -101,7 +101,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             if(id.contains("0 red_left_left")) {
                 level = 1;
                 levelDistance = 10;
-                backDistance = 4.75;
+                backDistance = 5.5;
             }
             else if(id.contains("1 red_left_middle")) {
                 level = 2;
