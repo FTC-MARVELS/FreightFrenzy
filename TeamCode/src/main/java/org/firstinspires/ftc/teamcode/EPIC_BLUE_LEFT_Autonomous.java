@@ -12,13 +12,13 @@ import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 
 import java.util.List;
 
-@Autonomous(name="EPIC_BLUE_RIGHT_Autonomous", group="Robot19587")
-public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
+@Autonomous(name="EPIC_BLUE_LEFT_Autonomous", group="Robot19587")
+public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private Detector tfDetector = null;
 
-    private static String MODEL_FILE_NAME = "EPIC_blue_right_model.tflite";
-    private static String LABEL_FILE_NAME = "EPIC_blue_right_labels.txt";
+    private static String MODEL_FILE_NAME = "EPIC_blue_left_model.tflite";
+    private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -98,17 +98,17 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             int level = 3;
             distance = 27;
             //id is equivalent to the labels
-            if(id.contains("0 blue_right_right")) {
+            if(id.contains("0 blue_left_right")) {
                 level = 1;
                 levelDistance = 10;
                 backDistance = 4.75;
             }
-            else if(id.contains("1 blue_right_middle")) {
+            else if(id.contains("1 blue_left_middle")) {
                 level = 2;
                 levelDistance = 12;
                 backDistance = 6.5;
             }
-            else if(id.contains("2 blue_right_left")) {
+            else if(id.contains("2 blue_left_left")) {
                 level = 3;
                 levelDistance = 14;
                 backDistance = 8.25;
@@ -120,8 +120,8 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             correctionFactor = 1.444;//.4;
             distance = 13.5;
             distance = distance * correctionFactor;
-            //Left
-            mecanum.encoderDrive(speed,-distance,distance,distance,-distance,2);
+            //Right
+            mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
             distance = levelDistance * correctionFactor;
             //forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
@@ -134,24 +134,26 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
             distance = 30 * correctionFactor;
-            //Right
-            mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
+            //Left turn
+            mecanum.encoderDrive(speed,-distance,distance,-distance,distance,2);
             distance = 5 * correctionFactor;
-            //Right
-            mecanum.encoderDrive(0.1,distance,-distance,-distance,distance,2);
+            //Left
+            mecanum.encoderDrive(speed,-distance,distance,distance,-distance,4);
+            //Forward
+            mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
             sleep(100);
-            spinner.setPower(spinnerPower);
-            sleep(2000);
+//            spinner.setPower(-spinnerPower);
+//            sleep(2000);
 
-            spinner.setPower(0);
+            //spinner.setPower(0);
 
             //distance = 3 * correctionFactor;
             //right turn
             //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
 
             distance = 13 * correctionFactor;
-            //Forward
-            mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
+            //right turn
+            //mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
 //
 //            distance = 6 * correctionFactor;
 //            //left
