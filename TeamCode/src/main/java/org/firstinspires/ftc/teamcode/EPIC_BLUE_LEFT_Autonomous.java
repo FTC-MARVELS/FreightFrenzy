@@ -118,11 +118,13 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             claw.lift(level);
             sleep(500);
             correctionFactor = 1.444;//.4;
-            distance = 13.5;
+            distance = 20.3;
             distance = distance * correctionFactor;
+
             //Right
             mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
             distance = levelDistance * correctionFactor;
+
             //forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
             //sleep(25000);
@@ -130,17 +132,21 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             sleep(1000);
 //                //sleep(2000);
             distance = backDistance * correctionFactor;
+
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
-            distance = 30 * correctionFactor;
+            distance = 11.7 * correctionFactor;
+
             //Left turn
-            mecanum.encoderDrive(speed,-distance,distance,-distance,distance,2);
-            distance = 5 * correctionFactor;
+            mecanum.encoderDrive(.4,-distance,-distance,distance,distance,3);
+            distance = 8 * correctionFactor;
+
             //Left
             mecanum.encoderDrive(speed,-distance,distance,distance,-distance,4);
+            sleep(700);
             //Forward
-            mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
+            mecanum.encoderDrive(.3,50,50,50,50,5);
             sleep(100);
 //            spinner.setPower(-spinnerPower);
 //            sleep(2000);
