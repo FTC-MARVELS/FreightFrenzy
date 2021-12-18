@@ -106,12 +106,12 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             else if(id.contains("1 blue_right_middle")) {
                 level = 2;
                 levelDistance = 12;
-                backDistance = 6.5;
+                backDistance = 5;
             }
             else if(id.contains("2 blue_right_left")) {
                 level = 3;
-                levelDistance = 14;
-                backDistance = 8.25;
+                levelDistance = 12;
+                backDistance = 5;
             }
             telemetry.addData("level", level);
             telemetry.update();
@@ -133,23 +133,26 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
-            distance = 30 * correctionFactor;
+            distance = 35 * correctionFactor;
             //Right
-            mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
-            distance = 5 * correctionFactor;
+            mecanum.encoderDrive(.2,distance,-distance,-distance,distance,10);
+            distance = 8.75 * correctionFactor;
             //Right
-            mecanum.encoderDrive(0.1,distance,-distance,-distance,distance,2);
+            mecanum.encoderDrive(0.1,-distance,-distance,distance,distance,4);
+            distance = 1.5 *correctionFactor;
+            mecanum.encoderDrive(0.1,-distance,-distance,-distance,-distance,3);
             sleep(100);
             spinner.setPower(spinnerPower);
             sleep(2000);
-
             spinner.setPower(0);
+            distance = 6.25 *correctionFactor;
+            mecanum.encoderDrive(.1,distance,distance,-distance,-distance,2);
 
             //distance = 3 * correctionFactor;
             //right turn
             //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
 
-            distance = 13 * correctionFactor;
+            distance = 15 * correctionFactor;
             //Forward
             mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
 //
