@@ -45,7 +45,8 @@ import java.util.List;
 
 //Opmode for quick testing of motors
 @TeleOp(name="TFDetector", group="Robot19587")
-//@Disabled
+
+@Disabled
 public class DetectorTest extends LinearOpMode{
 
     // Declare OpMode members.

@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.Research;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -41,6 +42,8 @@ import java.util.List;
 //Opmode for quick testing of motors
 @TeleOp(name="EpicDetector", group="Robot19587")
 //@Disabled
+
+@Disabled
 public class EpicDetectorTest extends LinearOpMode{
 
     // Declare OpMode members.
