@@ -128,7 +128,7 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             distance = levelDistance * correctionFactor;
             //forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
-            //sleep(25000);
+            sleep(100);
             claw.release();
             sleep(1000);
 //                //sleep(2000);
@@ -136,12 +136,12 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
-            distance = 30 * correctionFactor;
+            distance = 11.892 * correctionFactor;
             //Right turn
-            mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
-            distance = 5 * correctionFactor;
+            mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
+            distance = 45 * correctionFactor;
             //Forward
-            mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
+            mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
             sleep(100);
 //            spinner.setPower(-spinnerPower);
 //            sleep(2000);
@@ -151,7 +151,7 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             //12.5 inches is the distance between end to end of the wheels
             distance = 9 * correctionFactor;
             //right turn
-            mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
+           //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
 
             distance = 13 * correctionFactor;
             //right turn
