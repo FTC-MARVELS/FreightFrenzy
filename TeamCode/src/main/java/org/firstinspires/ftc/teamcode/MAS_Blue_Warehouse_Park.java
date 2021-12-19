@@ -46,9 +46,9 @@ import java.util.List;
      */
 
 
-@Autonomous(name = "MAS_Blue_SimpleAuto")
+@Autonomous(name = "MAS_Blue_Warehouse_Park")
 //@TeleOp(name="MAS_Blue_SimpleAuto")
-public class MAS_Blue_SimpleAuto extends LinearOpMode {
+public class MAS_Blue_Warehouse_Park extends LinearOpMode {
 
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
@@ -89,9 +89,9 @@ public class MAS_Blue_SimpleAuto extends LinearOpMode {
         }
 */
         waitForStart();
-       // runtime.reset();
+        // runtime.reset();
 
-       double forwardDistance = 38;
+        double forwardDistance = 38;
         double parkingDistance = 33;
 
   /*       int position = 9;
@@ -141,10 +141,12 @@ public class MAS_Blue_SimpleAuto extends LinearOpMode {
         claw.moveBucket(0.0);
         sleep(2000);
 */
-        mecanum.move_forward_auto(speed,forwardDistance, 10.0 );
-        mecanum.move_right_auto(speed*0.75, parkingDistance, 20.0);
-
+        mecanum.rotate_clock_auto(speed, 25, 5.0);
+        mecanum.move_right_auto(speed*0.75, 15,1.0);
+        mecanum.move_forward_auto(speed, 25, 5.0);
     }
 
 
 }
+
+

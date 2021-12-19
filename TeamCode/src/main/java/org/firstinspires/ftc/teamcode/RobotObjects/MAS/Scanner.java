@@ -16,15 +16,18 @@ import java.util.List;
 public class Scanner {
 
     // Declare OpMode members.
-    //private Detector tfDetector = null;
+    private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
     private static int MAX_POSITION = 2;
     private Telemetry telemetry;
-    private static String MODEL_FILE_NAME = "model_unquant_dec5.tflite";
-    private static String LABEL_FILE_NAME = "labels.txt";
-    private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
+    //private static String MODEL_FILE_NAME = "model_unquant_dec5.tflite";
+    //private static String LABEL_FILE_NAME = "labels.txt";
+    //private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
-    /*public void initialize(HardwareMap hardwareMap, LinearOpMode parent , Telemetry inputTelemetry) throws Exception {
+    /*
+    Not Needed
+     public void initialize(HardwareMap hardwareMap, LinearOpMode parent , Telemetry inputTelemetry) throws Exception {
+
         tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, inputTelemetry);
         tfDetector.parent = parent;
         tfDetector.activate();
@@ -32,6 +35,7 @@ public class Scanner {
     }*/
 
     public int scan(HardwareMap hardwareMap, Detector detector, Telemetry inputTelemetry) throws InterruptedException, Exception {
+
         String positionStr = "";
         int position = MAX_POSITION;
         telemetry = inputTelemetry;
@@ -43,19 +47,19 @@ public class Scanner {
         telemetry.update();
         sleep(1000);*/
         if (results == null || results.size() == 0){
-            /*telemetry.addData("Info", "No results");
+            telemetry.addData("Info", "No results");
             telemetry.update();
-            sleep(1000);*/
+            sleep(1000);
             positionStr = "NA";
             position = 3; // Added to test no results
         }
         else {
             for (Classifier.Recognition r : results) {
                 String item = String.format("%s: %.2f", r.getTitle(), r.getConfidence());
-                /*telemetry.addData("Found", item);
+                telemetry.addData("Found", item);
                 telemetry.update();
                 sleep(1000);
-                telemetry.addData("Found confidence level", r.getConfidence());
+                /*telemetry.addData("Found confidence level", r.getConfidence());
                 telemetry.update();
                 sleep(1000);*/
                 if(r.getConfidence()>0.7) {

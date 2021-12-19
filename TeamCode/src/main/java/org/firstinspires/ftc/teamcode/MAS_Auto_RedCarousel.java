@@ -2,11 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
-//import org.firstinspires.ftc.teamcode.RobotObjects.Scanner;
+import org.firstinspires.ftc.teamcode.tfrec.Detector;
+import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
 
 /*
     Near Carousel
@@ -36,80 +39,134 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
      */
 
 
+
+
 @Autonomous(name="MAS_Auto_RedCarousel")
 public class MAS_Auto_RedCarousel extends LinearOpMode {
+
+    private Detector tfDetector = null;
+    private ElapsedTime runtime = new ElapsedTime();
+
+    private static String MODEL_FILE_NAME = "redcarousel.tflite";
+    private static String LABEL_FILE_NAME = "labels_redcarousel.txt";
+    private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
+
     //Configuration used: 6wheelConfig
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 0.38;
+        double speed = 0.6;
         double rotationSpeed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
-       // Scanner scanner = new Scanner(hardwareMap);
+        Scanner scanner = new Scanner();
         mecanum.IsMASAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
         mecanum.initialize();
         mecanum.rightErrorAdjustment = 0.5;//1;
+        try {
+            tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
+            tfDetector.parent = this;
+            tfDetector.activate();
+        } catch (Exception ex) {
+            telemetry.addData("Error", String.format("Unable to initialize Detector. %s", ex.getMessage()));
+            sleep(3000);
+            return;
+        }
 
         waitForStart();
-        double spinnerDistance = 22.35;
-        double spinnerRotate = 20;
-        double shippingHubDistance = 15;
+        double spinnerDistance = 21.5;
+        double spinnerRotate = 10;
+        double shippingHubDistance = 40;
         double rotateNinety = 21;
-
         //SCAN CODE- EISHA AND HAMZA
-        mecanum.move_forward_auto(speed,6.7, 10.0 );
+
+        int position = 9;
+        try {
+            position = scanner.scan(hardwareMap, tfDetector, telemetry);
+            telemetry.addData("Found in class", position);
+            telemetry.update();
+            sleep(1000);
+
+            if (position == 3) {
+                position = scanner.scan(hardwareMap, tfDetector, telemetry);
+                sleep(1000);
+                telemetry.addData("Found again in class", position);
+                telemetry.update();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            telemetry.addData("Error", String.format("Unable to scan image. %s", e.getMessage()));
+            position = 2;
+            telemetry.addData("Found in class Exception ", position);
+            telemetry.update();
+        }
+
+        telemetry.addData("FINAL POSITION", position);
+        telemetry.update();
+
+        mecanum.move_right_auto(speed, shippingHubDistance, 10.0);
+
+        if(position == 2 || position == 3 || position == 9) {
+            mecanum.moveArm(2,0);
+            sleep(3000);
+            claw.moveBucket(0.0);
+            sleep(2000);
+        } else if(position == 1) {
+            mecanum.moveArm(1,0);
+            sleep(3000);
+            claw.moveBucket(0.0);
+            sleep(2000);
+        } else if(position == 0) {
+            claw.moveBucket(-0.5);
+            sleep(400);
+            claw.moveBucket(0.0);
+        }
+
+        mecanum.move_forward_auto(speed,shippingHubDistance*0.7, 7.0 );
+        claw.dropObject();
+        sleep(800);
+        claw.stopGripper();
+        mecanum.move_backward_auto(speed,4, 2.0);
         // rotate to bring spinner to position
-        mecanum.rotate_clock_auto(rotationSpeed, spinnerRotate, 20.0);
+        mecanum.rotate_clock_auto(rotationSpeed, spinnerRotate * 1.15, 10.0);
         //backward to go to carousel
-        mecanum.move_backward_auto(speed * 0.85, spinnerDistance * 1.1, 20.5);
+        mecanum.move_backward_auto(speed, spinnerDistance*1.15, 20.5);
+        mecanum.move_left_auto(speed, 45, 23.0);
+        mecanum.move_backward_auto(speed, spinnerDistance * 1.4, 22);
+        mecanum.rotate_counter_clock_auto(rotationSpeed, 15, 2.0);
 
         sleep(100);
-        mecanum.move_backward_auto(0.03, 0.5, 1.0);
+        //mecanum.move_backward_auto(0.03, 0.5, 1.0);
         //Spin
         spinner.setPower(-0.58);
         sleep(2600);
         spinner.setPower(0);
 
+        mecanum.rotate_clock_auto(rotationSpeed, 10, 2.0);
+        mecanum.move_forward_auto(speed, 5, 20.5);
+        mecanum.rotate_clock_auto(rotationSpeed, -spinnerRotate, 20.0);
+
         //back to position + rotate
         //come back to original position
-        mecanum.move_forward_auto(speed,spinnerDistance , 20.0);
-        //rotate to position the camera to scan
-        mecanum.rotate_anti_clock_auto(rotationSpeed, rotateNinety*0.88, 20.0);
-        //move back a bit to scan
-        mecanum.move_backward_auto(speed,4, 10.0 );
-        //Scan for position of the element- eisha and hamza!
 
-        //move right a bit then forward a bit to drop
-        mecanum.move_right_auto(speed, shippingHubDistance*1.35, 20.0);
-        mecanum.move_forward_auto(speed, shippingHubDistance*0.85,20.0);
-
-        //Raise Arm and wrist to drop
-        mecanum.liftArm(-0.4);
-        //claw.raiseWrist(0.5);
-        sleep(4800);
-       // mecanum.arm.setPower(0.0);
-        sleep(100);
-        //claw.openClaws();
-        sleep(500);
-        mecanum.liftArm(0.3);
-        //claw.restWrist();
-        //claw.closeClaws();
-        sleep(2100);
-
-        mecanum.move_backward_auto(speed,shippingHubDistance * 0.9, 20.0 );
-
-        mecanum.rotate_clock_auto(speed, rotateNinety, 10.0);
-
-        double ParkDistance = 34;//going forward into warehouse
+        if (position == 1 || position == 2) {
+            claw.moveBucket(-0.5);
+        } else {
+            claw.moveBucket(0.4);
+        }
+        mecanum.moveArm(0, position);
+        mecanum.move_forward_auto(speed, 22, 20.0);
+        claw.moveBucket(0.0);
+        mecanum.move_left_auto(speed/2, 10, 2.5);
+        //going forward into warehouse
         //Increase the speed if we are going over the obstacle
-        mecanum.move_backward_auto(speed*2,ParkDistance*1.145, 25.0 );
+        //mecanum.move_backward_auto(speed*2,ParkDistance*1.145, 25.0 );
         //else will need logic to collapse and then move right to park
-        mecanum.move_left_auto(speed, shippingHubDistance*1.75, 20.0);
-        mecanum.move_backward_auto(speed * 0.75,  5.0, 20.5);
+        //mecanum.move_left_auto(speed, shippingHubDistance*1.75, 20.0);
+        //mecanum.move_backward_auto(speed * 0.75,  5.0, 20.5);
 
     }
 

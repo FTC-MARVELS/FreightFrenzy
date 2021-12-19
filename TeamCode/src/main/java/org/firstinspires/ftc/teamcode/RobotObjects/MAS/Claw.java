@@ -64,8 +64,12 @@ public class Claw {
     }
 
     public void dropObject() {
-        rotatingGripper.setPower(-0.5);
+        rotatingGripper.setPower(-0.38);
         //rotatingGripper.setVelocity(-2000);
+    }
+
+    public void hamza() {
+        rotatingGripper.setPower(-0.55);
     }
 
     public void stopGripper() {

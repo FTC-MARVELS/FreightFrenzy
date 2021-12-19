@@ -45,7 +45,7 @@ public class Mecanum_Wheels {
         //middleright = hardwareMap.get(DcMotorEx.class,"Middleright");
         //middleleft = hardwareMap.get(DcMotorEx.class,"Middleleft");
         arm = hardwareMap.get(DcMotorEx.class, "arm");
-        //claw = new Claw(hardwareMap);
+        claw = new Claw(hardwareMap);
     }
 
     //initialize for TeleOp
@@ -101,61 +101,48 @@ public class Mecanum_Wheels {
         if (level == 0) {
             if (currentLevel == 1) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(600);
-                claw.moveBucket(0.0);
+                arm.setTargetPosition(-2100);
+                claw.moveBucket(-0.3);
                 arm.setPower(-0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            }
-
-            if (currentLevel == 2) {
+            } else if (currentLevel == 2) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(1500);
-                claw.moveBucket(0.0);
+                arm.setTargetPosition(-3500);
+                claw.moveBucket(-0.3);
                 arm.setPower(-0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-        }
-
-        if (currentLevel == 1) {
+        } else if (level == 1) {
             if (currentLevel == 0) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(600);
-                claw.moveBucket(0.3);
+                arm.setTargetPosition(2100);
+                claw.moveBucket(0.5);
                 arm.setPower(0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            }
-
-            if (currentLevel == 2) {
+            } else if (currentLevel == 2) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(1300);
-                claw.moveBucket(0.3);
+                arm.setTargetPosition(-1400);
+                claw.moveBucket(-0.3);
                 arm.setPower(-0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-        }
-
-        if (level == 2) {
+        } else if (level == 2) {
             if (currentLevel == 1) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(1300);
+                arm.setTargetPosition(1400);
                 claw.moveBucket(0.5);
                 arm.setPower(0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            }
-
-            if (currentLevel == 0) {
+            } else if (currentLevel == 0) {
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(1500);
+                arm.setTargetPosition(3500);// dropped at 2nd level
                 claw.moveBucket(0.5);
                 arm.setPower(0.5);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
         }
-
-   }
+    }
 
     public void encoderDrive(double speed,
                              double frontLeftInches, double backLeftInches, double frontRightInches,
@@ -272,7 +259,7 @@ public class Mecanum_Wheels {
 
     //frontleft backleft frontright backright
     public void move_right_auto(double speed, double distance, double timeOut) {
-        encoderDrive(speed,-distance,distance,-distance,distance, timeOut);
+        encoderDrive(speed,-distance,distance,distance,-distance, timeOut);
     }
 
     public void move_left_auto(double speed, double distance, double timeOut) {
@@ -283,7 +270,7 @@ public class Mecanum_Wheels {
         encoderDrive(speed,-distance,-distance,distance,distance, timeOut);
     }
 
-    public void rotate_anti_clock_auto(double speed, double distance, double timeOut) {
+    public void rotate_counter_clock_auto(double speed, double distance, double timeOut) {
         encoderDrive(speed,distance,distance,-distance,-distance, timeOut);
     }
     public void move_backward_auto(double speed, double distance, double timeOut){
