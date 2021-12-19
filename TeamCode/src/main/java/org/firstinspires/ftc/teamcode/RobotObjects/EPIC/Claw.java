@@ -24,15 +24,25 @@ public class Claw {
     public double finger2Init = 0.4;
     public double armMin = 0.0;
     public double armMax = 0.5;
-    public double finger1Min = 0.0;
-    public double finger2Min = 0.0;
+    public double finger1Min = 0.3;
+    public double finger2Min = -0.3;
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
+    //0 position
+    public double bucket1Min = 0.850;
+    public double bucket2Min = 0.850;
+    //Level 1
+    public double bucket1Level1 = 0.83;
+    public double bucket2Level1 = 0.83;
+    //Level 2
+    public double bucket1Level2 = 0.52;
+    public double bucket2Level2 = 0.52;
+    //Level 3
+    public double bucket1Level3 = 0.28;
+    public double bucket2Level3 = 0.28;
 
-    public double bucket1Min = 0.0;
-    public double bucket2Min = 0.0;
-    public double bucket1Max = 0.7;
-    public double bucket2Max = -0.7;
+    //public double bucket1Max = 0.7;
+    //public double bucket2Max = -0.7;
     public double liftPower = -0.2;
     public LinearOpMode parent;
     public Telemetry telemetry;
@@ -49,6 +59,8 @@ public class Claw {
         clawBucket2.setDirection(Servo.Direction.REVERSE);
         clawFinger1.setPosition(0);
         clawFinger2.setPosition(0);
+        clawBucket1.setPosition(bucket1Min);
+        clawBucket2.setPosition(bucket1Min);
         arm = hardwareMap.get(DcMotorEx.class,"arm");
         //arm.setDirection(DcMotor.Direction.REVERSE);
 
@@ -62,22 +74,55 @@ public class Claw {
         //liftMotor = hardwareMap.get(DcMotorEx.class,"Lift");
 
     }
-    public void lift(int position) {
+    public void lift(int level) {
         //double ticksPerInchMecanum = (537.7 / 1);
         //if (parent.opModeIsActive()) {
         //new_frontLeftTarget = arm.getCurrentPosition() + (int)(frontLeftInches * ticksPerInchMecanum);
         //while(arm.getCurrentPosition() < new_frontLeftTarget) {
+        int position = 0;
+        double bucket1pos = bucket1Min;
+        double bucket2pos = bucket2Min;
+        if(level == 1){
+            position = 200;
+            bucket1pos = bucket1Level1;
+            bucket2pos = bucket2Level1;
 
+        }
+        else if(level == 2){
+            position = 370;
+            bucket1pos = bucket1Level2;
+            bucket2pos = bucket2Level2;
+
+        }
+        else if(level == 3){
+            position = 540;
+            bucket1pos = bucket1Level3;
+            bucket2pos = bucket2Level3;
+
+        }
 
         new_frontLeftTarget = position;
+        if(level!=0) {
+            arm.setTargetPosition(new_frontLeftTarget);
+            parent.sleep(200);
+            clawBucket1.setPosition(bucket1pos);
+            clawBucket2.setPosition(bucket2pos);
+        }
+        else{
+
+            clawBucket1.setPosition(bucket1pos);
+            clawBucket2.setPosition(bucket2pos);
+            parent.sleep(200);
+            arm.setTargetPosition(new_frontLeftTarget);
+        }
         //arm.setTargetPosition(arm.getCurrentPosition() + position);
-        arm.setTargetPosition(new_frontLeftTarget);
+
         if(position==0){
-            arm.setPower(0.4);
+            arm.setPower(0.2);
             parent.sleep(200);
         }
         else
-            arm.setPower(1);
+            arm.setPower(0.6);
         //}
         //else{
         //arm.setPower(0.0);
@@ -105,7 +150,7 @@ public class Claw {
             //arm.setTargetPosition(arm.getCurrentPosition() + position);
             arm.setTargetPosition(new_frontLeftTarget);
             arm.setPower(speed);
-            //parent.sleep(100);
+            parent.sleep(100);
         }
         else if(new_frontLeftTarget<0)
             new_frontLeftTarget =0;
@@ -208,8 +253,8 @@ public class Claw {
         clawFinger1.setPosition(finger1Max);
         clawFinger2.setPosition(-finger2Max);
 
-        clawBucket1.setPosition(bucket1Max);
-        clawBucket2.setPosition(bucket2Max);
+        //clawBucket1.setPosition(bucket1Max);
+        //clawBucket2.setPosition(bucket2Max);
         telemetry.addData("Postion Claw 1:%d", clawFinger1.getPosition());
         telemetry.addData("Postion Claw 2:%d", clawFinger2.getPosition());
         telemetry.update();

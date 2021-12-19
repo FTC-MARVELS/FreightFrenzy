@@ -131,39 +131,40 @@ public class EPIC_TeleOp extends LinearOpMode {
             if(y2)
             {
 
-                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.005);
-                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()+0.005);
-                //claw.release();
+                //claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()+0.005);
+                //claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()+0.005);
+                claw.release();
 
             }
             else if(x2)
             {
 
-                claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()-0.005);
-                claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.005);
+                //claw.clawFinger1.setPosition(claw.clawFinger1.getPosition()-0.005);
+                //claw.clawFinger2.setPosition(claw.clawFinger2.getPosition()-0.005);
+                claw.grab();
 
             }
             else if(a2)
             {
-                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.005);
-                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()+0.005);
+                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.01);
+                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()+0.01);
                 //claw.grab();
             }
             //else if(x)
                 //spinner.setPower(carouselPower);
             else if(b2) {
                 //spinner.setPower(-carouselPower);
-                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition() - 0.005);
-                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() - 0.005);
+                claw.clawBucket1.setPosition(claw.clawBucket1.getPosition() - 0.01);
+                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition() - 0.01);
             }
             else if(dpad_down2){
-                claw.lift(200);
+                claw.lift(1);
             }
             else if(dpad_left2){
-                claw.lift(360);
+                claw.lift(2);
             }
             else if(dpad_up2){
-                claw.lift(600);
+                claw.lift(3);
             }
             else if(dpad_right2){
                 claw.lift(0);

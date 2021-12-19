@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -9,6 +10,8 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Claw;
 
 @Autonomous(name="EPIC_Autonomous")
+
+@Disabled
 public class EPIC_Autonomous extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private ElapsedTime runtime = new ElapsedTime();

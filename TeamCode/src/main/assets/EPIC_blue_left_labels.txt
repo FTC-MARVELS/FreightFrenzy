@@ -1,0 +1,3 @@
+0 blue_left_right
+1 blue_left_middle
+2 blue_left_left

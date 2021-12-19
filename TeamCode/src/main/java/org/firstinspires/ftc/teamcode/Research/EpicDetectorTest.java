@@ -29,34 +29,41 @@
 
 package org.firstinspires.ftc.teamcode.Research;
 
-import android.hardware.camera2.CameraCharacteristics;
-
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-//import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-//import org.firstinspires.ftc.teamcode.bots.DummyBot;
 import org.firstinspires.ftc.teamcode.tfrec.Detector;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 
 import java.util.List;
 
 //Opmode for quick testing of motors
-@TeleOp(name="TFDetector", group="Robot19587")
+@TeleOp(name="EpicDetector", group="Robot19587")
+//@Disabled
 
 @Disabled
-public class DetectorTest extends LinearOpMode{
+public class EpicDetectorTest extends LinearOpMode{
 
     // Declare OpMode members.
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "model_unquant_dec5.tflite";
+    //private static String MODEL_FILE_NAME = "EPIC_bottom_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_bottom_labels.txt";
+    //private static String MODEL_FILE_NAME = "EPIC_red_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_red_labels.txt";
+
+    //private static String MODEL_FILE_NAME = "EPIC_red_right_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_red_right_labels.txt";
+
+    private static String MODEL_FILE_NAME = "EPIC_red_left_model.tflite";
+    private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
+    //private static String MODEL_FILE_NAME = "Epic_Model.tflite";
     //private static String MODEL_FILE_NAME = "model.tflite";
     //private static String MODEL_FILE_NAME = "sample_model.tflite";
-    private static String LABEL_FILE_NAME = "labels.txt";
+    //private static String LABEL_FILE_NAME = "Epic_Labels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     @Override
