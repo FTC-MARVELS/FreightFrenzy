@@ -22,8 +22,8 @@ public class MAS_Auto_TestImage extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "bcr.tflite";
-    private static String LABEL_FILE_NAME = "labels_bcr.txt";
+    private static String MODEL_FILE_NAME = "redcarouselorangecone.tflite";
+    private static String LABEL_FILE_NAME = "newlabels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     //Configuration used: 6wheelConfig

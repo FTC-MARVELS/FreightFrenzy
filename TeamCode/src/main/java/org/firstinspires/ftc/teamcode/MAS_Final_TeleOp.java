@@ -20,7 +20,7 @@ public class MAS_Final_TeleOp extends LinearOpMode {
     double leftx = 0.0;
     double righty = 0.0;
     double rightx = 0.0;
-
+    boolean tankDrive = true;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -28,9 +28,6 @@ public class MAS_Final_TeleOp extends LinearOpMode {
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
         Claw claw = new Claw(hardwareMap);
-        //mecanumWheels.rightErrorAdjustment = 0.93;//1;
-        //claw.bucket1.setPosition(0.0);
-        //claw.bucket2.setPosition(0.0);
         waitForStart();
         while (opModeIsActive()) {
 
@@ -41,38 +38,63 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
 
-            boolean modeTwo = false;
-            if(gamepad1.right_bumper) {
-                modeTwo = true;
-            } else{
-                modeTwo = false;
-            }
-            boolean modeThree = false;
-            if(gamepad1.left_bumper){
-                modeThree = true;
-            }
-            else{
-                modeThree=false;
-            }
-            if(modeTwo==true){
-                mecanumWheels.move_side(-leftx* 0.93, rightx);
+
+            if(gamepad1.a) { //mode button
+                if(tankDrive == true) {
+                    tankDrive = false;
+                } else if(tankDrive == false) {
+                    tankDrive = true;
+                }
+                telemetry.addData("Tank Drive Mode on A" , tankDrive);
+                telemetry.update();
+
             }
 
-            if(modeThree==true) {
-                mecanumWheels.move_forwardback_rotate(lefty*0.5* 0.93,righty*0.5);
-                mecanumWheels.move_side(-leftx*0.5, rightx*0.5);
+
+            telemetry.addData("Tank Drive Mode" , tankDrive);
+            telemetry.update();
+
+
+
+            if(tankDrive) {
+                mecanumWheels.move_forwardback_rotate(lefty * 1, righty);
+                boolean modeTwo = false;
+                if(gamepad1.right_bumper) {
+                    modeTwo = true;
+                } else{
+                    modeTwo = false;
+                }
+                boolean modeThree = false;
+                if(gamepad1.left_bumper){
+                    modeThree = true;
+                }
+                else{
+                    modeThree=false;
+                }
+                if(modeTwo==true){
+                    mecanumWheels.move_side(-leftx* 1, rightx);
+                }
+
+                if(modeThree==true) {
+                    mecanumWheels.move_forwardback_rotate(lefty*0.5* 1,righty*0.5);
+                    mecanumWheels.move_side(-leftx*0.5, rightx*0.5);
+                }
+            } else { //Not Tank Drive - New mode of driving
+                //Right Joy Stick controls all forward, back, left, right motions
+                //Left Joy Stick controls expand, collapse, rotate 90 right and rotate 90 left
+                mecanumWheels.moveForward(-lefty);
+                if(leftx > 0.01 || leftx < 0.01) {
+                    mecanumWheels.moveSide(leftx);
+                }
+                if(rightx > 0.01 || rightx < 0.01) {
+                    mecanumWheels.expandCollapse(rightx); //Need to test this function
+                }
+                if(righty > 0.01 || righty < 0.01) {
+                    mecanumWheels.rotateMode(righty);
+                }
             }
-
-            /*if (gamepad2.right_bumper) {
-                claw.grabObject();
-            } else if(gamepad2.left_bumper) {
-                claw.dropObject();
-            } else {
-                claw.stopGripper();
-            }*/
-
             claw.rotateGripper(gamepad2.right_stick_y);
-
+            //mecanumWheels.frontright.setPower(gamepad2.right_stick_y);
             if(gamepad2.a) {
                 spinner.setPower(1.0);
                 //spinner.setVelocity(2000);
@@ -93,7 +115,6 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             //spinner.setPower(gamepad2.right_stick_x*0.7);
 
             mecanumWheels.liftArm(-gamepad2.left_stick_y);
-            mecanumWheels.move_forwardback_rotate(lefty * 0.93, righty);
             claw.moveBucket(-gamepad2.left_stick_y);
             if(gamepad2.left_bumper) {
                 claw.moveBucket(0.8);
@@ -105,6 +126,24 @@ public class MAS_Final_TeleOp extends LinearOpMode {
 
             telemetry.addData("Servo power" , claw.bucket1.getPower());
             telemetry.update();
+
+            int currentLevel = 0;
+            if(gamepad2.dpad_left) {
+                mecanumWheels.positionForDrop(0, currentLevel);
+                currentLevel = 0;
+            } else if (gamepad2.dpad_up) {
+                mecanumWheels.positionForDrop(1, currentLevel);
+                currentLevel = 1;
+            } else if (gamepad2.dpad_right) {
+                mecanumWheels.positionForDrop(2, currentLevel);
+                currentLevel = 2;
+            } else if (gamepad2.dpad_down) {
+                //Reset Original position
+                //Pending code
+                mecanumWheels.moveArm(0, currentLevel);
+                currentLevel = 0;
+            }
+
             /*int currentLevel = 0;
             int dPad = -1;
 

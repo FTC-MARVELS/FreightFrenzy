@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.RobotObjects.MAS;
 
+import static java.lang.Thread.sleep;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -90,12 +92,6 @@ public class Mecanum_Wheels {
             arm.setPower(power);
 
    }
-
-    //AUTOMATED arm control
-    public void armToLevel(double position) {
-
-    }
-
 
     public void moveArm(int level, int currentLevel) {
         if (level == 0) {
@@ -239,9 +235,9 @@ public class Mecanum_Wheels {
     //moveForward for TeleOp
     //The left and right powers are controlled by the left and right y axes
     public void move_forwardback_rotate( double leftPower, double rightPower){
-        frontleft.setPower(-leftPower*leftErrorAdjustment);
+        frontleft.setPower(leftPower*leftErrorAdjustment);
         backleft.setPower(-leftPower*leftErrorAdjustment);
-        frontright.setPower(rightPower*rightErrorAdjustment);
+        frontright.setPower(-rightPower*rightErrorAdjustment);
         backright.setPower(rightPower*rightErrorAdjustment);
     //    middleleft.setPower(-leftPower*leftErrorAdjustment);
     //    middleright.setPower(rightPower*rightErrorAdjustment);
@@ -250,10 +246,10 @@ public class Mecanum_Wheels {
     //moveSide for TeleOp
     //The left and right powers are controlled by the left and right x axes
     public void move_side( double leftPower, double rightPower){
-        frontleft.setPower(-leftPower*leftErrorAdjustment);
-        backleft.setPower(leftPower*leftErrorAdjustment);
-        frontright.setPower(rightPower*rightErrorAdjustment);
-        backright.setPower(-rightPower*rightErrorAdjustment);
+        frontleft.setPower(leftPower*0.93);
+        backleft.setPower(leftPower*0.93);
+        frontright.setPower(-rightPower*rightErrorAdjustment);
+        backright.setPower(-rightPower*0.93);
     }
 
 
@@ -285,4 +281,53 @@ public class Mecanum_Wheels {
         middleleft.setPower(leftPower*leftErrorAdjustment);
         middleright.setPower(rightPower*rightErrorAdjustment);
     }*/
+
+    public void positionForDrop (int position, int currentLevel) throws InterruptedException {
+        if(position == 2 || position == 3 || position == 9) {
+            moveArm(2,currentLevel);
+            sleep(3000);
+            claw.moveBucket(0.0);
+            sleep(2000);
+        } else if(position == 1) {
+            moveArm(1,currentLevel);
+            sleep(3000);
+            claw.moveBucket(0.0);
+            sleep(2000);
+        } else if(position == 0) {
+            arm.setPower(0.5);
+            sleep(500);
+            claw.moveBucket(-0.5);
+            arm.setPower(0.0);
+            sleep(600);
+            claw.moveBucket(0.0);
+        }
+    }
+
+    public void rotateMode(double power) {
+        frontleft.setPower(-power* 1);
+        backleft.setPower(power* 1);
+        frontright.setPower(-power*rightErrorAdjustment);
+        backright.setPower(power*rightErrorAdjustment);
+    }
+
+    public void expandCollapse(double power){
+        frontleft.setPower(power* 1);
+        backleft.setPower(power* 1);
+        frontright.setPower(-power*rightErrorAdjustment);
+        backright.setPower(-power*rightErrorAdjustment);
+    }
+
+    public void moveForward (double power) {
+        frontleft.setPower(-power*1);
+        backleft.setPower(power*1);
+        frontright.setPower(power*rightErrorAdjustment);
+        backright.setPower(-power*rightErrorAdjustment);
+    }
+
+    public void moveSide(double power) {
+        frontleft.setPower(-power*1);
+        backleft.setPower(-power*1);
+        frontright.setPower(-power*rightErrorAdjustment);
+        backright.setPower(-power*rightErrorAdjustment);
+    }
 }

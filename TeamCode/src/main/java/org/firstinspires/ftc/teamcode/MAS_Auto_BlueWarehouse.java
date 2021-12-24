@@ -96,7 +96,7 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         mecanum.move_right_auto(speed, shippingHubDistance/1.05, 20.0);
 
         //Copy for all autonomous BEGIN
-        if(position == 2 || position == 3 || position == 9) {
+        /*if(position == 2 || position == 3 || position == 9) {
             mecanum.moveArm(2,0);
             sleep(3000);
             claw.moveBucket(0.0);
@@ -113,7 +113,8 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
             mecanum.arm.setPower(0.0);
             sleep(600);
             claw.moveBucket(0.0);
-        }
+        }*/
+        mecanum.positionForDrop(position,0);
         //Copy for all autonomous END
 
         if(position != 0) {

@@ -39,6 +39,7 @@ public class Scanner {
         String positionStr = "";
         int position = MAX_POSITION;
         telemetry = inputTelemetry;
+        Float previousConfidence = 0.0f;
         List<Classifier.Recognition> results = detector.getLastResults();
         /*telemetry.addData("TEST STATEMENT", detector);
         telemetry.update();
@@ -63,19 +64,23 @@ public class Scanner {
                 telemetry.update();
                 sleep(1000);*/
                 if(r.getConfidence()>0.7) {
-                    positionStr = r.getTitle();
-                    position = Integer.parseInt(positionStr.substring(0,1));
+                    if(r.getConfidence() > previousConfidence) {
+                        positionStr = r.getTitle();
+                        position = Integer.parseInt(positionStr.substring(0,1));
+                    }
                     /*telemetry.addData("Found position before break", positionStr);
                     telemetry.update();
                     sleep(1000);*/
-                    break;
-                } else {
+                    //break;
+                } /*else {
                     positionStr = "NA";
                     position = MAX_POSITION;
                     /*telemetry.addData("DID NOT Find position before break", positionStr);
                     telemetry.update();
-                    sleep(1000);*/
-                }
+                    sleep(1000);
+                }*/
+                previousConfidence = r.getConfidence();
+
             }
         }
 

@@ -109,7 +109,7 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
 
         mecanum.move_left_auto(speed, shippingHubDistance * 1.1, 7.0);
 
-        if(position == 2 || position == 3 || position == 9) {
+       /* if(position == 2 || position == 3 || position == 9) {
             mecanum.moveArm(2,0);
             sleep(3000);
             claw.moveBucket(0.0);
@@ -123,7 +123,9 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
             claw.moveBucket(-0.5);
             sleep(800);
             claw.moveBucket(0.0);
-        }
+        }*/
+        mecanum.positionForDrop(position,0);
+
 
         mecanum.move_forward_auto(speed,shippingHubDistance*0.8, 7.0 );
         claw.dropObject();
