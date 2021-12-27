@@ -5,15 +5,13 @@ import static java.lang.Thread.sleep;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 
 public class Mecanum_Wheels {
-    //Configuration used: 6wheelConfig
+    //Configuration used: 4wheelConfig_MAS
     public DcMotorEx frontright;
     public DcMotorEx frontleft;
     public DcMotorEx backright;
@@ -26,6 +24,10 @@ public class Mecanum_Wheels {
 
     public double leftErrorAdjustment = 1.0;
     public double rightErrorAdjustment = 1.0;
+    public double frontleftErrorAdjustment = 1.0;
+    public double frontrightErrorAdjustment = 1.0;
+    public double backleftErrorAdjustment = 1.0;
+    public double backrightErrorAdjustment = 1.0;
 
     public double mecanumWheelCircumference = 12; //inches
     public double omniWheelCircumference = 12; //inches
@@ -88,57 +90,6 @@ public class Mecanum_Wheels {
             }
         }
     }
-   public void liftArm(double power) {
-            arm.setPower(power);
-
-   }
-
-    public void moveArm(int level, int currentLevel) {
-        if (level == 0) {
-            if (currentLevel == 1) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(-2100);
-                claw.moveBucket(-0.3);
-                arm.setPower(-0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            } else if (currentLevel == 2) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(-3500);
-                claw.moveBucket(-0.3);
-                arm.setPower(-0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-        } else if (level == 1) {
-            if (currentLevel == 0) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(2100);
-                claw.moveBucket(0.5);
-                arm.setPower(0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            } else if (currentLevel == 2) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(-1400);
-                claw.moveBucket(-0.3);
-                arm.setPower(-0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-        } else if (level == 2) {
-            if (currentLevel == 1) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(1400);
-                claw.moveBucket(0.5);
-                arm.setPower(0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            } else if (currentLevel == 0) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(3500);// dropped at 2nd level
-                claw.moveBucket(0.5);
-                arm.setPower(0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            }
-        }
-    }
 
     public void encoderDrive(double speed,
                              double frontLeftInches, double backLeftInches, double frontRightInches,
@@ -187,14 +138,14 @@ public class Mecanum_Wheels {
 
             // reset the timeout time and start motion.
             runtime.reset();
-            frontleft.setPower(speed*0.9);
+            frontleft.setPower(speed*1);
             frontright.setPower(speed);
             /*if(new_middleLeftTarget!=0)
                 middleleft.setPower(speed);
             if(new_middleRightTarget!=0)
                 middleright.setPower(speed);*/
-            backleft.setPower(speed*0.9);
-            backright.setPower(speed*0.9);
+            backleft.setPower(speed*1);
+            backright.setPower(speed*1);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (parent.opModeIsActive() &&
@@ -232,26 +183,7 @@ public class Mecanum_Wheels {
         //  sleep(250);   // optional pause after each move
     }
 
-    //moveForward for TeleOp
-    //The left and right powers are controlled by the left and right y axes
-    public void move_forwardback_rotate( double leftPower, double rightPower){
-        frontleft.setPower(leftPower*leftErrorAdjustment);
-        backleft.setPower(-leftPower*leftErrorAdjustment);
-        frontright.setPower(-rightPower*rightErrorAdjustment);
-        backright.setPower(rightPower*rightErrorAdjustment);
-    //    middleleft.setPower(-leftPower*leftErrorAdjustment);
-    //    middleright.setPower(rightPower*rightErrorAdjustment);
-    }
-
-    //moveSide for TeleOp
-    //The left and right powers are controlled by the left and right x axes
-    public void move_side( double leftPower, double rightPower){
-        frontleft.setPower(leftPower*0.93);
-        backleft.setPower(leftPower*0.93);
-        frontright.setPower(-rightPower*rightErrorAdjustment);
-        backright.setPower(-rightPower*0.93);
-    }
-
+    //Autonomous mode methods BEGIN
 
     //frontleft backleft frontright backright
     public void move_right_auto(double speed, double distance, double timeOut) {
@@ -277,57 +209,152 @@ public class Mecanum_Wheels {
         encoderDrive(speed,-distance,-distance,-distance, -distance, timeOut);
     }
 
+    //Autonomous mode methods END
+
     /*public void middleForwardback(double leftPower, double rightPower){
         middleleft.setPower(leftPower*leftErrorAdjustment);
         middleright.setPower(rightPower*rightErrorAdjustment);
     }*/
 
+    //Tank Drive mode methods BEGIN
+    //moveForward for TeleOp
+    //The left and right powers are controlled by the left and right y axes
+    public void move_forwardback_rotate( double leftPower, double rightPower){
+        frontleft.setPower(leftPower*frontleftErrorAdjustment);
+        backleft.setPower(-leftPower*backleftErrorAdjustment);
+        frontright.setPower(-rightPower*frontrightErrorAdjustment);
+        backright.setPower(rightPower*backrightErrorAdjustment);
+        //    middleleft.setPower(-leftPower*leftErrorAdjustment);
+        //    middleright.setPower(rightPower*rightErrorAdjustment);
+    }
+
+    //moveSide for TeleOp
+    //The left and right powers are controlled by the left and right x axes
+    public void move_side( double leftPower, double rightPower){
+        frontleft.setPower(-leftPower*frontleftErrorAdjustment);
+        backleft.setPower(-leftPower*backleftErrorAdjustment);
+        frontright.setPower(-rightPower*frontrightErrorAdjustment);
+        backright.setPower(-rightPower*backrightErrorAdjustment);
+    }
+
+    public void move_right(double power) {
+        frontleft.setPower(-power*frontleftErrorAdjustment);
+        backleft.setPower(-power*backleftErrorAdjustment);
+        frontright.setPower(-power*frontrightErrorAdjustment);
+        backright.setPower(-power*backrightErrorAdjustment);
+    }
+
+    public void move_left(double power) {
+        frontleft.setPower(power*frontleftErrorAdjustment);
+        backleft.setPower(power*backleftErrorAdjustment);
+        frontright.setPower(power*frontrightErrorAdjustment);
+        backright.setPower(power*backrightErrorAdjustment);
+    }
+    //Tank Drive mode methods END
+
+    //Non Tank Drive mode methods BEGIN
+
+    public void rotateMode(double power) {
+        frontleft.setPower(-power* frontleftErrorAdjustment);
+        backleft.setPower(power* backleftErrorAdjustment);
+        frontright.setPower(-power*frontrightErrorAdjustment);
+        backright.setPower(power*backrightErrorAdjustment);
+    }
+
+    public void expandCollapse(double power){
+        frontleft.setPower(power* frontleftErrorAdjustment);
+        backleft.setPower(power* backleftErrorAdjustment);
+        frontright.setPower(-power*frontrightErrorAdjustment);
+        backright.setPower(-power*backrightErrorAdjustment);
+    }
+
+    public void moveForward (double power) {
+        frontleft.setPower(power*frontleftErrorAdjustment);
+        backleft.setPower(-power*backleftErrorAdjustment);
+        frontright.setPower(-power*frontrightErrorAdjustment);
+        backright.setPower(power*backrightErrorAdjustment);
+    }
+
+    public void moveSide(double power) {
+        frontleft.setPower(-power*frontleftErrorAdjustment);
+        backleft.setPower(-power*backleftErrorAdjustment);
+        frontright.setPower(-power*frontrightErrorAdjustment);
+        backright.setPower(-power*backrightErrorAdjustment);
+    }
+
+    //Non Tank Drive mode methods END
+
+    public void liftArm(double power) {
+        arm.setPower(power);
+
+    }
+
+    public void moveArm(int level, int currentLevel) {
+        if (level == 0) {
+            if (currentLevel == 1) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(-2100);
+                claw.moveSwing(-0.3);
+                arm.setPower(-0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            } else if (currentLevel == 2) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(-3500);
+                claw.moveSwing(-0.3);
+                arm.setPower(-0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        } else if (level == 1) {
+            if (currentLevel == 0) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(2100);
+                claw.moveSwing(0.5);
+                arm.setPower(0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            } else if (currentLevel == 2) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(-1400);
+                claw.moveSwing(-0.3);
+                arm.setPower(-0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        } else if (level == 2) {
+            if (currentLevel == 1) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(1400);
+                claw.moveSwing(0.5);
+                arm.setPower(0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            } else if (currentLevel == 0) {
+                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                arm.setTargetPosition(3500);// dropped at 2nd level
+                claw.moveSwing(0.5);
+                arm.setPower(0.5);
+                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+        }
+    }
+
     public void positionForDrop (int position, int currentLevel) throws InterruptedException {
         if(position == 2 || position == 3 || position == 9) {
             moveArm(2,currentLevel);
             sleep(3000);
-            claw.moveBucket(0.0);
+            claw.moveSwing(0.0);
             sleep(2000);
         } else if(position == 1) {
             moveArm(1,currentLevel);
             sleep(3000);
-            claw.moveBucket(0.0);
+            claw.moveSwing(0.0);
             sleep(2000);
         } else if(position == 0) {
             arm.setPower(0.5);
             sleep(500);
-            claw.moveBucket(-0.5);
+            claw.moveSwing(-0.5);
             arm.setPower(0.0);
             sleep(600);
-            claw.moveBucket(0.0);
+            claw.moveSwing(0.0);
         }
     }
 
-    public void rotateMode(double power) {
-        frontleft.setPower(-power* 1);
-        backleft.setPower(power* 1);
-        frontright.setPower(-power*rightErrorAdjustment);
-        backright.setPower(power*rightErrorAdjustment);
-    }
-
-    public void expandCollapse(double power){
-        frontleft.setPower(power* 1);
-        backleft.setPower(power* 1);
-        frontright.setPower(-power*rightErrorAdjustment);
-        backright.setPower(-power*rightErrorAdjustment);
-    }
-
-    public void moveForward (double power) {
-        frontleft.setPower(-power*1);
-        backleft.setPower(power*1);
-        frontright.setPower(power*rightErrorAdjustment);
-        backright.setPower(-power*rightErrorAdjustment);
-    }
-
-    public void moveSide(double power) {
-        frontleft.setPower(-power*1);
-        backleft.setPower(-power*1);
-        frontright.setPower(-power*rightErrorAdjustment);
-        backright.setPower(-power*rightErrorAdjustment);
-    }
 }

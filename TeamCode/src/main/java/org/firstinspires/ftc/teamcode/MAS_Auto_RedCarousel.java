@@ -130,7 +130,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         mecanum.move_forward_auto(speed,shippingHubDistance*0.7, 7.0 );
         claw.dropObject();
         sleep(800);
-        claw.stopGripper();
+        claw.stopIntake();
         mecanum.move_backward_auto(speed,4, 2.0);
         // rotate to bring spinner to position
         mecanum.rotate_clock_auto(rotationSpeed, spinnerRotate * 1.15, 10.0);
@@ -155,13 +155,13 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         //come back to original position
 
         if (position == 1 || position == 2) {
-            claw.moveBucket(-0.5);
+            claw.moveSwing(-0.5);
         } else {
-            claw.moveBucket(0.4);
+            claw.moveSwing(0.4);
         }
         mecanum.moveArm(0, position);
         mecanum.move_forward_auto(speed, 22, 20.0);
-        claw.moveBucket(0.0);
+        claw.moveSwing(0.0);
         mecanum.move_left_auto(speed/2, 10, 2.5);
         //going forward into warehouse
         //Increase the speed if we are going over the obstacle

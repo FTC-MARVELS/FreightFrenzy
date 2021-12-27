@@ -12,8 +12,8 @@ public class Claw {
     public Servo rightclaw;
     public Servo rightwrist;
     public Servo leftwrist;
-    public CRServo bucket1;
-    public CRServo bucket2;
+    public CRServo swing;
+    public Servo floor;
 
     public double armInit = 0.0;
     public double leftClawInit = 1.0;
@@ -29,20 +29,20 @@ public class Claw {
     public double finger2Max = 0.4;
     public double finger3Max = 0.4;
 
-    public DcMotorEx rotatingGripper;
+    public DcMotorEx intake;
 
     public Claw(HardwareMap hardwareMap) {
       /*  rightwrist = hardwareMap.get(Servo.class,"rightwrist");
         leftwrist = hardwareMap.get(Servo.class,"leftwrist");
         rightclaw = hardwareMap.get(Servo.class,"rightclaw");
         leftclaw = hardwareMap.get(Servo.class,"leftclaw");*/
-        rotatingGripper = hardwareMap.get(DcMotorEx.class, "rotatingGripper");
-        bucket1 = hardwareMap.get(CRServo.class,"bucket1");
-        bucket2 = hardwareMap.get(CRServo.class,"bucket2");
-        bucket1.setPower(0);
-        bucket2.setPower(0);
-        bucket1.setDirection(DcMotorSimple.Direction.FORWARD);
-        bucket2.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        swing = hardwareMap.get(CRServo.class,"swing");
+        floor = hardwareMap.get(Servo.class,"floor");
+        swing.setPower(0);
+        //floor.setPosition(0.0);
+        swing.setDirection(DcMotorSimple.Direction.FORWARD);
+        //floor.setDirection(DcMotorSimple.Direction.FORWARD);
         //rightwrist.setPosition(rightWristInit);
         //leftwrist.setPosition(leftWristInit);
         //rightclaw.setPosition(rightClawInit);
@@ -53,32 +53,40 @@ public class Claw {
         bucket.setPosition(0.5);
     }*/
 
-    public void moveBucket(double power) {
-        bucket1.setPower(power);
-        bucket2.setPower(power);
+    public void moveSwing(double power) {
+        swing.setPower(power);
+        //floor.setPower(power);
+    }
+
+    public void moveFloor(double power) {
+        floor.setPosition(power);
     }
 
     public void grabObject() {
-        rotatingGripper.setPower(0.5);
+        intake.setPower(0.5);
         //rotatingGripper.setVelocity(2000);
     }
 
     public void dropObject() {
-        rotatingGripper.setPower(-0.38);
+        intake.setPower(-0.38);
         //rotatingGripper.setVelocity(-2000);
     }
 
     public void hamza() {
-        rotatingGripper.setPower(-0.55);
+        intake.setPower(-0.55);
     }
 
-    public void stopGripper() {
-        rotatingGripper.setPower(0);
+    public void stopIntake() {
+        intake.setPower(0);
         //rotatingGripper.setVelocity(0);
     }
 
-    public void rotateGripper(double power) {
-        rotatingGripper.setPower(power);
+    public void startIntake(double power) {
+        intake.setPower(power);
+    }
+
+    public void reverseIntake(double power) {
+        intake.setPower(power);
     }
 
     /*public void raiseWrist(double power)

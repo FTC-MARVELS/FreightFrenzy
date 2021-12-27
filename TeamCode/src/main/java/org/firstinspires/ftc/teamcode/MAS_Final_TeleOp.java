@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
@@ -28,16 +28,21 @@ public class MAS_Final_TeleOp extends LinearOpMode {
         Mecanum_Wheels mecanumWheels = new Mecanum_Wheels(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
         Claw claw = new Claw(hardwareMap);
+
+
         waitForStart();
         while (opModeIsActive()) {
-
             mecanumWheels.initialize();
+
+            mecanumWheels.frontrightErrorAdjustment = 1.0;
+            mecanumWheels.backrightErrorAdjustment = 1.0;
+            mecanumWheels.frontleftErrorAdjustment = 1.0;
+            mecanumWheels.backleftErrorAdjustment = 1.0;
 
             lefty = gamepad1.left_stick_y;
             leftx = gamepad1.left_stick_x;
             righty = gamepad1.right_stick_y;
             rightx = gamepad1.right_stick_x;
-
 
             if(gamepad1.a) { //mode button
                 if(tankDrive == true) {
@@ -46,55 +51,41 @@ public class MAS_Final_TeleOp extends LinearOpMode {
                     tankDrive = true;
                 }
                 telemetry.addData("Tank Drive Mode on A" , tankDrive);
-                telemetry.update();
-
-            }
-
+           }
 
             telemetry.addData("Tank Drive Mode" , tankDrive);
-            telemetry.update();
-
-
 
             if(tankDrive) {
-                mecanumWheels.move_forwardback_rotate(lefty * 1, righty);
-                boolean modeTwo = false;
                 if(gamepad1.right_bumper) {
-                    modeTwo = true;
-                } else{
-                    modeTwo = false;
-                }
-                boolean modeThree = false;
-                if(gamepad1.left_bumper){
-                    modeThree = true;
-                }
-                else{
-                    modeThree=false;
-                }
-                if(modeTwo==true){
-                    mecanumWheels.move_side(-leftx* 1, rightx);
-                }
-
-                if(modeThree==true) {
+                    applyAdjustments(mecanumWheels);
+                    mecanumWheels.move_side(leftx, rightx);
+                } else if(gamepad1.left_bumper) {
                     mecanumWheels.move_forwardback_rotate(lefty*0.5* 1,righty*0.5);
-                    mecanumWheels.move_side(-leftx*0.5, rightx*0.5);
+                    mecanumWheels.move_side(leftx*0.5, rightx*0.5);
+                } else {
+                    mecanumWheels.move_forwardback_rotate(lefty , righty);
                 }
             } else { //Not Tank Drive - New mode of driving
                 //Right Joy Stick controls all forward, back, left, right motions
                 //Left Joy Stick controls expand, collapse, rotate 90 right and rotate 90 left
-                mecanumWheels.moveForward(-lefty);
-                if(leftx > 0.01 || leftx < 0.01) {
+                if(lefty > 0.01 || leftx < -0.01) {
+                    mecanumWheels.moveForward(lefty);
+                    telemetry.addData("Left X" , leftx);
+                } else if(leftx > 0.1 || leftx < 0.1) {
+                //if(leftx > 0.1 ) { // moveright
                     mecanumWheels.moveSide(leftx);
-                }
-                if(rightx > 0.01 || rightx < 0.01) {
+                    //mecanumWheels.move_right(leftx, 0.8, 1);
+                //} else if (leftx < -0.1) {
+                    //mecanumWheels.move_left(leftx, 1, 0.8);
+                 //   mecanumWheels.moveSide(leftx, 1, 0.5);
+                //
+                } else if(rightx > 0.01 || rightx < -0.01) {
                     mecanumWheels.expandCollapse(rightx); //Need to test this function
-                }
-                if(righty > 0.01 || righty < 0.01) {
+                } else if(righty > 0.01 || righty < -0.01) {
                     mecanumWheels.rotateMode(righty);
                 }
             }
-            claw.rotateGripper(gamepad2.right_stick_y);
-            //mecanumWheels.frontright.setPower(gamepad2.right_stick_y);
+
             if(gamepad2.a) {
                 spinner.setPower(1.0);
                 //spinner.setVelocity(2000);
@@ -113,19 +104,56 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             }
 
             //spinner.setPower(gamepad2.right_stick_x*0.7);
-
-            mecanumWheels.liftArm(-gamepad2.left_stick_y);
-            claw.moveBucket(-gamepad2.left_stick_y);
-            if(gamepad2.left_bumper) {
-                claw.moveBucket(0.8);
-            } else if(gamepad2.right_bumper) {
-                claw.moveBucket(-0.8);
+            if(gamepad2.left_trigger > 0.05) {
+                claw.startIntake(-gamepad2.left_trigger);
+            } else if(gamepad2.right_trigger > 0.05) {
+                claw.reverseIntake(gamepad2.right_trigger);
             } else {
-                claw.moveBucket(0);
+                claw.stopIntake();
             }
 
-            telemetry.addData("Servo power" , claw.bucket1.getPower());
-            telemetry.update();
+       //     mecanumWheels.liftArm(-gamepad2.left_stick_x*0.6);
+
+            int StickButton = 0;
+
+            if(gamepad2.left_stick_button) {
+                if(gamepad2.left_stick_x > 0.05) {
+                    StickButton = 1;
+                }else if(gamepad2.left_stick_x < -0.05) {
+                    StickButton = 2;
+                } else {
+                    StickButton = 0;
+                }
+            }
+
+            if(StickButton == 0) {
+                mecanumWheels.liftArm(-gamepad2.left_stick_x*0.6);
+            } else if(StickButton == 1) {
+                mecanumWheels.liftArm(-gamepad2.left_stick_x*0.6 + 0.05);
+            } else if(StickButton == 2) {
+                mecanumWheels.liftArm(-gamepad2.left_stick_x*0.6 - 0.05);
+            }
+
+            telemetry.addData("StickButton" , StickButton);
+
+            claw.moveSwing(-gamepad2.right_stick_x);
+            if(gamepad2.right_bumper) {
+                claw.moveFloor(0.0);
+            } else if(gamepad2.left_bumper) {
+                claw.moveFloor(1.0);
+            } else {
+                claw.moveFloor(0.4);
+            }
+
+            /*if(gamepad2.left_bumper) {
+                claw.moveSwing(0.8);
+            } else if(gamepad2.right_bumper) {
+                claw.moveSwing(-0.8);
+            } else {
+                claw.moveSwing(0);
+            }*/
+
+            telemetry.addData("Servo power" , claw.swing.getPower());
 
             int currentLevel = 0;
             if(gamepad2.dpad_left) {
@@ -143,6 +171,8 @@ public class MAS_Final_TeleOp extends LinearOpMode {
                 mecanumWheels.moveArm(0, currentLevel);
                 currentLevel = 0;
             }
+
+            telemetry.update();
 
             /*int currentLevel = 0;
             int dPad = -1;
@@ -174,5 +204,36 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             telemetry.update();*/
         }
     }
+
+    public void applyAdjustments(Mecanum_Wheels mecanumWheels) {
+        telemetry.addData("Left X and Right X values" ,leftx + ": " + rightx);
+
+        if(gamepad1.left_stick_x > 0.05 && gamepad1.right_stick_x > 0.05) {
+            mecanumWheels.frontleftErrorAdjustment = 1.0;
+            mecanumWheels.backleftErrorAdjustment = 1.0;
+            mecanumWheels.frontrightErrorAdjustment = 1.0;
+            mecanumWheels.backrightErrorAdjustment = 1.0;
+            telemetry.addData("Moving Right : Left Adjustments" , mecanumWheels.frontleftErrorAdjustment + " : " + mecanumWheels.backleftErrorAdjustment);
+
+        } else if(gamepad1.left_stick_x < -0.05 && gamepad1.right_stick_x < -0.05) {
+            mecanumWheels.frontleftErrorAdjustment = 1.0;
+            mecanumWheels.backleftErrorAdjustment = 1.0;
+            mecanumWheels.frontrightErrorAdjustment = 1.0;
+            mecanumWheels.backrightErrorAdjustment = 1.0;
+            telemetry.addData("Moving Left : Right Adjustments" , mecanumWheels.frontrightErrorAdjustment + " : " + mecanumWheels.backrightErrorAdjustment);
+
+        }
+        else {
+            mecanumWheels.frontrightErrorAdjustment = 1.0;
+            mecanumWheels.backrightErrorAdjustment = 1.0;
+            mecanumWheels.frontleftErrorAdjustment = 1.0;
+            mecanumWheels.backleftErrorAdjustment = 1.0;
+        }
+        telemetry.addData("Final Adjustment Values" ,
+                mecanumWheels.frontrightErrorAdjustment + " : " + mecanumWheels.backrightErrorAdjustment +
+                        mecanumWheels.frontleftErrorAdjustment + " : " + mecanumWheels.backleftErrorAdjustment );
+        telemetry.update();
+    }
+
 }
 

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -130,7 +129,7 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
 
         sleep(1000);
 
-        claw.stopGripper();
+        claw.stopIntake();
 
         mecanum.move_backward_auto(speed,shippingHubDistance/1.25, 20.0 );
 

@@ -1,16 +1,19 @@
 Control Hub
 DC Motors
 0: Frontright
-1: arm
+1: secondArm
 2: Backright
-3: rotatingGripper
+3: carouselMotor
 
-Servos
-0: bucket1
 
 
 Expansion Hub
 DC Motors
 0: Frontleft
-1: carouselMotor
+1: arm
 2: Backleft
+3: intake
+
+Servos
+0: swing
+1: floor
