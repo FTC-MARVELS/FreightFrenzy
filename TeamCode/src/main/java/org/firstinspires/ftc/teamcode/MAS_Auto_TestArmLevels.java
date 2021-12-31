@@ -1,0 +1,108 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
+import org.firstinspires.ftc.teamcode.tfrec.Detector;
+import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
+
+@Autonomous(name = "MAS_Auto_TestArmLevels")
+public class MAS_Auto_TestArmLevels extends LinearOpMode {
+
+    private Detector tfDetector = null;
+    private ElapsedTime runtime = new ElapsedTime();
+
+    //Configuration used: 6wheelConfig
+    @Override
+    public void runOpMode() throws InterruptedException {
+        Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
+        Scanner scanner = new Scanner();
+        Claw claw = new Claw(hardwareMap);
+        mecanum.IsMASAutonomous = true;
+        mecanum.velocity = 400;
+        mecanum.telemetry = this.telemetry;
+        mecanum.parent = this;
+        mecanum.initialize();
+        mecanum.rightErrorAdjustment = 0.5;//1;
+
+
+        waitForStart();
+
+
+        mecanum.move_backward_auto(0.6, 10, 10.0);
+        //mecanum.move_left_auto(0.8, 15, 10.0);
+        //mecanum.rotate_counter_clock_auto(0.3, 10, 10.0);
+        //mecanum.move_forward_auto(0.6, 20, 10.0);
+        mecanum.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mecanum.arm.setTargetPosition(1700); // red top level
+        mecanum.arm.setPower(0.5);
+        claw.moveSwing(0.0);
+        mecanum.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sleep(2000);
+        mecanum.move_left_auto(0.8, 25, 10.0);
+        claw.moveFloor(1.0);
+        claw.moveSwing(0.5);
+        sleep(1000);
+        //claw.dropObject();
+        sleep(1000);
+        //claw.stopIntake();
+        claw.moveFloor(0.5);
+        //mecanum.arm.setTargetPosition(200);
+        //mecanum.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //sleep(2000);
+        mecanum.move_right_auto(0.3, 10, 10.0);
+       // mecanum.arm.setPower(0.0);
+        //mecanum.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //mecanum.moveArmSideways(2, 0);
+
+    //labels are reversed here
+      /*  if(position == 0 || position == 3 || position == 9) {
+            mecanum.moveArm(2,0);
+            sleep(3000);
+            claw.moveBucket(0.0);
+            sleep(2000);
+        } else if(position == 1) {
+            mecanum.moveArm(1,0);
+            sleep(3000);
+            claw.moveBucket(0.0);
+            sleep(2000);
+        } else if(position == 2) {
+            claw.moveBucket(0.2);
+            sleep(200);
+        }*/
+
+        /*mecanum.moveArm(2,0);
+        sleep(3000);
+        claw.moveBucket(0.0);
+        sleep(2000);
+
+        mecanum.moveArm(0,2);
+        sleep(3000);
+        claw.moveBucket(0.0);
+        sleep(2000);
+
+        mecanum.moveArm(1,0);
+        sleep(3000);
+        claw.moveBucket(0.0);
+        sleep(2000);
+
+
+        mecanum.moveArm(0,1);
+        sleep(3000);
+        claw.moveBucket(0.0);
+        sleep(2000);
+*/
+
+    }
+
+}
+

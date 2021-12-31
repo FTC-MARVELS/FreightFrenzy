@@ -1,15 +1,16 @@
 Control Hub
 DC Motors
-0: Frontright
-1: secondArm
+0: Frontright (reversed)
 2: Backright
 3: carouselMotor
 
-
+Servos
+2: secondArm
+1: finger
 
 Expansion Hub
 DC Motors
-0: Frontleft
+0: Frontleft (reversed)
 1: arm
 2: Backleft
 3: intake

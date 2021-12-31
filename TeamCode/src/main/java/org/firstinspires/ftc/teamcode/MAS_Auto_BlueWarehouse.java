@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
-import org.firstinspires.ftc.teamcode.tfrec.Detector;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Detector;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 /*
 
@@ -50,7 +50,7 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         //Copy for all autonomous BEGIN
         try {
             tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
-            tfDetector.parent = this;
+           // tfDetector.parent = this;
             tfDetector.activate();
         } catch (Exception ex) {
             telemetry.addData("Error", String.format("Unable to initialize Detector. %s", ex.getMessage()));

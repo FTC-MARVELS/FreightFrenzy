@@ -60,7 +60,7 @@ public class ScannerSample extends LinearOpMode{
         try {
             try {
                 tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
-                tfDetector.parent = this;
+               // tfDetector.parent = this;
                 tfDetector.activate();
 
             }
