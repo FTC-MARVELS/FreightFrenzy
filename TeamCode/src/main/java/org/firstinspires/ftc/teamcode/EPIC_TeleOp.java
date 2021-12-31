@@ -224,8 +224,11 @@ public class EPIC_TeleOp extends LinearOpMode {
             telemetry.addData("clawBucket2 target position", claw.clawBucket2.getPosition());
 
 
-            telemetry.addData("arm current position", claw.arm.getCurrentPosition());
-            telemetry.addData("arm target position", claw.arm.getTargetPosition());
+            telemetry.addData("armLeft current position", claw.armLeft.getCurrentPosition());
+
+            telemetry.addData("armRight current position", claw.armRight.getCurrentPosition());
+            telemetry.addData("armLeft target position", claw.armLeft.getTargetPosition());
+            telemetry.addData("armRight target position", claw.armRight.getTargetPosition());
             telemetry.addData("arm target position set", claw.new_frontLeftTarget);
 
             telemetry.addData("b2", b2);
