@@ -26,15 +26,15 @@ public class Claw {
     public double armMin = 0.0;
     public double armMax = 0.5;
     public double finger1Min = 0.3;
-    public double finger2Min = -0.3;
+    public double finger2Min = 0.3;
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
     public double bucket1Min = 0.850;
     public double bucket2Min = 0.850;
     //Level 1
-    public double bucket1Level1 = 0.83;
-    public double bucket2Level1 = 0.83;
+    public double bucket1Level1 = 0.72;
+    public double bucket2Level1 = 0.72;
     //Level 2
     public double bucket1Level2 = 0.52;
     public double bucket2Level2 = 0.52;
@@ -60,8 +60,8 @@ public class Claw {
         armRight = hardwareMap.get(DcMotorEx.class,"armRight");
         clawFinger2.setDirection(Servo.Direction.REVERSE);
         clawBucket2.setDirection(Servo.Direction.REVERSE);
-        clawFinger1.setPosition(0);
-        clawFinger2.setPosition(0);
+        clawFinger1.setPosition(finger1Min);
+        clawFinger2.setPosition(finger2Min);
         clawBucket1.setPosition(bucket1Min);
         clawBucket2.setPosition(bucket1Min);
         //arm = hardwareMap.get(DcMotorEx.class,"arm");
@@ -92,19 +92,19 @@ public class Claw {
         double bucket1pos = bucket1Min;
         double bucket2pos = bucket2Min;
         if(level == 1){
-            position = 200;
+            position = 105;
             bucket1pos = bucket1Level1;
             bucket2pos = bucket2Level1;
 
         }
         else if(level == 2){
-            position = 370;
+            position = 220;
             bucket1pos = bucket1Level2;
             bucket2pos = bucket2Level2;
 
         }
         else if(level == 3){
-            position = 540;
+            position = 330;
             bucket1pos = bucket1Level3;
             bucket2pos = bucket2Level3;
 
