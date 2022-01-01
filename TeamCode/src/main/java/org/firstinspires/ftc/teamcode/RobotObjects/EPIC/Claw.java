@@ -21,26 +21,26 @@ public class Claw {
     //public DcMotorEx liftMotor;
 
     public double armInit = 0.0;
-    public double finger1Init = 0.4;
-    public double finger2Init = 0.4;
+    public double finger1Init = 0.3;
+    public double finger2Init = 0.3;
     public double armMin = 0.0;
     public double armMax = 0.5;
-    public double finger1Min = 0.3;
-    public double finger2Min = 0.3;
+    public double finger1Min = 0.2;
+    public double finger2Min = 0.2;
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
-    public double bucket1Min = 0.850;
-    public double bucket2Min = 0.850;
+    public double bucket1Min = 0.86;
+    public double bucket2Min = 0.86;
     //Level 1
-    public double bucket1Level1 = 0.72;
-    public double bucket2Level1 = 0.72;
+    public double bucket1Level1 = 0.58;
+    public double bucket2Level1 = 0.58;
     //Level 2
-    public double bucket1Level2 = 0.52;
-    public double bucket2Level2 = 0.52;
+    public double bucket1Level2 = 0.26;
+    public double bucket2Level2 = 0.26;
     //Level 3
-    public double bucket1Level3 = 0.28;
-    public double bucket2Level3 = 0.28;
+    public double bucket1Level3 = 0.2;
+    public double bucket2Level3 = 0.2;
 
     //public double bucket1Max = 0.7;
     //public double bucket2Max = -0.7;
@@ -92,19 +92,19 @@ public class Claw {
         double bucket1pos = bucket1Min;
         double bucket2pos = bucket2Min;
         if(level == 1){
-            position = 105;
+            position = 135;
             bucket1pos = bucket1Level1;
             bucket2pos = bucket2Level1;
 
         }
         else if(level == 2){
-            position = 220;
+            position = 260;
             bucket1pos = bucket1Level2;
             bucket2pos = bucket2Level2;
 
         }
         else if(level == 3){
-            position = 330;
+            position = 360;
             bucket1pos = bucket1Level3;
             bucket2pos = bucket2Level3;
 
