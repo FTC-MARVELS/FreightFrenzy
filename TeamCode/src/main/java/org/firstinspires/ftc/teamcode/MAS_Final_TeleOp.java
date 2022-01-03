@@ -22,6 +22,7 @@ public class MAS_Final_TeleOp extends LinearOpMode {
     double rightx = 0.0;
     int StickButton = 0;
     int otherStickButton = 0;
+    int finger = 0;
     int dPadButton = 0;
     int homePosition = 0;
     boolean tankDrive = true;
@@ -145,10 +146,10 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             }
 
             if(gamepad2.dpad_left) {
-                claw.moveSecondArm(0.8);
+                claw.moveSecondArm(0.6);
                 dPadButton = 1;
             } else if(gamepad2.dpad_right) {
-                claw.moveSecondArm(-0.8);
+                claw.moveSecondArm(-0.6);
                 dPadButton = 2;
             } else if(gamepad2.dpad_down) {
                 dPadButton = 0;
@@ -164,7 +165,7 @@ public class MAS_Final_TeleOp extends LinearOpMode {
 
             //spinner.setPower(gamepad2.right_stick_x*0.7);
             if(gamepad2.left_trigger > 0.05) {
-                claw.startIntake(-gamepad2.left_trigger);
+                claw.startIntake(gamepad2.left_trigger);
             } else if(gamepad2.right_trigger > 0.05) {
                 claw.reverseIntake(gamepad2.right_trigger);
             } else {

@@ -29,14 +29,14 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "redwrhs.tflite";
-    private static String LABEL_FILE_NAME = "labels_redwrhs.txt";
+    private static String MODEL_FILE_NAME = "testmodeldec30.tflite";
+    private static String LABEL_FILE_NAME = "testmodeldec30.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     //Copy for all autonomous END
 
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 0.4;
+        double speed = 0.8;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Scanner scanner = new Scanner();
 
@@ -70,11 +70,11 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
             position = scanner.scan(hardwareMap, tfDetector, telemetry);
             telemetry.addData("Found in class", position);
             telemetry.update();
-            sleep(1000);
+            sleep(800);
 
             if (position == 3) {
                 position = scanner.scan(hardwareMap, tfDetector, telemetry);
-                sleep(1000);
+                sleep(800);
                 telemetry.addData("Found again in class", position);
                 telemetry.update();
             }
@@ -89,10 +89,13 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
         telemetry.addData("FINAL POSITION", position);
         telemetry.update();
 
+        if(position == 3 || position == 9) {
+            position = 2;
+        }
         //Copy for all autonomous END
 
         //move right a bit then forward a bit to drop
-        mecanum.move_left_auto(speed, shippingHubDistance*0.9, 20.0);
+        //mecanum.move_left_auto(speed, shippingHubDistance*0.9, 20.0);
 
         //Copy for all autonomous BEGIN
         /*if(position == 2 || position == 3 || position == 9) {
@@ -114,12 +117,30 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
             claw.moveBucket(0.0);
         }*/
         //Copy for all autonomous END
+        double wareHouseDistance = 55;
+        //mecanum.positionForDrop(position,0);
+        mecanum.move_backward_auto(0.7, 21, 10.0);
 
-        mecanum.positionForDrop(position,0);
+        int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Red"); //this code moves closer to the hub, drops and then moves back slightly
+        telemetry.addData("Encoder Position", encoderPosition);
+        telemetry.update();
+        //return arm to base position
+        mecanum.armToEncoderPosition(encoderPosition);
+        sleep(1000);
+        claw.moveSwing(0.5);
+        sleep(500);
+        claw.moveSwing(0.0);
+        mecanum.move_right_auto(speed, 22, 10.0);
+        mecanum.move_forward_auto(speed, wareHouseDistance,20.0);
+        //Below code grabs one object and drops on the field
+        claw.startIntake(0.8);
+        sleep(2000);
+        //mecanum.move_backward_auto(speed*0.9, wareHouseDistance, 20.0);
+        //claw.reverseIntake(-0.8);
+        //sleep(1000);
+        //mecanum.move_forward_auto(speed, wareHouseDistance,20.0);
 
-        mecanum.move_forward_auto(speed, shippingHubDistance * 0.75,20.0);
-
-        if(position == 0) {
+     /*   if(position == 0) {
             claw.hamza();
         } else {
             claw.dropObject();
@@ -139,7 +160,7 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
         //Increase the speed if we are going over the obstacle
         mecanum.move_forward_auto(speed*2.5,ParkDistance * 1.2, 25.0 );
         //else will need logic to collapse and then move right to park
-
+*/
     }
 
 

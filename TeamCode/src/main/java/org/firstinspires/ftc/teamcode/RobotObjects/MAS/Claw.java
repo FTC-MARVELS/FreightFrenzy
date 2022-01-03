@@ -18,18 +18,6 @@ public class Claw {
     public Servo finger;
 
     public double armInit = 0.0;
-    public double leftClawInit = 1.0;
-    public double rightWristInit = 0.0;
-    public double rightClawInit = 0.0;
-    public double leftWristInit = 0.0;
-    public double armMin = 0.0;
-    public double armMax = 0.5;
-    public double finger1Min = 0.2;
-    public double finger2Min = 0.2;
-    public double finger3Min = 0.2;
-    public double finger1Max = 0.4;
-    public double finger2Max = 0.4;
-    public double finger3Max = 0.4;
 
     public DcMotorEx intake;
 
@@ -65,7 +53,6 @@ public class Claw {
 
     public void moveSwing(double power) {
         swing.setPower(power);
-        //floor.setPower(power);
     }
 
     public void moveFloor(double power) {
@@ -100,7 +87,7 @@ public class Claw {
     }
 
     public void startIntake(double power) {
-        intake.setPower(power);
+        intake.setPower(-power);
     }
 
     public void reverseIntake(double power) {

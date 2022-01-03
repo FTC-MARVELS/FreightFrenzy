@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -81,6 +82,7 @@ public class MAS_Auto_GyroTest extends LinearOpMode {
 
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
+        telemetry.addData("Angle " , getAngle());
         telemetry.update();
 
         waitForStart();
@@ -96,99 +98,10 @@ public class MAS_Auto_GyroTest extends LinearOpMode {
         telemetry.addData("2 global heading", globalAngle);
         telemetry.addData("3 correction", correction);
         telemetry.update();
-
+        sleep(500);
         rotate(45, 0.3, mecanum);
-        // runtime.reset();
-/*
-        int position = 9;
-        try {
-            position = scanner.scan(hardwareMap, tfDetector, telemetry);
-            telemetry.addData("Found in class", position);
-            telemetry.update();
-            sleep(2000);
-
-            if (position == 3) {
-                position = scanner.scan(hardwareMap, tfDetector, telemetry);
-                sleep(2000);
-                telemetry.addData("Found again in class", position);
-                telemetry.update();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            telemetry.addData("Error", String.format("Unable to scan image. %s", e.getMessage()));
-            position = 2;
-            telemetry.addData("Found in class Exception ", position);
-            telemetry.update();
-        }
-
-        telemetry.addData("FINAL POSITION", position);
-        telemetry.update();
-        sleep(2000);*/
-   //     claw.moveFloor(0.4);
-   /*     mecanum.move_backward_auto(0.6, 10, 10.0);
-        mecanum.move_left_auto(0.8, 15, 10.0);
-        mecanum.rotate_counter_clock_auto(0.3, 10, 10.0);
-        //mecanum.move_forward_auto(0.6, 20, 10.0);*/
-   /*     mecanum.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mecanum.arm.setTargetPosition(1700); // red top level
-        mecanum.arm.setPower(0.5);
-        claw.moveSwing(0.0);
-        mecanum.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        sleep(2000);
-        mecanum.move_left_auto(0.8, 25, 10.0);
-        claw.moveFloor(1.0);
-        claw.moveSwing(0.5);
-        sleep(1000);
-        //claw.dropObject();
-        sleep(1000);
-        //claw.stopIntake();
-        claw.moveFloor(0.5);
-        //mecanum.arm.setTargetPosition(200);
-        //mecanum.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //sleep(2000);
-        mecanum.move_right_auto(0.3, 10, 10.0);
-       // mecanum.arm.setPower(0.0);
-        //mecanum.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-*/
-        //mecanum.moveArmSideways(2, 0);
-
-    //labels are reversed here
-      /*  if(position == 0 || position == 3 || position == 9) {
-            mecanum.moveArm(2,0);
-            sleep(3000);
-            claw.moveBucket(0.0);
-            sleep(2000);
-        } else if(position == 1) {
-            mecanum.moveArm(1,0);
-            sleep(3000);
-            claw.moveBucket(0.0);
-            sleep(2000);
-        } else if(position == 2) {
-            claw.moveBucket(0.2);
-            sleep(200);
-        }*/
-
-        /*mecanum.moveArm(2,0);
-        sleep(3000);
-        claw.moveBucket(0.0);
-        sleep(2000);
-
-        mecanum.moveArm(0,2);
-        sleep(3000);
-        claw.moveBucket(0.0);
-        sleep(2000);
-
-        mecanum.moveArm(1,0);
-        sleep(3000);
-        claw.moveBucket(0.0);
-        sleep(2000);
 
 
-        mecanum.moveArm(0,1);
-        sleep(3000);
-        claw.moveBucket(0.0);
-        sleep(2000);
-*/
 
     }
 
@@ -200,6 +113,9 @@ public class MAS_Auto_GyroTest extends LinearOpMode {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         globalAngle = 0;
+        //telemetry.addData("Last Angles: ", lastAngles);
+        telemetry.addData("Angle after reset " , lastAngles.firstAngle + ": " + lastAngles.secondAngle + ": " + lastAngles.thirdAngle);
+        telemetry.addData("Global Angle in Reset Angle: " , globalAngle);
     }
 
     /**
@@ -308,7 +224,7 @@ public class MAS_Auto_GyroTest extends LinearOpMode {
         mecanumWheels.backleft.setPower(0);
         mecanumWheels.frontright.setPower(0);
         mecanumWheels.backright.setPower(0);
-
+        telemetry.update();
         // wait for rotation to stop.
         sleep(1000);
 

@@ -38,27 +38,63 @@ public class MAS_Auto_TestArmLevels extends LinearOpMode {
 
 
         mecanum.move_backward_auto(0.6, 10, 10.0);
-        //mecanum.move_left_auto(0.8, 15, 10.0);
-        //mecanum.rotate_counter_clock_auto(0.3, 10, 10.0);
-        //mecanum.move_forward_auto(0.6, 20, 10.0);
-        mecanum.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mecanum.arm.setTargetPosition(1700); // red top level
-        mecanum.arm.setPower(0.5);
-        claw.moveSwing(0.0);
-        mecanum.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        sleep(2000);
-        mecanum.move_left_auto(0.8, 25, 10.0);
-        claw.moveFloor(1.0);
-        claw.moveSwing(0.5);
-        sleep(1000);
-        //claw.dropObject();
-        sleep(1000);
-        //claw.stopIntake();
+        int level = 0;
+        String alliance = "Blue";
+        if(level == 0) {
+            mecanum.moveArmSideways(level, 0, alliance);
+            sleep(2000);
+            if(alliance.equalsIgnoreCase("Red")) {
+                claw.moveSwing(0.1);
+                sleep(500);
+                mecanum.move_left_auto(0.8, 22, 10.0); //Red Level 0
+                claw.moveFloor(1.0);
+                sleep(1000);
+
+            } else {
+                claw.moveSwing(-0.1);
+                sleep(500);
+                mecanum.move_right_auto(0.8, 22, 10.0); //Blue Level 0
+                claw.moveFloor(0.0);
+                sleep(1000);
+            }
+        } else if (level == 1) {
+            mecanum.moveArmSideways(level, 0, alliance);
+            sleep(2000);
+            if (alliance.equalsIgnoreCase("Red")) {
+                mecanum.move_left_auto(0.8, 21, 10.0);//Red Level 1
+                claw.moveFloor(1.0);
+                sleep(1000);
+            } else {
+                mecanum.move_right_auto(0.8, 21, 10.0);//Blue Level 1
+                claw.moveFloor(1.0);
+                sleep(1000);
+            }
+        } else if (level == 2) {
+            mecanum.moveArmSideways(level, 0, alliance);
+            sleep(2000);
+            if (alliance.equalsIgnoreCase("Red")) {
+                mecanum.move_left_auto(0.8, 24, 10.0); //Red Level 2
+                claw.moveFloor(1.0);
+                sleep(1000);
+            } else {
+                mecanum.move_right_auto(0.8, 24, 10.0); //Blue Level 2
+                claw.moveFloor(1.0);
+                sleep(1000);
+            }
+        }
+
+        claw.dropObject();
+        sleep(500);
+        claw.stopIntake();
         claw.moveFloor(0.5);
         //mecanum.arm.setTargetPosition(200);
         //mecanum.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //sleep(2000);
-        mecanum.move_right_auto(0.3, 10, 10.0);
+        if(alliance.equalsIgnoreCase("Red")) {
+            mecanum.move_right_auto(0.3, 10, 10.0);
+        } else {
+            mecanum.move_left_auto(0.3, 10, 10.0);
+        }
        // mecanum.arm.setPower(0.0);
         //mecanum.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 

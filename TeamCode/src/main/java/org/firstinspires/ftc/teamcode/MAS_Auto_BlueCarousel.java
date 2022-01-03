@@ -124,7 +124,8 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
             sleep(800);
             claw.moveBucket(0.0);
         }*/
-        mecanum.positionForDrop(position,0);
+        //mecanum.positionForDrop(position,0);
+        mecanum.positionForDropSidewaysAuto(position, "Blue"); //this code moves closer to the hub, drops and then moves back slightly
 
 
         mecanum.move_forward_auto(speed,shippingHubDistance*0.8, 7.0 );

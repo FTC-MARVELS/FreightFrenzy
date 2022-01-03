@@ -113,7 +113,9 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
             sleep(600);
             claw.moveBucket(0.0);
         }*/
-        mecanum.positionForDrop(position,0);
+        //mecanum.positionForDrop(position,0);
+        mecanum.positionForDropSidewaysAuto(position, "Blue"); //this code moves closer to the hub, drops and then moves back slightly
+
         //Copy for all autonomous END
 
         if(position != 0) {

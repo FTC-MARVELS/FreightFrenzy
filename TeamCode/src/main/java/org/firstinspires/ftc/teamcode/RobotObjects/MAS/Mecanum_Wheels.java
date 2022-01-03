@@ -373,55 +373,126 @@ public class Mecanum_Wheels {
 
     }
 
-    public void moveArmSideways(int level, int currentLevel) {
+    public int moveArmSideways(int level, int currentLevel, String alliance) throws InterruptedException {
+        //Red  LB 1.0 For Floor
+        //Blue RB 0.0 For Floor
+        int encoderPosition = 0;
+        Double armPower = 0.5;
+        int allianceSpecificMultiplier = 1;
+        if(alliance!=null && "Blue".equalsIgnoreCase(alliance)) {
+            allianceSpecificMultiplier = -1;
+        }
         if (level == 0) {
-            if (currentLevel == 1) {
+            if (currentLevel == 0) { //fixed
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(-2100);
-                claw.moveSwing(-0.3);
-                arm.setPower(-0.5);
+                arm.setTargetPosition(600 * allianceSpecificMultiplier);
+                //claw.moveSwing(0.0); Commenting so that I can move it to common method position for drop
+                arm.setPower(armPower);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            } else if (currentLevel == 2) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(-3500);
-                claw.moveSwing(-0.3);
-                arm.setPower(-0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                encoderPosition = 600 * allianceSpecificMultiplier;
             }
         } else if (level == 1) {
-            if (currentLevel == 0) {
+            if (currentLevel == 0) { //fixed
+                claw.moveSwing(-0.5);
+                sleep(350);
+                claw.moveSwing(0.0);
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(2100);
-                claw.moveSwing(0.5);
-                arm.setPower(0.5);
+                arm.setTargetPosition(1100 * allianceSpecificMultiplier); //dropped at red 2nd level 1100
+                //claw.moveSwing(0.0);
+                arm.setPower(armPower);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            } else if (currentLevel == 2) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(-1400);
-                claw.moveSwing(-0.3);
-                arm.setPower(-0.5);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                encoderPosition = 1100 * allianceSpecificMultiplier;
             }
         } else if (level == 2) {
-            if (currentLevel == 1) {
+            if (currentLevel == 0) { //fixed
+                claw.moveSwing(-0.5);
+                sleep(1000);
+                claw.moveSwing(0.0);
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(1400);
-                claw.moveSwing(0.5);
-                arm.setPower(0.5);
+                arm.setTargetPosition(1650 * allianceSpecificMultiplier);// dropped at red top level 1700 /1650
+                //claw.moveSwing(0.0);
+                arm.setPower(armPower);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            } else if (currentLevel == 0) {
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(3500);// dropped at 2nd level
-                claw.moveSwing(0.5);
-                arm.setPower(0.8);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                claw.moveFloor(1.0);
+                encoderPosition = 1650 * allianceSpecificMultiplier;
             }
         }
+        return encoderPosition;
     }
 
+    public int positionForDropSidewaysAuto(int level, String alliance) throws InterruptedException {
+        int encoderPosition = 0;
+        if(level == 0) {
+            encoderPosition = moveArmSideways(level, 0, alliance);
+            //claw.moveSwing(0.0);
+            //Thread.sleep(2000);
+            if(alliance.equalsIgnoreCase("Red")) {
+                claw.moveSwing(0.3);
+                sleep(800);
+                move_left_auto(0.8, 22, 10.0); //Red Level 0
+                claw.moveFloor(1.0);
+                sleep(1000);
+           } else {
+                claw.moveSwing(-0.3);
+                sleep(1000);
+                move_right_auto(0.8, 22, 10.0); //Blue Level 0
+                claw.moveFloor(0.0);
+                sleep(1000);
+            }
+            //drop using intake just in case floor didn't drop
+            claw.reverseIntake(0.3);
+            sleep(1000);
+            claw.stopIntake();
+        } else if (level == 1) {
+            encoderPosition = moveArmSideways(level, 0, alliance);
+            sleep(2000);
+            if (alliance.equalsIgnoreCase("Red")) {
+                move_left_auto(0.8, 21, 10.0);//Red Level 1
+                claw.moveFloor(1.0);
+                sleep(1000);
+            } else {
+                move_right_auto(0.8, 21, 10.0);//Blue Level 1
+                claw.moveFloor(1.0);
+                sleep(1000);
+            }
+            //drop using intake just in case floor didn't drop
+            claw.reverseIntake(0.1);
+            sleep(1000);
+            claw.stopIntake();
+        } else if (level == 2) {
+            encoderPosition = moveArmSideways(level, 0, alliance);
+            sleep(2000);
+            if (alliance.equalsIgnoreCase("Red")) {
+                move_left_auto(0.8, 24, 10.0); //Red Level 2
+                claw.moveFloor(1.0);
+                sleep(1000);
+            } else {
+                move_right_auto(0.8, 24, 10.0); //Blue Level 2
+                claw.moveFloor(1.0);
+                sleep(1000);
+            }
+            //drop using intake just in case floor didn't drop
+            claw.reverseIntake(0.1);
+            sleep(1000);
+            claw.stopIntake();
+        }
+        //move away after drop
+        if(alliance.equalsIgnoreCase("Red")) {
+            move_right_auto(0.3, 10, 10.0);
+        } else {
+            move_left_auto(0.3, 10, 10.0);
+        }
+        claw.moveFloor(0.5);
+        return encoderPosition;
+    }
 
+    public void armToEncoderPosition(int encoderPosition) {
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setTargetPosition(-encoderPosition);
+        arm.setPower(0.5);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    //The below code was for R1 (2nd meet)
     public void moveArm(int level, int currentLevel) {
         if (level == 0) {
             if (currentLevel == 1) {
