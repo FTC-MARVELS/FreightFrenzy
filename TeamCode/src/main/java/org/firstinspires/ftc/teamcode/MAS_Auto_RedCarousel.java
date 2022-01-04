@@ -153,8 +153,11 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         sleep(1000);
         double wareHouseDistance = 55;
         //mecanum.positionForDrop(position,0);
-        if(position!=0) {
+        if(position==1) {
             mecanum.move_forward_auto(speed, 15, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 4, 10.0);
+        } else if(position==2) {
+            mecanum.move_forward_auto(speed, 16, 10.0);//position 1 and 2
             mecanum.move_left_auto(speed, 4, 10.0);
         } else {
             mecanum.move_forward_auto(speed, 12, 10.0);//position 1 and 2
@@ -181,7 +184,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         sleep(100);
         mecanum.move_backward_auto(0.3, 3, 20.0);
         sleep(100);
-        mecanum.move_backward_auto(0.1, 2, 1.0);
+        mecanum.move_backward_auto(0.1, 3, 1.0);
         //Spin
         spinner.setVelocity(1500);
         sleep(2600);
