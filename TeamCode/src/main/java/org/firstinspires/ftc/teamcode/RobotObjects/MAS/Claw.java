@@ -14,7 +14,7 @@ public class Claw {
     public Servo leftwrist;
     public CRServo swing;
     public Servo floor;
-    public CRServo secondArm;
+    public CRServo tail;
     public Servo finger;
 
     public double armInit = 0.0;
@@ -29,12 +29,12 @@ public class Claw {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         swing = hardwareMap.get(CRServo.class,"swing");
         floor = hardwareMap.get(Servo.class,"floor");
-        secondArm = hardwareMap.get(CRServo.class,"secondArm");
+        tail = hardwareMap.get(CRServo.class,"secondArm");
         finger = hardwareMap.get(Servo.class,"finger");
         swing.setPower(0);
         swing.setDirection(DcMotorSimple.Direction.FORWARD);
-        secondArm.setPower(0);
-        secondArm.setDirection(DcMotorSimple.Direction.FORWARD);
+        tail.setPower(0);
+        tail.setDirection(DcMotorSimple.Direction.FORWARD);
         //floor.setPosition(0.0);
         //floor.setDirection(DcMotorSimple.Direction.FORWARD);
         //rightwrist.setPosition(rightWristInit);
@@ -47,8 +47,8 @@ public class Claw {
         bucket.setPosition(0.5);
     }*/
 
-    public void moveSecondArm(double power) {
-        secondArm.setPower(power);
+    public void moveTail(double power) {
+        tail.setPower(power);
     }
 
     public void moveSwing(double power) {

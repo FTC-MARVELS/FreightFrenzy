@@ -132,7 +132,7 @@ public class MAS_Final_TeleOp extends LinearOpMode {
                 //spinner.setPower(0.52);
                 spinner.setVelocity(1500);
             } else if(gamepad1.y) {
-                spinner.setPower(-0.52);
+                //spinner.setPower(-0.52);
                 spinner.setVelocity(-1500);
             } else {
                 spinner.setPower(0);
@@ -146,20 +146,20 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             }
 
             if(gamepad2.dpad_left) {
-                claw.moveSecondArm(0.6);
+                claw.moveTail(0.6);
                 dPadButton = 1;
             } else if(gamepad2.dpad_right) {
-                claw.moveSecondArm(-0.6);
+                claw.moveTail(-0.6);
                 dPadButton = 2;
             } else if(gamepad2.dpad_down) {
                 dPadButton = 0;
             } else {
                 if(dPadButton == 0) {
-                    claw.moveSecondArm(0.0);
+                    claw.moveTail(0.0);
                 } else if (dPadButton == 1) {
-                    claw.moveSecondArm(0.075);
+                    claw.moveTail(0.075);
                 } else if(dPadButton == 2) {
-                    claw.moveSecondArm(-0.075);
+                    claw.moveTail(-0.075);
                 }
             }
 
