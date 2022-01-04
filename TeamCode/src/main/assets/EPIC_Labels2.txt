@@ -1,0 +1,5 @@
+0 shipping element
+1 red corner
+2 red barcode
+3 blue barcode
+4 blue corner

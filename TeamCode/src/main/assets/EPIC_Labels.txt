@@ -1,0 +1,6 @@
+0 shipping element
+1 red corner
+2 barrier
+3 red barcode
+4 blue barcode
+5 blue corner

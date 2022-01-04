@@ -43,7 +43,7 @@ import java.util.List;
 @TeleOp(name="EpicDetector", group="Robot19587")
 //@Disabled
 
-@Disabled
+//@Disabled
 public class EpicDetectorTest extends LinearOpMode{
 
     // Declare OpMode members.
@@ -58,12 +58,12 @@ public class EpicDetectorTest extends LinearOpMode{
     //private static String MODEL_FILE_NAME = "EPIC_red_right_model.tflite";
     //private static String LABEL_FILE_NAME = "EPIC_red_right_labels.txt";
 
-    private static String MODEL_FILE_NAME = "EPIC_red_left_model.tflite";
-    private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
-    //private static String MODEL_FILE_NAME = "Epic_Model.tflite";
+    //private static String MODEL_FILE_NAME = "EPIC_red_left_model.tflite";
+    //private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
+    private static String MODEL_FILE_NAME = "EPIC_Model2.tflite";
     //private static String MODEL_FILE_NAME = "model.tflite";
     //private static String MODEL_FILE_NAME = "sample_model.tflite";
-    //private static String LABEL_FILE_NAME = "Epic_Labels.txt";
+    private static String LABEL_FILE_NAME = "EPIC_Labels2.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     @Override
@@ -95,7 +95,7 @@ public class EpicDetectorTest extends LinearOpMode{
                 }
                 else {
                     for (Classifier.Recognition r : results) {
-                        String item = String.format("%s: %.2f", r.getTitle(), r.getConfidence());
+                        String item = String.format("%s: %.2f %.2f %.2f %.2f %.2f", r.getTitle(), r.getConfidence(), r.getLocation().top,r.getLocation().left,r.getLocation().bottom,r.getLocation().right);
                         telemetry.addData("Found", item);
                     }
                 }
