@@ -84,6 +84,8 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
             position = 2;
             telemetry.addData("Found in class Exception ", position);
             telemetry.update();
+        } finally {
+            tfDetector.stopProcessing();
         }
 
         telemetry.addData("FINAL POSITION", position);

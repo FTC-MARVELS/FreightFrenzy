@@ -52,8 +52,8 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "testmodeldec30.tflite";
-    private static String LABEL_FILE_NAME = "testmodeldec30.txt";
+    private static String MODEL_FILE_NAME = "redcarousel_0104.tflite";
+    private static String LABEL_FILE_NAME = "redcarousel_0104.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
@@ -136,6 +136,8 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
             position = 2;
             telemetry.addData("Found in class Exception ", position);
             telemetry.update();
+        }finally {
+            tfDetector.stopProcessing();
         }
 
         telemetry.addData("FINAL POSITION", position);

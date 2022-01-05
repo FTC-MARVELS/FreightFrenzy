@@ -24,8 +24,9 @@ public class MAS_Auto_TestImage extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "testmodeldec30.tflite";
-    private static String LABEL_FILE_NAME = "testmodeldec30.txt";
+    private static String MODEL_FILE_NAME = "redwarehouse_0104.tflite";
+            //""testmodeldec30.tflite";
+    private static String LABEL_FILE_NAME = "redwarehouse_0104.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     //Configuration used: 6wheelConfig
