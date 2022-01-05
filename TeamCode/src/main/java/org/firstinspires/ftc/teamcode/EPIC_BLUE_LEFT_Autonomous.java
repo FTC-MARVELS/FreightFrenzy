@@ -18,7 +18,7 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
     private Detector tfDetector = null;
 
     private static String MODEL_FILE_NAME = "EPIC_blue_left_model.tflite";
-    private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
+    private static String LABEL_FILE_NAME = "EPIC_blue_left_labels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -100,17 +100,20 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             //id is equivalent to the labels
             if(id.contains("0 blue_left_right")) {
                 level = 1;
-                levelDistance = 10;
+                levelDistance = 13;
+                //back distance does not matter for RED RIGHT
                 backDistance = 4.75;
             }
             else if(id.contains("1 blue_left_middle")) {
                 level = 2;
                 levelDistance = 12;
+                //back distance does not matter for RED RIGHT
                 backDistance = 6.5;
             }
             else if(id.contains("2 blue_left_left")) {
                 level = 3;
                 levelDistance = 14;
+                //back distance does not matter for RED RIGHT
                 backDistance = 8.25;
             }
             telemetry.addData("level", level);
@@ -118,46 +121,39 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             claw.lift(level);
             sleep(500);
             correctionFactor = 1.444;//.4;
-            distance = 20.3;
+            distance = 13.5;
             distance = distance * correctionFactor;
-
             //Right
             mecanum.encoderDrive(speed,distance,-distance,-distance,distance,2);
             distance = levelDistance * correctionFactor;
-
             //forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
-            //sleep(25000);
+            sleep(1000);
             claw.release();
             sleep(1000);
 //                //sleep(2000);
-            distance = backDistance * correctionFactor;
-
+            distance = levelDistance * correctionFactor;
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
-            distance = 11.7 * correctionFactor;
-
+            distance = 11.23 * correctionFactor;
             //Left turn
-            mecanum.encoderDrive(.4,-distance,-distance,distance,distance,3);
-            distance = 8 * correctionFactor;
-
-            //Left
-            mecanum.encoderDrive(speed,-distance,distance,distance,-distance,4);
-            sleep(700);
+            mecanum.encoderDrive(speed,-distance,-distance,distance,distance,2);
+            distance = 37 * correctionFactor;
             //Forward
-            mecanum.encoderDrive(.3,50,50,50,50,5);
+            mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
             sleep(100);
 //            spinner.setPower(-spinnerPower);
 //            sleep(2000);
 
             //spinner.setPower(0);
-
-            //distance = 3 * correctionFactor;
+            //9 inches is the distance between center of front and back wheels
+            //12.5 inches is the distance between end to end of the wheels
+            //distance = 9 * correctionFactor;
             //right turn
             //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
 
-            distance = 13 * correctionFactor;
+            //distance = 13 * correctionFactor;
             //right turn
             //mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
 //
