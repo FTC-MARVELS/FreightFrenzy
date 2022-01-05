@@ -29,8 +29,8 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "testmodeldec30.tflite";
-    private static String LABEL_FILE_NAME = "testmodeldec30.txt";
+    private static String MODEL_FILE_NAME = "redwarehouse_0104.tflite";
+    private static String LABEL_FILE_NAME = "redwarehouse_0104.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     //Copy for all autonomous END
 
@@ -84,6 +84,8 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
             position = 2;
             telemetry.addData("Found in class Exception ", position);
             telemetry.update();
+        } finally {
+            tfDetector.stopProcessing();
         }
 
         telemetry.addData("FINAL POSITION", position);
@@ -115,11 +117,29 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
             mecanum.arm.setPower(0.0);
             sleep(700);
             claw.moveBucket(0.0);
-        }*/
+        }
+        if(position==1) {
+            mecanum.move_forward_auto(speed, 15, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 4, 10.0);
+        } else if(position==2) {
+            mecanum.move_forward_auto(speed, 16, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 4, 10.0);
+        } else {
+            mecanum.move_forward_auto(speed, 12, 10.0);//position 1 and 2
+        }
+        */
         //Copy for all autonomous END
         double wareHouseDistance = 55;
         //mecanum.positionForDrop(position,0);
-        mecanum.move_backward_auto(0.7, 21, 10.0);
+        if(position==1) {
+            mecanum.move_backward_auto(0.7, 20, 10.0);
+            mecanum.move_left_auto(speed, 5, 10.0);
+        } else if(position==2) {
+            mecanum.move_backward_auto(0.7, 23, 10.0);
+            mecanum.move_left_auto(speed, 4, 10.0);
+        } else {
+            mecanum.move_backward_auto(0.7, 21, 10.0);
+        }
 
         int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Red"); //this code moves closer to the hub, drops and then moves back slightly
         telemetry.addData("Encoder Position", encoderPosition);

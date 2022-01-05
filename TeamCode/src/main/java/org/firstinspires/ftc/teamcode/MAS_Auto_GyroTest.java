@@ -99,8 +99,20 @@ public class MAS_Auto_GyroTest extends LinearOpMode {
         telemetry.addData("3 correction", correction);
         telemetry.update();
         sleep(500);
-        rotate(45, 0.3, mecanum);
 
+        resetAngle();
+        telemetry.addData("Angle after reset " , lastAngles.firstAngle + ": " + lastAngles.secondAngle + ": " + lastAngles.thirdAngle);
+        telemetry.update();
+
+        sleep(1000);
+
+        mecanum.move_left_auto(0.6, 10, 10.0);
+        rotate(45, 0.3, mecanum);
+        resetAngle();
+        telemetry.addData("Angle after reset " , lastAngles.firstAngle + ": " + lastAngles.secondAngle + ": " + lastAngles.thirdAngle);
+        telemetry.update();
+
+        sleep(1000);
 
 
     }

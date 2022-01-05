@@ -52,8 +52,8 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "redcarousel.tflite";
-    private static String LABEL_FILE_NAME = "labels_redcarousel.txt";
+    private static String MODEL_FILE_NAME = "redcarousel_0104.tflite";
+    private static String LABEL_FILE_NAME = "redcarousel_0104.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
@@ -61,8 +61,8 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     //Configuration used: 6wheelConfig
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 0.6;
-        double rotationSpeed = 0.2;
+        double speed = 0.8;
+        double rotationSpeed = 0.5;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
@@ -72,7 +72,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
         mecanum.initialize();
-        mecanum.rightErrorAdjustment = 0.5;//1;
+        //mecanum.rightErrorAdjustment = 0.5;//1;
         try {
             tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
         //    tfDetector.parent = this;
@@ -122,11 +122,11 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
             position = scanner.scan(hardwareMap, tfDetector, telemetry);
             telemetry.addData("Found in class", position);
             telemetry.update();
-            sleep(1000);
+            sleep(500);
 
             if (position == 3) {
+                sleep(300);
                 position = scanner.scan(hardwareMap, tfDetector, telemetry);
-                sleep(1000);
                 telemetry.addData("Found again in class", position);
                 telemetry.update();
             }
@@ -136,6 +136,8 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
             position = 2;
             telemetry.addData("Found in class Exception ", position);
             telemetry.update();
+        }finally {
+            tfDetector.stopProcessing();
         }
 
         telemetry.addData("FINAL POSITION", position);
@@ -143,69 +145,65 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         if(position == 3 || position == 9) {
             position = 2;
         }
-
+        //Testing single position  only
+        //position = 2;
         // restart imu movement tracking.
         resetAngle();
         telemetry.addData("Angle after reset " , lastAngles.firstAngle + ": " + lastAngles.secondAngle + ": " + lastAngles.thirdAngle);
-
         telemetry.update();
 
+        sleep(1000);
         double wareHouseDistance = 55;
         //mecanum.positionForDrop(position,0);
-        mecanum.move_forward_auto(0.7, 16, 10.0);
-
+        if(position==1) {
+            mecanum.move_forward_auto(speed, 15, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 4, 10.0);
+        } else if(position==2) {
+            mecanum.move_forward_auto(speed, 16, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 4, 10.0);
+        } else {
+            mecanum.move_forward_auto(speed, 12, 10.0);//position 1 and 2
+        }
         int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Red"); //this code moves closer to the hub, drops and then moves back slightly
         telemetry.addData("Encoder Position", encoderPosition);
         telemetry.update();
         //return arm to base position
         mecanum.armToEncoderPosition(encoderPosition);
         sleep(1000);
-        //mecanum.move_right_auto(speed, 22, 10.0);
-
-
-        /*mecanum.move_forward_auto(speed,shippingHubDistance*0.7, 7.0 );
-        claw.dropObject();
+        claw.moveTail(-0.6); //tail up
         sleep(800);
-        claw.stopIntake();
-        mecanum.move_backward_auto(speed,4, 2.0);*/
-        // rotate to bring spinner to position
-   /*     mecanum.rotate_clock_auto(rotationSpeed, spinnerRotate * 1.15, 10.0);
-        //backward to go to carousel
-        mecanum.move_backward_auto(speed, spinnerDistance*1.15, 20.5);
-        mecanum.move_left_auto(speed, 45, 23.0);
-        mecanum.move_backward_auto(speed, spinnerDistance * 1.4, 22);
-        mecanum.rotate_counter_clock_auto(rotationSpeed, 15, 2.0);
-*/
-        sleep(100);
+
         //mecanum.move_backward_auto(0.03, 0.5, 1.0);
-        rotate(-8, 0.5, mecanum);
+        //rotate(-8, rotationSpeed, mecanum);
+
+        mecanum.move_backward_auto(speed, 25, 20.0);
+
+        //mecanum.rotate_counter_clock_auto(rotationSpeed, spinnerRotate, 10.0);
+
+        rotate(40, 0.3, mecanum);
+        mecanum.move_left_auto(0.5, 12, 20.0);
+        mecanum.move_backward_auto(0.5, 9, 20.0);
+        sleep(100);
+        mecanum.move_backward_auto(0.3, 3, 20.0);
+        sleep(100);
+        mecanum.move_backward_auto(0.1, 3, 1.0);
         //Spin
-  /*      spinner.setPower(-0.58);
+        spinner.setVelocity(1500);
         sleep(2600);
         spinner.setPower(0);
+
+
+        mecanum.move_forward_auto(speed, 10, 10.0);
+        rotate(-40, 0.3, mecanum);
+        //claw.moveTail(0.6);
+        //sleep(800);
+        mecanum.move_left_auto(speed, 20, 20.0);
+        mecanum.move_backward_auto(speed, 7, 20.0);
+
+  /*      spinner.setPower(-0.58);
+        spinner.setPower(0);
 */
-    /*    mecanum.rotate_clock_auto(rotationSpeed, 10, 2.0);
-        mecanum.move_forward_auto(speed, 5, 20.5);
-        mecanum.rotate_clock_auto(rotationSpeed, -spinnerRotate, 20.0);
 
-        //back to position + rotate
-        //come back to original position
-
-        if (position == 1 || position == 2) {
-            claw.moveSwing(-0.5);
-        } else {
-            claw.moveSwing(0.4);
-        }
-        mecanum.moveArm(0, position);
-        mecanum.move_forward_auto(speed, 22, 20.0);
-        claw.moveSwing(0.0);
-        mecanum.move_left_auto(speed/2, 10, 2.5);*/
-        //going forward into warehouse
-        //Increase the speed if we are going over the obstacle
-        //mecanum.move_backward_auto(speed*2,ParkDistance*1.145, 25.0 );
-        //else will need logic to collapse and then move right to park
-        //mecanum.move_left_auto(speed, shippingHubDistance*1.75, 20.0);
-        //mecanum.move_backward_auto(speed * 0.75,  5.0, 20.5);
 
     }
     /**

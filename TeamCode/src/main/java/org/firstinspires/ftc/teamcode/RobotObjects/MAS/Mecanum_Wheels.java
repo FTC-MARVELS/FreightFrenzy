@@ -426,27 +426,27 @@ public class Mecanum_Wheels {
             //claw.moveSwing(0.0);
             //Thread.sleep(2000);
             if(alliance.equalsIgnoreCase("Red")) {
-                claw.moveSwing(0.3);
-                sleep(800);
-                move_left_auto(0.8, 22, 10.0); //Red Level 0
+                claw.moveSwing(0.2);
+                sleep(700);
+                move_left_auto(0.8, 24, 10.0); //Red Level 0
                 claw.moveFloor(1.0);
                 sleep(1000);
            } else {
-                claw.moveSwing(-0.3);
-                sleep(1000);
+                claw.moveSwing(-0.2);
+                sleep(700);
                 move_right_auto(0.8, 22, 10.0); //Blue Level 0
                 claw.moveFloor(0.0);
                 sleep(1000);
             }
             //drop using intake just in case floor didn't drop
-            claw.reverseIntake(0.3);
+            claw.reverseIntake(0.15);
             sleep(1000);
             claw.stopIntake();
         } else if (level == 1) {
             encoderPosition = moveArmSideways(level, 0, alliance);
             sleep(2000);
             if (alliance.equalsIgnoreCase("Red")) {
-                move_left_auto(0.8, 21, 10.0);//Red Level 1
+                move_left_auto(0.8, 24, 10.0);//Red Level 1
                 claw.moveFloor(1.0);
                 sleep(1000);
             } else {
@@ -455,14 +455,14 @@ public class Mecanum_Wheels {
                 sleep(1000);
             }
             //drop using intake just in case floor didn't drop
-            claw.reverseIntake(0.1);
+            claw.reverseIntake(0.3);
             sleep(1000);
             claw.stopIntake();
         } else if (level == 2) {
             encoderPosition = moveArmSideways(level, 0, alliance);
             sleep(2000);
             if (alliance.equalsIgnoreCase("Red")) {
-                move_left_auto(0.8, 24, 10.0); //Red Level 2
+                move_left_auto(0.8, 25, 10.0); //Red Level 2
                 claw.moveFloor(1.0);
                 sleep(1000);
             } else {
@@ -471,7 +471,7 @@ public class Mecanum_Wheels {
                 sleep(1000);
             }
             //drop using intake just in case floor didn't drop
-            claw.reverseIntake(0.1);
+            claw.reverseIntake(0.3);
             sleep(1000);
             claw.stopIntake();
         }

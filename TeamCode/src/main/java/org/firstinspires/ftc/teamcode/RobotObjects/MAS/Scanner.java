@@ -50,7 +50,7 @@ public class Scanner {
         if (results == null || results.size() == 0){
             telemetry.addData("Info", "No results");
             telemetry.update();
-            sleep(1000);
+            sleep(500);
             positionStr = "NA";
             position = 3; // Added to test no results
         }
@@ -59,11 +59,11 @@ public class Scanner {
                 String item = String.format("%s: %.2f", r.getTitle(), r.getConfidence());
                 telemetry.addData("Found", item);
                 telemetry.update();
-                sleep(1000);
+                sleep(500);
                 /*telemetry.addData("Found confidence level", r.getConfidence());
                 telemetry.update();
                 sleep(1000);*/
-                if(r.getConfidence()>0.7) {
+                if(r.getConfidence()>0.5) {
                     if(r.getConfidence() > previousConfidence) {
                         positionStr = r.getTitle();
                         position = Integer.parseInt(positionStr.substring(0,1));
