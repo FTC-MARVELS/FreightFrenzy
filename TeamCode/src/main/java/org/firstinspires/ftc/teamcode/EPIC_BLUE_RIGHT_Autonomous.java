@@ -154,7 +154,7 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             sleep(1000);
             //Backwards
             distance = 27.5;
-            mecanum.encoderDrive(0.3,-distance,-distan  ce,-distance,-distance,2);
+            mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
             claw.grab();
             //Left
