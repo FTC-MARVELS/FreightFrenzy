@@ -123,10 +123,10 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             //Forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
             distance = levelDistance * correctionFactor;
-            distance = 29;
+            distance = 31.2;
             //Left
             mecanum.encoderDrive(0.4,-distance,distance,distance,-distance,2);
-            distance = 4;
+            distance = 4.3;
             //Left lower speed
             mecanum.encoderDrive(0.3,-distance,distance,distance,-distance,2);
             spinner.setPower(-spinnerPower);
@@ -142,12 +142,12 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             distance = 14.9;
             mecanum.encoderDrive(0.4,distance,distance,-distance,-distance,2);
             //Forward
-            distance = 27.8;
+            distance = 26;
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
             claw.release();
             sleep(100);
             //Backwards
-            distance = 29;
+            distance = 31;
             mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
             //Left
