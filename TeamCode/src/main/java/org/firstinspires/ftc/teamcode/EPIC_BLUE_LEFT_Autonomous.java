@@ -134,10 +134,10 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             claw.lift(0);
             claw.grab();
             //Left turn
-            distance = 17.8;
+            distance = 17.3;
             mecanum.encoderDrive(0.4,-distance,-distance,distance,distance,2);
             //Forward
-            distance = 50;
+            distance = 65;
             mecanum.encoderDrive(0.5,distance,distance,distance,distance,4);
 
 //                //sleep(25000);

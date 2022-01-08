@@ -115,25 +115,25 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             }
             telemetry.addData("level", level);
             telemetry.update();
-            claw.lift(level);
+            claw.lift(3);
             sleep(500);
             correctionFactor = 1.444;//.4;
-            distance = 6;
             distance = distance * correctionFactor;
+            distance = 7.6;
             //Forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
             distance = levelDistance * correctionFactor;
-            distance = 31.2;
+            distance = 33;
             //Left
             mecanum.encoderDrive(0.4,-distance,distance,distance,-distance,2);
-            distance = 4.3;
-            //Left lower speed
-            mecanum.encoderDrive(0.3,-distance,distance,distance,-distance,2);
+//            distance = 4.3;
+//            //Left lower speed
+//            mecanum.encoderDrive(0.3,-distance,distance,distance,-distance,2);
             spinner.setPower(-spinnerPower);
             sleep(3000);
             spinner.setPower(0);
             //Right
-            distance = 1.6;
+            distance = 1;
             mecanum.encoderDrive(0.4,distance,distance,-distance,-distance,1);
             //Forward
             distance = 35;
@@ -142,7 +142,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             distance = 14.9;
             mecanum.encoderDrive(0.4,distance,distance,-distance,-distance,2);
             //Forward
-            distance = 26;
+            distance = 24.8;
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
             claw.release();
             sleep(100);
@@ -151,7 +151,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
             //Left
-            distance = 23;
+            distance = 19.6;
             mecanum.encoderDrive(0.4,distance,-distance,-distance,distance,2);
 
 //                //sleep(25000);
