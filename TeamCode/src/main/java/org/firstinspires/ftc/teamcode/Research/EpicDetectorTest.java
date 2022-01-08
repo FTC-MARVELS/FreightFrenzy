@@ -60,10 +60,10 @@ public class EpicDetectorTest extends LinearOpMode{
 
     //private static String MODEL_FILE_NAME = "EPIC_red_left_model.tflite";
     //private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
-    private static String MODEL_FILE_NAME = "EPIC_Model2.tflite";
+    private static String MODEL_FILE_NAME = "EPIC_Model.tflite";
     //private static String MODEL_FILE_NAME = "model.tflite";
     //private static String MODEL_FILE_NAME = "sample_model.tflite";
-    private static String LABEL_FILE_NAME = "EPIC_Labels2.txt";
+    private static String LABEL_FILE_NAME = "EPIC_Labels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     @Override

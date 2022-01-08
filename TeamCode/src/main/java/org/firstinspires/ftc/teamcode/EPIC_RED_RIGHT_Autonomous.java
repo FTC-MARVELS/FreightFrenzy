@@ -100,7 +100,7 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             //id is equivalent to the labels
             if(id.contains("0 red_right_left")) {
                 level = 1;
-                levelDistance = 10;
+                levelDistance = 13;
                 //back distance does not matter for RED RIGHT
                 backDistance = 4.75;
             }
@@ -136,10 +136,10 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
 //            //back
             mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
-            distance = 11.89 * correctionFactor;
+            distance = 11.23 * correctionFactor;
             //Right turn
             mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
-            distance = 35 * correctionFactor;
+            distance = 37 * correctionFactor;
             //Forward
             mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
             sleep(100);
