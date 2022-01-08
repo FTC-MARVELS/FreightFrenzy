@@ -91,13 +91,45 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         telemetry.addData("FINAL POSITION", position);
         telemetry.update();
 
+        if(position == 3 || position == 9) {
+            position = 2;
+        }
         //Copy for all autonomous END
+        double wareHouseDistance = 55;
+        if(position==1) {
+            mecanum.move_backward_auto(0.7, 20, 10.0);
+            mecanum.move_right_auto(speed, 5, 10.0);
+        } else if(position==2) {
+            mecanum.move_backward_auto(0.7, 23, 10.0);
+            mecanum.move_right_auto(speed, 4, 10.0);
+        } else {
+            mecanum.move_backward_auto(0.7, 21, 10.0);
+        }
+
+
+        int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Blue"); //this code moves closer to the hub, drops and then moves back slightly
+        telemetry.addData("Encoder Position", encoderPosition);
+        telemetry.update();
+        //return arm to base position
+        mecanum.armToEncoderPosition(encoderPosition);
+        sleep(1000);
+        claw.moveSwing(0.5);
+        sleep(500);
+        claw.moveSwing(0.0);
+        mecanum.move_left_auto(speed, 22, 10.0);
+        mecanum.move_forward_auto(speed, wareHouseDistance,20.0);
+        //Below code grabs one object and drops on the field
+        claw.startIntake(0.8);
+        sleep(2000);
+/*
+
 
         //move right a bit then forward a bit to drop
         mecanum.move_right_auto(speed, shippingHubDistance/1.05, 20.0);
 
         //Copy for all autonomous BEGIN
-        /*if(position == 2 || position == 3 || position == 9) {
+        */
+/*if(position == 2 || position == 3 || position == 9) {
             mecanum.moveArm(2,0);
             sleep(3000);
             claw.moveBucket(0.0);
@@ -114,7 +146,8 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
             mecanum.arm.setPower(0.0);
             sleep(600);
             claw.moveBucket(0.0);
-        }*/
+        }*//*
+
         //mecanum.positionForDrop(position,0);
         mecanum.positionForDropSidewaysAuto(position, "Blue"); //this code moves closer to the hub, drops and then moves back slightly
 
@@ -145,6 +178,7 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         //Increase the speed if we are going over the obstacle
         mecanum.move_backward_auto(speed*2.5,ParkDistance * 1.3, 25.0 );
         //else will need logic to collapse and then move right to park
+*/
 
     }
 

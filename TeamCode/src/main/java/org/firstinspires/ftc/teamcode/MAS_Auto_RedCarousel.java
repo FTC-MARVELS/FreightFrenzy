@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Thread.sleep;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -52,8 +54,8 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "redcarousel_0104.tflite";
-    private static String LABEL_FILE_NAME = "redcarousel_0104.txt";
+    private static String MODEL_FILE_NAME = "redcarousel_0107_2.tflite";
+    private static String LABEL_FILE_NAME = "redcarousel_0107_2.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
@@ -63,6 +65,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double speed = 0.8;
         double rotationSpeed = 0.5;
+        int encoderPosition = 0;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         Spinner spinner = new Spinner(hardwareMap);
@@ -79,7 +82,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
             tfDetector.activate();
         } catch (Exception ex) {
             telemetry.addData("Error", String.format("Unable to initialize Detector. %s", ex.getMessage()));
-            sleep(3000);
+            sleep(300);
             return;
         }
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -109,7 +112,7 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
-
+        claw.moveFloor(0.5);
         waitForStart();
         double spinnerDistance = 21.5;
         double spinnerRotate = 10;
@@ -122,10 +125,10 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
             position = scanner.scan(hardwareMap, tfDetector, telemetry);
             telemetry.addData("Found in class", position);
             telemetry.update();
-            sleep(500);
+            sleep(100);
 
             if (position == 3) {
-                sleep(300);
+                sleep(200);
                 position = scanner.scan(hardwareMap, tfDetector, telemetry);
                 telemetry.addData("Found again in class", position);
                 telemetry.update();
@@ -142,27 +145,89 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
 
         telemetry.addData("FINAL POSITION", position);
         telemetry.update();
+        sleep(100);
         if(position == 3 || position == 9) {
             position = 2;
         }
         //Testing single position  only
         //position = 2;
         // restart imu movement tracking.
-        resetAngle();
-        telemetry.addData("Angle after reset " , lastAngles.firstAngle + ": " + lastAngles.secondAngle + ": " + lastAngles.thirdAngle);
-        telemetry.update();
 
+        //New Code
+        mecanum.move_forward_auto(0.5,11,10.0);
+        claw.moveTail(-0.6);
+        rotate(-52,0.5,mecanum);
+        claw.moveTail(0.0);
+        mecanum.move_backward_auto(0.5,23,10.0);
+        mecanum.move_left_auto(0.5,2,10.0);
+        rotate(12, 0.3,mecanum);
+        //mecanum.move_left_auto(0.05, 1, 1.0);
+        mecanum.move_backward_auto(0.25,4,10.0);
+        mecanum.move_backward_auto(0.1, 3, 1.0);
+       // mecanum.move_backward_auto(0.01, 3, 1.0);
+        mecanum.move_left_auto(0.3, 2,1.0);
+
+        mecanum.move_backward_auto(0.1, 3, 1.0);
+        //Spin
+        spinner.setVelocity(1400);
+        sleep(2000);
+        spinner.setVelocity(0);
+
+        mecanum.move_forward_auto(0.5,3,10.0);
+        rotate(45,0.3,mecanum);
+        mecanum.move_forward_auto(0.7,28,15.0);
+        mecanum.move_right_auto(0.7,25,15.0);
+
+        if(position!=0) {
+            claw.moveSwing(0.5);
+            sleep(1000);
+            claw.moveSwing(0.0);
+        }
+
+        encoderPosition = mecanum.moveArmSideways(position, 0, "Red");
+        sleep(1700);
+
+        mecanum.move_right_auto(0.55, 11, 10.0);
+        rotate(-22, 0.7, mecanum);
+
+        //New Code Ends
+        claw.moveFloor(1.0);
         sleep(1000);
+        if(position!=0) {
+            claw.reverseIntake(0.3);
+            sleep(600);
+        } else {
+            claw.reverseIntake(0.4);
+            sleep(700);
+        }
+        claw.stopIntake();
+
+        rotate(20,0.6, mecanum);
+
+        claw.moveFloor(0.5);
+        mecanum.armToEncoderPosition(encoderPosition);
+        mecanum.move_left_auto(0.6, 7,10.0);
+        rotate(50,0.8,mecanum);
+        mecanum.move_forward_auto(0.8,22,5.0);
+        sleep(100);
+        mecanum.move_left_auto(0.6, 22, 10.0);
+        //return arm to base position
+        claw.moveTail(0.6);
+        sleep(700);
+
+   //     mecanum.move_backward_auto(1, 5, 10.0);
+
+    /*    sleep(1000);
         double wareHouseDistance = 55;
         //mecanum.positionForDrop(position,0);
         if(position==1) {
-            mecanum.move_forward_auto(speed, 15, 10.0);//position 1 and 2
-            mecanum.move_left_auto(speed, 4, 10.0);
+            mecanum.move_forward_auto(speed*0.8, 18, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 5, 10.0);
         } else if(position==2) {
-            mecanum.move_forward_auto(speed, 16, 10.0);//position 1 and 2
-            mecanum.move_left_auto(speed, 4, 10.0);
+            mecanum.move_forward_auto(speed*0.8, 18, 10.0);//position 1 and 2
+            mecanum.move_left_auto(speed, 5, 10.0);
         } else {
-            mecanum.move_forward_auto(speed, 12, 10.0);//position 1 and 2
+            mecanum.move_forward_auto(speed*0.8, 15, 10.0);//position 1 and 2
         }
         int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Red"); //this code moves closer to the hub, drops and then moves back slightly
         telemetry.addData("Encoder Position", encoderPosition);
@@ -181,14 +246,16 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         //mecanum.rotate_counter_clock_auto(rotationSpeed, spinnerRotate, 10.0);
 
         rotate(40, 0.3, mecanum);
-        mecanum.move_left_auto(0.5, 12, 20.0);
+        mecanum.move_left_auto(0.5, 15, 20.0);
         mecanum.move_backward_auto(0.5, 9, 20.0);
         sleep(100);
         mecanum.move_backward_auto(0.3, 3, 20.0);
         sleep(100);
         mecanum.move_backward_auto(0.1, 3, 1.0);
+        sleep(100);
+        mecanum.move_backward_auto(0.01, 3, 1.0);
         //Spin
-        spinner.setVelocity(1500);
+        spinner.setVelocity(1400);
         sleep(2600);
         spinner.setPower(0);
 

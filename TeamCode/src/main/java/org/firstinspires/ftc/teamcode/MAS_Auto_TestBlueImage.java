@@ -1,32 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
-import static java.lang.Thread.sleep;
-
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Detector;
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 
-import java.util.List;
-
-@Autonomous(name = "MAS_Auto_TestImage")
-public class MAS_Auto_TestImage extends LinearOpMode {
+@Autonomous(name = "MAS_Auto_TestBlueImage")
+public class MAS_Auto_TestBlueImage extends LinearOpMode {
 
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "redwarehouse_0104.tflite";
+    private static String MODEL_FILE_NAME = "bluecarousel_0107.tflite";
             //""testmodeldec30.tflite";
-    private static String LABEL_FILE_NAME = "redwarehouse_0104.txt";
+    private static String LABEL_FILE_NAME = "bluecarousel_0107.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     //Configuration used: 6wheelConfig
