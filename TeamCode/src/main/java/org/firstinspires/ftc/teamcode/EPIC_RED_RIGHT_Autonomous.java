@@ -118,14 +118,14 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             }
             telemetry.addData("level", level);
             telemetry.update();
-            claw.lift(level);
-            sleep(500);
+            sleep(10000);
             correctionFactor = 1.444;//.4;
             distance = 13.5;
             distance = distance * correctionFactor;
             //Left
             mecanum.encoderDrive(speed,-distance,distance,distance,-distance,2);
             distance = levelDistance * correctionFactor;
+            claw.lift(3);
             //forward
             mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
             sleep(1000);

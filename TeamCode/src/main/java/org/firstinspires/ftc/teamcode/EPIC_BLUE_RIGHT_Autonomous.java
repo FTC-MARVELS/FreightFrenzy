@@ -101,21 +101,21 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             if(id.contains("0 blue_right_right")) {
                 level = 1;
                 levelDistance = 10;
-                backDistance = 5.5;
+                backDistance = 4.4;
             }
             else if(id.contains("1 blue_right_middle")) {
                 level = 2;
                 levelDistance = 12;
-                backDistance = 7.5;
+                backDistance = 4.4;
             }
             else if(id.contains("2 blue_right_left")) {
                 level = 3;
                 levelDistance = 14;
-                backDistance = 8.25;
+                backDistance = 4.4;
             }
             telemetry.addData("level", level);
             telemetry.update();
-            claw.lift(level);
+            claw.lift(3);
             sleep(500);
             correctionFactor = 1.444;//.4;
             distance = 5;
@@ -130,8 +130,8 @@ public class EPIC_BLUE_RIGHT_Autonomous extends LinearOpMode {
             //Left turn
             mecanum.encoderDrive(0.3,-distance,-distance,distance,distance,2);
             //Back
-            distance = 1;
-            mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
+            distance = 4.4;
+            mecanum.encoderDrive(0.3,-backDistance,-backDistance,-backDistance,-backDistance,2);
             spinner.setPower(spinnerPower);
             sleep(3700);
             spinner.setPower(0);
