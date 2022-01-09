@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.hardware.motors.RevRoboticsUltraPlanetaryHdHexMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -13,6 +14,8 @@ import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 
 //@Autonomous(name = "MAS_TestMotor")
 @TeleOp(name = "MAS_TestMotor")
+@Disabled
+
 public class MAS_TestMotor extends LinearOpMode {
     public DcMotorEx frontright;
     public DcMotorEx frontleft;

@@ -14,9 +14,9 @@ public class MAS_Auto_TestBlueImage extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "bluecarousel_0107.tflite";
+    private static String MODEL_FILE_NAME = "bluecarousel_0108_1.tflite";
             //""testmodeldec30.tflite";
-    private static String LABEL_FILE_NAME = "bluecarousel_0107.txt";
+    private static String LABEL_FILE_NAME = "bluecarousel_0108_1.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     //Configuration used: 6wheelConfig

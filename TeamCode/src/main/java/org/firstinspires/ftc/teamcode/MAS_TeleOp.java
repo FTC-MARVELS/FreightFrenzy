@@ -4,6 +4,7 @@ the robot just like an Rc Car.
 */
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -13,6 +14,8 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 
 @TeleOp(name = "MAS_TeleOp")
+@Disabled
+
 public class MAS_TeleOp extends LinearOpMode {
     //Configuration used: 6wheelConfig
     double lefty = 0.0;

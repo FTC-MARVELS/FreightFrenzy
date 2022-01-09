@@ -393,11 +393,11 @@ public class Mecanum_Wheels {
                     encoderPosition = 800 * allianceSpecificMultiplier;
                 } else {
                     arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    arm.setTargetPosition(700 * allianceSpecificMultiplier);
+                    arm.setTargetPosition(450 * allianceSpecificMultiplier);
                     //claw.moveSwing(0.0); Commenting so that I can move it to common method position for drop
                     arm.setPower(armPower);
                     arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    encoderPosition = 700 * allianceSpecificMultiplier;
+                    encoderPosition = 450 * allianceSpecificMultiplier;
                 }
             }
         } else if (level == 1) {

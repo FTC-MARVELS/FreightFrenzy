@@ -175,24 +175,58 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
 
         mecanum.move_forward_auto(0.5,3,10.0);
         rotate(45,0.3,mecanum);
-        mecanum.move_forward_auto(0.7,28,15.0);
+        /*mecanum.move_forward_auto(0.7,29,15.0);
         mecanum.move_right_auto(0.7,25,15.0);
+*/
+        /*if(position!=0) {
+            claw.moveSwing(0.5);
+            sleep(600);
+            claw.moveSwing(0.0);
+        }
+*/
+        if(position == 2) {
+            mecanum.move_forward_auto(0.7,29,15.0);
+            mecanum.move_right_auto(0.7,25,15.0);
 
-        if(position!=0) {
             claw.moveSwing(0.5);
             sleep(1000);
             claw.moveSwing(0.0);
+        } else if(position == 1) {
+            mecanum.move_forward_auto(0.7,29,15.0);
+            mecanum.move_right_auto(0.7,25,15.0);
+
+            claw.moveSwing(0.5);
+            sleep(200);
+            claw.moveSwing(0.1);
+        } else {
+            mecanum.move_forward_auto(0.7,26,15.0);
+            mecanum.move_right_auto(0.7,25,15.0);
+
+            claw.moveSwing(-0.1);
         }
 
         encoderPosition = mecanum.moveArmSideways(position, 0, "Red");
         sleep(1700);
 
-        mecanum.move_right_auto(0.55, 11, 10.0);
-        rotate(-22, 0.7, mecanum);
+        if(position == 2) {
+            mecanum.move_right_auto(0.55, 11, 10.0);
+            rotate(-21, 0.7, mecanum);
+        } else if(position == 1) {
+            mecanum.move_right_auto(0.55, 7, 10.0);
+            rotate(-24, 0.7, mecanum);
+        } else if(position == 0) {
+            mecanum.move_right_auto(0.55, 6, 10.0);
+            rotate(-30, 0.7, mecanum);
+        }
+
+        /*mecanum.move_right_auto(0.55, 11, 10.0);
+        rotate(-26, 0.7, mecanum);*/
 
         //New Code Ends
-        claw.moveFloor(1.0);
-        sleep(1000);
+        if (position !=0) {
+            claw.moveFloor(1.0);
+            sleep(1000);
+        }
         if(position!=0) {
             claw.reverseIntake(0.3);
             sleep(600);
@@ -202,15 +236,18 @@ public class MAS_Auto_RedCarousel extends LinearOpMode {
         }
         claw.stopIntake();
 
-        rotate(20,0.6, mecanum);
+        rotate(24,0.6, mecanum);
 
         claw.moveFloor(0.5);
         mecanum.armToEncoderPosition(encoderPosition);
+
+
+
         mecanum.move_left_auto(0.6, 7,10.0);
         rotate(50,0.8,mecanum);
-        mecanum.move_forward_auto(0.8,22,5.0);
+        mecanum.move_forward_auto(0.8,24,5.0);
         sleep(100);
-        mecanum.move_left_auto(0.6, 22, 10.0);
+        mecanum.move_left_auto(0.6, 17, 10.0);
         //return arm to base position
         claw.moveTail(0.6);
         sleep(700);

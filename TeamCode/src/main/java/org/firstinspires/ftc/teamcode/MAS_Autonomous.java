@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 
 @Autonomous(name="MAS_Autonomous")
-//@Disabled
+@Disabled
 public class MAS_Autonomous extends LinearOpMode {
     //Configuration used: 6wheelConfig
     @Override

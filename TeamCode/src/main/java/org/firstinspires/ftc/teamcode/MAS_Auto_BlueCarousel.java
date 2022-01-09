@@ -54,8 +54,8 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "bluecarousel_0107.tflite";
-    private static String LABEL_FILE_NAME = "bluecarousel_0107.txt";
+    private static String MODEL_FILE_NAME = "bluecarousel_0108_1.tflite";
+    private static String LABEL_FILE_NAME = "bluecarousel_0108_1.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
@@ -162,12 +162,12 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
         mecanum.move_right_auto(0.5,2,10.0);
         rotate(-20, 0.3,mecanum);
         //mecanum.move_left_auto(0.05, 1, 1.0);
-        mecanum.move_backward_auto(0.25,4,10.0);
-        mecanum.move_backward_auto(0.1, 4, 1.0);
+        mecanum.move_backward_auto(0.25,2,10.0);
+        mecanum.move_backward_auto(0.1, 2, 1.0);
         // mecanum.move_backward_auto(0.01, 3, 1.0);
         mecanum.move_right_auto(0.5, 3,1.0);
         rotate(-5,0.3,mecanum);
-        mecanum.move_backward_auto(0.1, 1, 1.0);
+        mecanum.move_backward_auto(0.1, 3, 1.0);
         //Spin
         spinner.setVelocity(-1400);
         sleep(2000);
@@ -194,14 +194,21 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
         encoderPosition = mecanum.moveArmSideways(position, 0, "Blue");
         sleep(1700);
 
-        mecanum.move_left_auto(0.55, 11, 10.0);
-        rotate(23, 0.7, mecanum);
-
+        if(position == 2) {
+            mecanum.move_left_auto(0.55, 12, 10.0);
+            rotate(21, 0.7, mecanum);
+        } else if(position == 1) {
+            mecanum.move_left_auto(0.55, 8, 10.0);
+            rotate(24, 0.7, mecanum);
+        } else if(position == 0) {
+            mecanum.move_left_auto(0.55, 6, 10.0);
+            rotate(28, 0.7, mecanum);
+        }
         //New Code Ends
         claw.moveFloor(0.0);
         sleep(1000);
-        if(position!=0) {
-            claw.reverseIntake(0.5);
+        if(position == 2) {
+            claw.reverseIntake(0.4);
             sleep(600);
         } else {
             claw.reverseIntake(0.5);
@@ -209,16 +216,16 @@ public class MAS_Auto_BlueCarousel extends LinearOpMode {
         }
         claw.stopIntake();
 
-        rotate(-22,0.6, mecanum);
+        rotate(-24,0.6, mecanum);
 
         claw.moveFloor(0.5);
         mecanum.armToEncoderPosition(encoderPosition);
         mecanum.move_right_auto(0.6, 7,10.0);
         rotate(-50,0.8,mecanum);
-        mecanum.move_forward_auto(0.8,20.5,5.0);
+        mecanum.move_forward_auto(0.8,20,5.0);
         sleep(100);
         claw.moveTail(0.6);
-        mecanum.move_right_auto(0.6, 13, 10.0);
+        mecanum.move_right_auto(0.6, 18, 10.0);
         //return arm to base position
 
         //     mecanum.move_backward_auto(1, 5, 10.0);

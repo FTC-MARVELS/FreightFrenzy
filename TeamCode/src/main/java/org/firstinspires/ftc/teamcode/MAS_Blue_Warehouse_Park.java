@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -47,6 +48,8 @@ import java.util.List;
 
 
 @Autonomous(name = "MAS_Blue_Warehouse_Park")
+@Disabled
+
 //@TeleOp(name="MAS_Blue_SimpleAuto")
 public class MAS_Blue_Warehouse_Park extends LinearOpMode {
 
