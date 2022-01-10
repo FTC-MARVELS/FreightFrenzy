@@ -2,16 +2,20 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.hardware.motors.RevRoboticsUltraPlanetaryHdHexMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
 
 //@Autonomous(name = "MAS_TestMotor")
 @TeleOp(name = "MAS_TestMotor")
+@Disabled
+
 public class MAS_TestMotor extends LinearOpMode {
     public DcMotorEx frontright;
     public DcMotorEx frontleft;
@@ -21,7 +25,7 @@ public class MAS_TestMotor extends LinearOpMode {
     public DcMotorEx testMotor1;
     public RevRoboticsUltraPlanetaryHdHexMotor testMotor ;
     public RevRoboticsCoreHexMotor temp1;
-
+    public Claw claw;
     //Configuration used: 6wheelConfig
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,6 +44,7 @@ public class MAS_TestMotor extends LinearOpMode {
         frontleft = hardwareMap.get(DcMotorEx.class,"Frontleft");
         backright = hardwareMap.get(DcMotorEx.class,"Backright");
         backleft = hardwareMap.get(DcMotorEx.class,"Backleft");
+        claw = new Claw(hardwareMap);
         waitForStart();
         // runtime.reset();
         //testMotor1.setPower(0.5);
@@ -61,12 +66,18 @@ public class MAS_TestMotor extends LinearOpMode {
                 testMotor1.setPower(0.0);
                 testMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }*/
-            secondArm.setDirection(DcMotorSimple.Direction.FORWARD);
+           /* secondArm.setDirection(DcMotorSimple.Direction.FORWARD);
             if(gamepad1.a)
                 secondArm.setPower(0.8);
             else if(gamepad1.b) {
                 secondArm.setPower(-0.8);
-            }
+            }*/
+            if(gamepad1.a)
+                claw.moveFloor(0.0);
+            else if(gamepad1.b)
+                claw.moveFloor(1.0);
+           else
+                claw.moveFloor(0.5);
 
         }
 

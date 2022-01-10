@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -21,7 +22,7 @@ import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
      */
 
 @Autonomous(name="MAS_Auto_RedWarehouse")
-//@Disabled
+@Disabled
 public class MAS_Auto_RedWarehouse extends LinearOpMode {
     //Configuration used: 6wheelConfig
 
@@ -29,8 +30,8 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "redwarehouse_0104.tflite";
-    private static String LABEL_FILE_NAME = "redwarehouse_0104.txt";
+    private static String MODEL_FILE_NAME = "redwarehouse_0105.tflite";
+    private static String LABEL_FILE_NAME = "redwarehouse_0105.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
     //Copy for all autonomous END
 
@@ -138,7 +139,7 @@ public class MAS_Auto_RedWarehouse extends LinearOpMode {
             mecanum.move_backward_auto(0.7, 23, 10.0);
             mecanum.move_left_auto(speed, 4, 10.0);
         } else {
-            mecanum.move_backward_auto(0.7, 21, 10.0);
+            mecanum.move_backward_auto(0.7, 22, 10.0);
         }
 
         int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Red"); //this code moves closer to the hub, drops and then moves back slightly

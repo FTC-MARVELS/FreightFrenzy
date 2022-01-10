@@ -379,23 +379,29 @@ public class Mecanum_Wheels {
         int encoderPosition = 0;
         Double armPower = 0.5;
         int allianceSpecificMultiplier = 1;
-        if(alliance!=null && "Blue".equalsIgnoreCase(alliance)) {
+        if(alliance!=null && "Red".equalsIgnoreCase(alliance)) {
             allianceSpecificMultiplier = -1;
         }
         if (level == 0) {
             if (currentLevel == 0) { //fixed
-                arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                arm.setTargetPosition(600 * allianceSpecificMultiplier);
-                //claw.moveSwing(0.0); Commenting so that I can move it to common method position for drop
-                arm.setPower(armPower);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                encoderPosition = 600 * allianceSpecificMultiplier;
+                if(alliance!=null && "Red".equalsIgnoreCase(alliance)) {
+                    arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    arm.setTargetPosition(800 * allianceSpecificMultiplier);
+                    //claw.moveSwing(0.0); Commenting so that I can move it to common method position for drop
+                    arm.setPower(armPower);
+                    arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    encoderPosition = 800 * allianceSpecificMultiplier;
+                } else {
+                    arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    arm.setTargetPosition(450 * allianceSpecificMultiplier);
+                    //claw.moveSwing(0.0); Commenting so that I can move it to common method position for drop
+                    arm.setPower(armPower);
+                    arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    encoderPosition = 450 * allianceSpecificMultiplier;
+                }
             }
         } else if (level == 1) {
             if (currentLevel == 0) { //fixed
-                claw.moveSwing(-0.5);
-                sleep(350);
-                claw.moveSwing(0.0);
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 arm.setTargetPosition(1100 * allianceSpecificMultiplier); //dropped at red 2nd level 1100
                 //claw.moveSwing(0.0);
@@ -405,9 +411,6 @@ public class Mecanum_Wheels {
             }
         } else if (level == 2) {
             if (currentLevel == 0) { //fixed
-                claw.moveSwing(-0.5);
-                sleep(1000);
-                claw.moveSwing(0.0);
                 arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 arm.setTargetPosition(1650 * allianceSpecificMultiplier);// dropped at red top level 1700 /1650
                 //claw.moveSwing(0.0);

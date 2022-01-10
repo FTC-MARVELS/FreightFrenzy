@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 
 @TeleOp(name = "MAS_TeleOp_Testing")
-//@Disabled
+@Disabled
 public class MAS_TeleOp_Testing extends LinearOpMode {
     //Configuration used: 6wheelConfig
     double lefty = 0.0;

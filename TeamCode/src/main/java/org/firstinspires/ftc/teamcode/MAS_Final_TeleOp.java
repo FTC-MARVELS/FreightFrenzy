@@ -146,7 +146,7 @@ public class MAS_Final_TeleOp extends LinearOpMode {
             }
 
             if(gamepad2.dpad_left) {
-                claw.moveTail(0.6);
+                claw.moveTail(0.4);
                 dPadButton = 1;
             } else if(gamepad2.dpad_right) {
                 claw.moveTail(-0.6);

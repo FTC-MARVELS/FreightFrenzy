@@ -7,65 +7,84 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Claw;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Mecanum_Wheels;
-import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
+import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Detector;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
-/*
+import org.firstinspires.ftc.teamcode.RobotObjects.MAS.Scanner;
 
-    Near Warehouse
+/*
+    Near Carousel
     =============
-    1. Scan
-    2. Drop preload
-    3. Spin (if we decide to do this)
+    1. Spin Carousel
+    2. Scan
+    3. Drop preload
     4. Go to Warehouse and Park
+
+    //forward
+    mecanum.encoderDrive(speed,12,12,12,12,12,12, 1.0);
+    //backward
+    mecanum.encoderDrive(speed,-12,-12,-12,-12,-12,-12, 1.0);
+    //left
+    mecanum.encoderDrive(speed,-12,0,12,12,0,-12, 1.0);
+    //right
+    mecanum.encoderDrive(speed,12,0,-12,-12,0,12, 1.0);
+    //left turn
+    mecanum.encoderDrive(speed,-12,0,-12,12,0,12, 1.0);
+    //right turn
+    mecanum.encoderDrive(speed,12,0,12,-12,0,-12, 1.0);
+    //contract
+    mecanum.encoderDrive(speed,3.15,0,-3.15,3.1,0,-3.1, 1.0);
+    //expand
+    mecanum.encoderDrive(speed,-3.15,0,3.15,-3.1,0,3.1, 1.0);
 
      */
 
-@Autonomous(name="MAS_Auto_BlueWarehouse")
-@Disabled
-public class MAS_Auto_BlueWarehouse extends LinearOpMode {
-    //Configuration used: 6wheelConfig
 
-    //Copy for all autonomous BEGIN
+
+
+@Autonomous(name="MAS_Auto_BlueCarousel_old")
+@Disabled
+public class MAS_Auto_BlueCarousel_old extends LinearOpMode {
+
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "bluewarehouse.tflite";
-    private static String LABEL_FILE_NAME = "labels_bluewarehouse.txt";
+    private static String MODEL_FILE_NAME = "bcr.tflite";
+    private static String LABEL_FILE_NAME = "labels_bcr.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
-    //Copy for all autonomous END
 
+    //Configuration used: 6wheelConfig
     @Override
     public void runOpMode() throws InterruptedException {
-        double speed = 0.4;
+        double speed = 0.6;
+        double rotationSpeed = 0.2;
         Mecanum_Wheels mecanum = new Mecanum_Wheels(hardwareMap);
-        Scanner scanner = new Scanner();
-
         Claw claw = new Claw(hardwareMap);
+        Spinner spinner = new Spinner(hardwareMap);
+        Scanner scanner = new Scanner();
         mecanum.IsMASAutonomous = true;
         mecanum.velocity = 400;
         mecanum.telemetry = this.telemetry;
         mecanum.parent = this;
         mecanum.initialize();
-
-        //Copy for all autonomous BEGIN
+        mecanum.rightErrorAdjustment = 0.5;//1;
         try {
             tfDetector = new Detector(MODEl_TYPE, MODEL_FILE_NAME, LABEL_FILE_NAME, hardwareMap.appContext, telemetry);
-           // tfDetector.parent = this;
+            //tfDetector.parent = this;
             tfDetector.activate();
         } catch (Exception ex) {
             telemetry.addData("Error", String.format("Unable to initialize Detector. %s", ex.getMessage()));
             sleep(3000);
             return;
         }
-        //Copy for all autonomous END
-        waitForStart();
-        double spinnerDistance = 23;
-        double spinnerRotate = 20;
-        double shippingHubDistance = 40;
-        double rotateNinety = 30;
 
-        //Copy for all autonomous BEGIN
+        waitForStart();
+        double spinnerDistance = 21.5;
+        double spinnerRotate = 10;
+        double shippingHubDistance = 40;
+        double rotateNinety = 21;
+        //SCAN CODE- EISHA AND HAMZA
+
         int position = 9;
         try {
             position = scanner.scan(hardwareMap, tfDetector, telemetry);
@@ -95,93 +114,71 @@ public class MAS_Auto_BlueWarehouse extends LinearOpMode {
         if(position == 3 || position == 9) {
             position = 2;
         }
-        //Copy for all autonomous END
-        double wareHouseDistance = 55;
-        if(position==1) {
-            mecanum.move_backward_auto(0.7, 20, 10.0);
-            mecanum.move_right_auto(speed, 5, 10.0);
-        } else if(position==2) {
-            mecanum.move_backward_auto(0.7, 23, 10.0);
-            mecanum.move_right_auto(speed, 4, 10.0);
-        } else {
-            mecanum.move_backward_auto(0.7, 21, 10.0);
-        }
 
+        mecanum.move_left_auto(speed, shippingHubDistance * 1.1, 7.0);
 
-        int encoderPosition = mecanum.positionForDropSidewaysAuto(position, "Blue"); //this code moves closer to the hub, drops and then moves back slightly
-        telemetry.addData("Encoder Position", encoderPosition);
-        telemetry.update();
-        //return arm to base position
-        mecanum.armToEncoderPosition(encoderPosition);
-        sleep(1000);
-        claw.moveSwing(0.5);
-        sleep(500);
-        claw.moveSwing(0.0);
-        mecanum.move_left_auto(speed, 22, 10.0);
-        mecanum.move_forward_auto(speed, wareHouseDistance,20.0);
-        //Below code grabs one object and drops on the field
-        claw.startIntake(0.8);
-        sleep(2000);
-/*
-
-
-        //move right a bit then forward a bit to drop
-        mecanum.move_right_auto(speed, shippingHubDistance/1.05, 20.0);
-
-        //Copy for all autonomous BEGIN
-        */
-/*if(position == 2 || position == 3 || position == 9) {
+       /* if(position == 2 || position == 3 || position == 9) {
             mecanum.moveArm(2,0);
             sleep(3000);
             claw.moveBucket(0.0);
-            sleep(2000);
+            //sleep(2000);
         } else if(position == 1) {
             mecanum.moveArm(1,0);
             sleep(3000);
             claw.moveBucket(0.0);
-            sleep(2000);
+            //sleep(2000);
         } else if(position == 0) {
-            mecanum.arm.setPower(0.5);
-            sleep(500);
             claw.moveBucket(-0.5);
-            mecanum.arm.setPower(0.0);
-            sleep(600);
+            sleep(800);
             claw.moveBucket(0.0);
-        }*//*
-
+        }*/
         //mecanum.positionForDrop(position,0);
         mecanum.positionForDropSidewaysAuto(position, "Blue"); //this code moves closer to the hub, drops and then moves back slightly
 
-        //Copy for all autonomous END
 
-        if(position != 0) {
-            mecanum.move_forward_auto(speed, shippingHubDistance * 0.8, 20.0);
-        } else {
-            mecanum.move_forward_auto(speed, shippingHubDistance * 0.7, 20.0);
-        }
-        if(position == 0) {
-            claw.hamza();
-        } else {
-            claw.dropObject();
-        }
-
-        sleep(1000);
-
+        mecanum.move_forward_auto(speed,shippingHubDistance*0.8, 7.0 );
+        claw.dropObject();
+        sleep(800);
         claw.stopIntake();
+        mecanum.move_backward_auto(speed,4, 2.0);
+        // rotate to bring spinner to position
+        mecanum.rotate_counter_clock_auto(rotationSpeed, spinnerRotate * 2.5, 10.0);
+        //backward to go to carousel
+        mecanum.move_backward_auto(speed, spinnerDistance*2.5, 20.5);
+        mecanum.rotate_counter_clock_auto(rotationSpeed, 18, 2.0);
+        mecanum.move_backward_auto(speed, 25, 5.5);
+        mecanum.rotate_clock_auto(rotationSpeed, 8, 2.0);
+        mecanum.move_left_auto(speed * 0.8, 5, 2.0);
 
-        mecanum.move_backward_auto(speed,shippingHubDistance/1.25, 20.0 );
+        sleep(100);
+        //mecanum.move_backward_auto(0.03, 0.5, 1.0);
+        //Spin
+        spinner.setPower(0.58);
+        sleep(2600);
+        spinner.setPower(0);
 
-        mecanum.rotate_clock_auto(speed, rotateNinety, 10.0);
 
-        mecanum.move_right_auto(speed * 1.5, 15, 15.0);
+        //back to position + rotate
+        //come back to original position
 
-        double ParkDistance = 75;//going forward into warehouse
+        if (position == 1 || position == 2) {
+            claw.moveSwing(0.7);
+        } else {
+            claw.moveSwing(-0.4);
+        }
+        sleep(200);
+        mecanum.moveArm(0, position);
+        claw.moveSwing(0.0);
+        mecanum.move_right_auto(speed/2, 31, 2.5);
+        claw.moveSwing(0.0);
+        mecanum.move_backward_auto(speed/2, 10, 2.0);
+        //going forward into warehouse
         //Increase the speed if we are going over the obstacle
-        mecanum.move_backward_auto(speed*2.5,ParkDistance * 1.3, 25.0 );
+        //mecanum.move_backward_auto(speed*2,ParkDistance*1.145, 25.0 );
         //else will need logic to collapse and then move right to park
-*/
+        //mecanum.move_left_auto(speed, shippingHubDistance*1.75, 20.0);
+        //mecanum.move_backward_auto(speed * 0.75,  5.0, 20.5);
 
     }
-
 
 }

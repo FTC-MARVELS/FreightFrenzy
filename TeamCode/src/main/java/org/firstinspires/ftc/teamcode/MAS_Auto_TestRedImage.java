@@ -18,15 +18,15 @@ import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 
 import java.util.List;
 
-@Autonomous(name = "MAS_Auto_TestImage")
-public class MAS_Auto_TestImage extends LinearOpMode {
+@Autonomous(name = "MAS_Auto_TestRedImage")
+public class MAS_Auto_TestRedImage extends LinearOpMode {
 
     private Detector tfDetector = null;
     private ElapsedTime runtime = new ElapsedTime();
 
-    private static String MODEL_FILE_NAME = "redwarehouse_0104.tflite";
+    private static String MODEL_FILE_NAME = "redcarousel_0107_2.tflite";
             //""testmodeldec30.tflite";
-    private static String LABEL_FILE_NAME = "redwarehouse_0104.txt";
+    private static String LABEL_FILE_NAME = "redcarousel_0107_2.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
 
     //Configuration used: 6wheelConfig
