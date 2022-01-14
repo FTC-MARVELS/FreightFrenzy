@@ -70,7 +70,7 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
                     for (Classifier.Recognition r : results) {
                         String item = String.format("%s: %.2f", r.getTitle(), r.getConfidence());
                         //confidence more than 60
-                        if (r.getConfidence() > 0.6) {
+                        if (r.getConfidence() > 0.2) {
                             id = r.getId();
                             telemetry.addData("id", "[" + id + "]");
                             telemetry.addData("Found", item);
@@ -115,67 +115,54 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             }
             telemetry.addData("level", level);
             telemetry.update();
-            sleep(10000);
+            claw.lift(3);
+            sleep(500);
             correctionFactor = 1.444;//.4;
             distance = 15;
             distance = distance * correctionFactor;
             //Right
-            mecanum.encoderDrive(0.4,distance,-distance,-distance,distance,2);
-            claw.lift(3);
+            mecanum.encoderDrive(0.5,distance,-distance,-distance,distance,2);
             distance = levelDistance * correctionFactor;
             distance = 17;
             //Forward
-            mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
+            mecanum.encoderDrive(0.5,distance,distance,distance,distance,2);
             claw.release();
-            sleep(1000);
+            sleep(800);
             //Backward
-            distance = 17;
-            mecanum.encoderDrive(0.4,-distance,-distance,-distance,-distance,1);
+            distance = 18.5;
+            mecanum.encoderDrive(0.5,-distance,-distance,-distance,-distance,1);
             claw.lift(0);
-            claw.grab();
             //Left turn
-            distance = 17.3;
-            mecanum.encoderDrive(0.4,-distance,-distance,distance,distance,2);
+            distance = 17;
+            mecanum.encoderDrive(0.5,-distance,-distance,distance,distance,2);
             //Forward
-            distance = 53;
+            distance = 61.6;
+            mecanum.encoderDrive(0.5,distance,distance,distance,distance,4);
+            //Claw
+            claw.grab();
+            //Backward
+            distance = 97;
+            mecanum.encoderDrive(0.5,-distance,-distance,-distance,-distance,2);
+            claw.lift(3);
+            //Turn Right
+            distance = 17.2;
+            mecanum.encoderDrive(0.5,distance,distance,-distance,-distance,2);
+            //Forward
+            distance = 17;
+            mecanum.encoderDrive(0.5,distance,distance,distance,distance,2);
+            claw.release();
+            //Backward
+            distance = 20;
+            mecanum.encoderDrive(0.5,-distance,-distance,-distance,-distance,2);
+            claw.lift(0);
+            //Left turn
+            distance = 17.2;
+            mecanum.encoderDrive(0.5,-distance,-distance,distance,distance,2);
+            //Forward
+            distance = 50;
             mecanum.encoderDrive(0.5,distance,distance,distance,distance,4);
 
-//                //sleep(25000);
-//                claw.release();
-//                sleep(1000);
-////                //sleep(2000);
-//            distance = backDistance * correctionFactor;
-////            //back
-//            mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
-//            claw.lift(0);
-//            distance = 30 * correctionFactor;
-//            //left
-//            mecanum.encoderDrive(speed,-distance,distance,distance,-distance,2);
-//            distance = 5 * correctionFactor;
-//            //left
-//            mecanum.encoderDrive(0.1,-distance,distance,distance,-distance,2);
-//            sleep(100);
-//            spinner.setPower(-spinnerPower);
-//            sleep(2000);
-//
-//            spinner.setPower(0);
 
-            //distance = 3 * correctionFactor;
-            //right turn
-            //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
-
-//            distance = 13 * correctionFactor;
-//            //right turn
-//            mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
-//
-//            distance = 6 * correctionFactor;
-//            //left
-//            mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
-
-            //sleep(10000);
-
-            //}
-            //claw.lift(0);
         }
         catch (Exception ex){
             telemetry.addData("Init Error", ex.getMessage());

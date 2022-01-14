@@ -57,7 +57,7 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             mecanum.initialize();
             String id = "";
             runtime.reset();
-            telemetry.addData("Opmode Active", "No");
+            //telemetry.addData("Opmode Active", "Yes");
             telemetry.update();
             waitForStart();
             // run until the end of the match (driver presses STOP)
@@ -126,9 +126,6 @@ public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
             distance = 33;
             //Left
             mecanum.encoderDrive(0.4,-distance,distance,distance,-distance,2);
-//            distance = 4.3;
-//            //Left lower speed
-//            mecanum.encoderDrive(0.3,-distance,distance,distance,-distance,2);
             spinner.setPower(-spinnerPower);
             sleep(3000);
             spinner.setPower(0);

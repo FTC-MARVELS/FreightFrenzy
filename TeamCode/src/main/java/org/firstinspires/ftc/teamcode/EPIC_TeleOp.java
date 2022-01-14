@@ -75,7 +75,7 @@ public class EPIC_TeleOp extends LinearOpMode {
         wheels.leftErrorAdjustment = 0.5;
         wheels.rightErrorAdjustment = 0.45;
         double wheelPower = 0.6;
-        double carouselPower = 0.58;
+        double carouselPower = 0.7;
         claw.parent = this;
         claw.telemetry = this.telemetry;
         double clawPower = lefty/10;
