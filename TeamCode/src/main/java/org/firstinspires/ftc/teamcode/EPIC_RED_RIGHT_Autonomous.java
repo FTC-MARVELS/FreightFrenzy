@@ -118,7 +118,7 @@ public class EPIC_RED_RIGHT_Autonomous extends LinearOpMode {
             }
             telemetry.addData("level", level);
             telemetry.update();
-            sleep(10000);
+            sleep(1000);
             correctionFactor = 1.444;//.4;
             distance = 13.5;
             distance = distance * correctionFactor;
