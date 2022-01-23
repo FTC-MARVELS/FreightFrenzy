@@ -104,7 +104,7 @@ public class Claw {
 
         }
         else if(level == 3){
-            position = 360;
+            position = 380;
             bucket1pos = bucket1Level3;
             bucket2pos = bucket2Level3;
 
