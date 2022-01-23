@@ -16,8 +16,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.List;
 
-@Autonomous(name="newAuton_RedLeft", group="Robot19587")
-public class newAutonRedLeft extends LinearOpMode {
+@Autonomous(name="newAuton_redLeft", group="Robot19587")
+public class newAutonredLeft extends LinearOpMode {
     //Configuration used: 6wheelConfig
     OpenCvCamera webcam;
     @Override

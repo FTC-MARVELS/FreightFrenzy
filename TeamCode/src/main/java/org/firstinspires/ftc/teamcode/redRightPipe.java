@@ -9,7 +9,9 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class BlueRightPipe extends OpenCvPipeline {
+import java.util.TreeMap;
+
+public class redRightPipe extends OpenCvPipeline {
     Telemetry telemetry;
     int correctlocation = 3;
     Mat mat = new Mat();
@@ -19,14 +21,16 @@ public class BlueRightPipe extends OpenCvPipeline {
         LEFT
     }
     private Location location;
-    static final Rect BMiddle = new Rect(
-            new Point(200, 70),
-            new Point(250, 90));
-    static final Rect BLeft = new Rect(
-            new Point(80, 70),
-            new Point(120, 95));
-    static final double PERCENT_COLOR_THRESHOLD = 0.2;
-    public BlueRightPipe(Telemetry t) {telemetry = t;}
+    //Defining rectangles
+    static final Rect Middle = new Rect(
+            new Point(47, 45),
+            new Point(120, 75));
+    //Defining rectangles
+    static final Rect Left = new Rect(
+            new Point(140, 35),
+            new Point(200, 75));
+    static final double PERCENT_COLOR_THRESHOLD = 0.1;
+    public redRightPipe(Telemetry t) {telemetry = t;}
 
     @Override
     public Mat processFrame(Mat input) {
@@ -36,27 +40,29 @@ public class BlueRightPipe extends OpenCvPipeline {
 
         Core.inRange(mat,lowHSV,highHSV,mat);
 
-        Mat middle = mat.submat(BMiddle);
-        Mat left = mat.submat(BLeft);
+        //Creating the rectangles defined above
+        Mat middle = mat.submat(Middle);
+        Mat left = mat.submat(Left);
 
-        double middleValue = Core.sumElems(middle).val[0] / BMiddle.area() / 255;
-        double leftValue = Core.sumElems(left).val[0] / BLeft.area() / 255;
+
+        double middleValue = Core.sumElems(middle).val[0] / Middle.area() / 255;
+        double LeftValue = Core.sumElems(left).val[0] / Left.area() / 255;
 
         middle.release();
         left.release();
 
         telemetry.addData("Right raw value", (int) Core.sumElems(left).val[0]);
         telemetry.addData("Middle raw value", (int) Core.sumElems(middle).val[0]);
-        telemetry.addData("Right percentage", Math.round(leftValue * 100) + "%");
+        telemetry.addData("Left percentage", Math.round(LeftValue * 100) + "%");
         telemetry.addData("Middle percentage", Math.round(middleValue * 100) + "%");
 
 
-        boolean onLeft = leftValue >PERCENT_COLOR_THRESHOLD;
+        boolean onLeft = LeftValue >PERCENT_COLOR_THRESHOLD;
         boolean onMiddle = middleValue>PERCENT_COLOR_THRESHOLD;
 
         if (onLeft){
             correctlocation = 1;
-            telemetry.addData("LOCATION!:","LEFT");
+            telemetry.addData("LOCATION!:","RIGHT");
 
         }
         else if (onMiddle){
@@ -65,7 +71,7 @@ public class BlueRightPipe extends OpenCvPipeline {
         }
         else{
             correctlocation = 3;
-            telemetry.addData("LOCATION!:","RIGHT");
+            telemetry.addData("LOCATION!:","LEFT");
         }
         telemetry.update();
         Scalar False = new Scalar(255, 0, 0);
@@ -73,8 +79,8 @@ public class BlueRightPipe extends OpenCvPipeline {
 
 
         Imgproc.cvtColor(mat,mat,Imgproc.COLOR_GRAY2RGB);
-        Imgproc.rectangle(mat,BLeft , location == Location.RIGHT? True:False);
-        Imgproc.rectangle(mat,BMiddle, location == Location.MIDDLE? True :False);
+        Imgproc.rectangle(mat,Left , location == Location.LEFT? True:False);
+        Imgproc.rectangle(mat,Middle, location == Location.MIDDLE? True :False);
         return mat;
     }
     public Location getLocation(){

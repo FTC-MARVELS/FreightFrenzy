@@ -15,7 +15,7 @@ public class BlueImageAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        BlueRightPipe detector = new BlueRightPipe(telemetry);
+        blueRightPipe detector = new blueRightPipe(telemetry);
         webcam.setPipeline(detector);
         Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
