@@ -115,67 +115,55 @@ public class EPIC_BLUE_LEFT_Autonomous extends LinearOpMode {
             }
             telemetry.addData("level", level);
             telemetry.update();
-            sleep(10000);
+            sleep(500);
             correctionFactor = 1.444;//.4;
             distance = 15;
             distance = distance * correctionFactor;
-            //Right
-            mecanum.encoderDrive(0.4,distance,-distance,-distance,distance,2);
             claw.lift(3);
+            //Right
+            mecanum.encoderDrive(0.6,distance,-distance,-distance,distance,2);
             distance = levelDistance * correctionFactor;
             distance = 17;
             //Forward
-            mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
+            mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
             claw.release();
-            sleep(1000);
+            sleep(700);
             //Backward
-            distance = 17;
-            mecanum.encoderDrive(0.4,-distance,-distance,-distance,-distance,1);
+            distance = 18;
+            mecanum.encoderDrive(0.6,-distance,-distance,-distance,-distance,1);
             claw.lift(0);
-            //claw.grab();
             //Left turn
             distance = 17.3;
-            mecanum.encoderDrive(0.4,-distance,-distance,distance,distance,2);
+            mecanum.encoderDrive(0.6,-distance,-distance,distance,distance,2);
+            //Left
+            distance = 3;
+            mecanum.encoderDrive(0.6,-distance,distance,distance,-distance,1);
             //Forward
-            distance = 53;
-            mecanum.encoderDrive(0.5,distance,distance,distance,distance,4);
+            distance = 57;
+            mecanum.encoderDrive(0.6,distance,distance,distance,distance,4);
+           //Grab
+            claw.grab();
+//            //Backwards
+//            distance = 65;
+//            mecanum.encoderDrive(0.6,-distance,-distance,-distance,-distance,3);
+//            //Turn Right
+//            distance = 17.3;
+//            mecanum.encoderDrive(0.6,distance,distance,-distance,-distance,2);
+//            //Forward
+//            distance = 17;
+//            mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
+//            //Release
+//            claw.release();
+//            //Backwards
+//            distance = 17;
+//            mecanum.encoderDrive(0.6,-distance,-distance,-distance,-distance,2);
+//            //Turn Left
+//            distance = 17.3;
+//            mecanum.encoderDrive(0.6,-distance,-distance,distance,distance,2);
+//            //Forward
+//            distance = 55;
+//            mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
 
-//                //sleep(25000);
-//                claw.release();
-//                sleep(1000);
-////                //sleep(2000);
-//            distance = backDistance * correctionFactor;
-////            //back
-//            mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
-//            claw.lift(0);
-//            distance = 30 * correctionFactor;
-//            //left
-//            mecanum.encoderDrive(speed,-distance,distance,distance,-distance,2);
-//            distance = 5 * correctionFactor;
-//            //left
-//            mecanum.encoderDrive(0.1,-distance,distance,distance,-distance,2);
-//            sleep(100);
-//            spinner.setPower(-spinnerPower);
-//            sleep(2000);
-//
-//            spinner.setPower(0);
-
-            //distance = 3 * correctionFactor;
-            //right turn
-            //mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
-
-//            distance = 13 * correctionFactor;
-//            //right turn
-//            mecanum.encoderDrive(speed,distance,distance,distance,distance,2);
-//
-//            distance = 6 * correctionFactor;
-//            //left
-//            mecanum.encoderDrive(0.1,distance,distance,distance,distance,2);
-
-            //sleep(10000);
-
-            //}
-            //claw.lift(0);
         }
         catch (Exception ex){
             telemetry.addData("Init Error", ex.getMessage());
