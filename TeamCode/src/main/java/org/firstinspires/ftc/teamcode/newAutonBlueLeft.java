@@ -62,26 +62,26 @@ public class newAutonBlueLeft extends LinearOpMode {
         correctionFactor = 1.444;//.4;
         distance = 15;
         distance = distance * correctionFactor;
-        claw.lift(3);
+        //claw.lift(3);
         //Right
-        mecanum.encoderDrive(0.6,distance,-distance,-distance,distance,2);
+        mecanum.encoderDrive(0.5,distance,-distance,-distance,distance,2);
         distance = levelDistance * correctionFactor;
         distance = 17;
         //Forward
-        mecanum.encoderDrive(0.6,distance,distance,distance,distance,2);
+        mecanum.encoderDrive(0.5,distance,distance,distance,distance,2);
         claw.release();
         sleep(700);
         //Backward
         distance = 18;
-        mecanum.encoderDrive(0.6,-distance,-distance,-distance,-distance,1);
+        mecanum.encoderDrive(0.5,-distance,-distance,-distance,-distance,1);
         claw.lift(0);
         //Left turn
         distance = 17.3;
-        mecanum.encoderDrive(0.6,-distance,-distance,distance,distance,2);
+        mecanum.encoderDrive(0.5,-distance,-distance,distance,distance,2);
         //Left
         distance = 3;
-        mecanum.encoderDrive(0.6,-distance,distance,distance,-distance,1);
+        mecanum.encoderDrive(0.5,-distance,distance,distance,-distance,1);
         //Forward
         distance = 57;
-        mecanum.encoderDrive(0.6,distance,distance,distance,distance,4);
+        mecanum.encoderDrive(0.5,distance,distance,distance,distance,4);
     }}

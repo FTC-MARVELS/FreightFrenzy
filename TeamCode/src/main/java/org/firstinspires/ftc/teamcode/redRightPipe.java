@@ -22,13 +22,13 @@ public class redRightPipe extends OpenCvPipeline {
     }
     private Location location;
     //Defining rectangles
-    static final Rect Middle = new Rect(
-            new Point(47, 45),
-            new Point(120, 75));
-    //Defining rectangles
     static final Rect Left = new Rect(
-            new Point(140, 35),
-            new Point(200, 75));
+            new Point(85, 45),
+            new Point(128, 95));
+    //Defining rectangles
+    static final Rect Middle = new Rect(
+            new Point(202, 40),
+            new Point(250, 90));
     static final double PERCENT_COLOR_THRESHOLD = 0.1;
     public redRightPipe(Telemetry t) {telemetry = t;}
 
@@ -62,7 +62,7 @@ public class redRightPipe extends OpenCvPipeline {
 
         if (onLeft){
             correctlocation = 1;
-            telemetry.addData("LOCATION!:","RIGHT");
+            telemetry.addData("LOCATION!:","LEFT");
 
         }
         else if (onMiddle){
@@ -71,7 +71,7 @@ public class redRightPipe extends OpenCvPipeline {
         }
         else{
             correctlocation = 3;
-            telemetry.addData("LOCATION!:","LEFT");
+            telemetry.addData("LOCATION!:","RIGHT");
         }
         telemetry.update();
         Scalar False = new Scalar(255, 0, 0);

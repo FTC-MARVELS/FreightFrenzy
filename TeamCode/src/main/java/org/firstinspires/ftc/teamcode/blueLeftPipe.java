@@ -19,12 +19,12 @@ public class blueLeftPipe extends OpenCvPipeline {
         LEFT
     }
     private Location location;
-    static final Rect BMiddle = new Rect(
-            new Point(200, 70),
-            new Point(250, 90));
     static final Rect BRight = new Rect(
-            new Point(80, 70),
-            new Point(120, 95));
+            new Point(165, 58),
+            new Point(225, 95));
+    static final Rect BMiddle = new Rect(
+            new Point(52, 34),
+            new Point(100, 95));
     static final double PERCENT_COLOR_THRESHOLD = 0.2;
     public blueLeftPipe(Telemetry t) {telemetry = t;}
 
