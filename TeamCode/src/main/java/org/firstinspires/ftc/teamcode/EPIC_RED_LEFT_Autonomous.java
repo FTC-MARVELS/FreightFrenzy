@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.RobotObjects.EPIC.Mecanum_Wheels;
 import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 import org.firstinspires.ftc.teamcode.tfrec.Detector;
 import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
+import org.openftc.easyopencv.OpenCvCamera;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
     //Configuration used: 6wheelConfig
     private Detector tfDetector = null;
+    OpenCvCamera webcam;
 
     private static String MODEL_FILE_NAME = "EPIC_red_left_model.tflite";
     private static String LABEL_FILE_NAME = "EPIC_red_left_labels.txt";
