@@ -67,9 +67,9 @@ public class newAutonRedRight extends LinearOpMode {
         int i =0;
         int level = 3;
         distance = 27;
-        sleep(500);
+        sleep(2000);
         claw.lift(detector.correctlocation);
-        sleep(1000);
+        sleep(700);
         correctionFactor = 1.444;//.4;
         distance = 13.5;
         distance = distance * correctionFactor;

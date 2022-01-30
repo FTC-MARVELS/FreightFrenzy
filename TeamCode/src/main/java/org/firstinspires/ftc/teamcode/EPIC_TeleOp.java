@@ -186,10 +186,30 @@ public class EPIC_TeleOp extends LinearOpMode {
                 //spinner.setPower(0);
             }
 
-            if(x)
-                spinner.setPower(carouselPower);
-            else if(b)
-                spinner.setPower(-carouselPower);
+            if(x) {
+                spinner.setPower(0.76);
+                sleep(200);
+                spinner.setPower(.8);
+                sleep(200);
+                spinner.setPower(.85);
+                sleep(300);
+                spinner.setPower(.95);
+                sleep(300);
+                spinner.setPower(1);
+                sleep(400);
+            }
+            else if(b) {
+                spinner.setPower(-0.76);
+                sleep(200);
+                spinner.setPower(-0.8);
+                sleep(200);
+                spinner.setPower(-0.85);
+                sleep(400);
+                spinner.setPower(-0.95);
+                sleep(200);
+                spinner.setPower(-1);
+                sleep(500);
+            }
             else {
                 //wheels.move(lefty,righty,-leftx,rightx);
                 wheels.move(lefty,righty,leftx,rightx);

@@ -19,7 +19,7 @@ public class newAutonBlueLeft extends LinearOpMode {
         double correctionFactor = 1;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        blueLeftPipe detector = new blueLeftPipe(telemetry);
+        ImageRecogPipe detector = new ImageRecogPipe(telemetry);
         webcam.setPipeline(detector);
         Mecanum_Wheels wheels = new Mecanum_Wheels(hardwareMap);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -57,8 +57,9 @@ public class newAutonBlueLeft extends LinearOpMode {
         telemetry.addData("Opmode Active", "No");
         telemetry.update();
         waitForStart();
+        sleep(2000);
         claw.lift(detector.correctlocation);
-        sleep(500);
+        sleep(700);
         correctionFactor = 1.444;//.4;
         distance = 15;
         distance = distance * correctionFactor;

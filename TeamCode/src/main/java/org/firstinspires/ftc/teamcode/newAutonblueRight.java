@@ -69,11 +69,11 @@ public class newAutonblueRight extends LinearOpMode {
         sleep(200);
         //Right
         mecanum.encoderDrive(0.4,distance,-distance,-distance,distance,2);
-        distance = 7.9;
+        distance = 8.25;
         //Left turn
         mecanum.encoderDrive(0.3,-distance,-distance,distance,distance,2);
         //Backward
-        distance = 1.86;
+        distance = 1.7;
         mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
         spinner.setPower(spinnerPower);
         sleep(3700);
@@ -82,7 +82,7 @@ public class newAutonblueRight extends LinearOpMode {
         distance = 5;
         mecanum.encoderDrive(0.4,distance,distance,distance,distance,1);
         //Right turn
-        distance = 7.6;
+        distance = 7.95;
         mecanum.encoderDrive(0.4,distance,distance,-distance,-distance,2);
         //Forward
         distance = 29.4;
