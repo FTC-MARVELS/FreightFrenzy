@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -39,6 +40,8 @@ public class EPIC_TeleOp2 extends LinearOpMode {
     public DcMotorEx frontleft;
     public DcMotorEx backright;
     public DcMotorEx backleft;
+
+
 
 
 //    double liftPower = 0.0;
@@ -222,7 +225,7 @@ public class EPIC_TeleOp2 extends LinearOpMode {
 //                sleep(500);
 //            }
 
-                wheels.move(lefty,righty,-leftx,rightx);
+            wheels.move2(lefty,righty,-leftx,rightx);
 //                wheels.move(lefty,righty,leftx,rightx);
 //                spinner.setPower(0);
 

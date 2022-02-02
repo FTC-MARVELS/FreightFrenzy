@@ -178,6 +178,9 @@ public class EPIC_TeleOp extends LinearOpMode {
             }
             else if(dpad_right2){
                 claw.lift(0);
+                if(claw.pos != 0){
+
+                }
             }
 
             else if(lefty2!=0){

@@ -286,4 +286,7 @@ public class Claw {
         telemetry.update();
         //parent.sleep(5000);
     }
+    public void setBucketPosition(double position){
+        
+    }
 }
