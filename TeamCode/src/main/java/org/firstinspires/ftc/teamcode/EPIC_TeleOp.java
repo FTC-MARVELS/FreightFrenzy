@@ -80,6 +80,7 @@ public class EPIC_TeleOp extends LinearOpMode {
         claw.telemetry = this.telemetry;
         double clawPower = lefty/10;
         boolean lifted = false;
+        double level = 0;
         //double needPos = clawPower+claw.arm.getPosition();
         claw.new_frontLeftTarget = 0;
 
@@ -169,18 +170,24 @@ public class EPIC_TeleOp extends LinearOpMode {
             }
             else if(dpad_down2){
                 claw.lift(1);
+                level = 1;
+
             }
             else if(dpad_left2){
                 claw.lift(2);
+                level= 2;
             }
             else if(dpad_up2){
                 claw.lift(3);
+                level = 3;
             }
             else if(dpad_right2){
-                claw.lift(0);
-                if(claw.pos != 0){
-
+                if(level != 0){
+                claw.setBucketPosition(0.85);
                 }
+                claw.lift(0);
+                level = 0;
+
             }
 
             else if(lefty2!=0){

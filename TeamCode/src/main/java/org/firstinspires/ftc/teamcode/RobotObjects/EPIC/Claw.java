@@ -287,6 +287,7 @@ public class Claw {
         //parent.sleep(5000);
     }
     public void setBucketPosition(double position){
-        
+        clawBucket1.setPosition(position);
+        clawBucket1.setPosition(position);
     }
 }
