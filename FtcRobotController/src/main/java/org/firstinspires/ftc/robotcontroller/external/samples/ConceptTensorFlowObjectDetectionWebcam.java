@@ -49,8 +49,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-//@Disabled
 @TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+@Disabled
 public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
   /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
    * the following 4 detectable objects
@@ -84,7 +84,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            "AV4DWg3/////AAABmQ6n5OzGwUYalTyB5uR46wxwDEO+PdJwv/KbeSDh+Frtn/FdN8pU2XERVvNAfgckS4NCo0L4YzGYhYUrTJfio23+zD2tl7J4NCF8IZ1hWtVmh1lx1p1+nv0cL/ZFOQb1k6O009NkKi/t+nLHTtZrswnCFC3Pasiw8IwoDPUjjnY08gU4IVRByn+DwgQL+1jrEo4/twIWe5UB65TztGdTXPOEcCzn5ZbjJqaCadFnYI0sMiWmMDoEfgFglWBoA55GOSuKrr1/fRuYXFuCqEqMBx7SzPYopF8vfM0qQ5h2EFEykKUSsre3OY3heH6ewwkpy7PRFE4MBaJoggv9dogm82m0dHu75KV2MbhRm75AkwB3";
+            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
