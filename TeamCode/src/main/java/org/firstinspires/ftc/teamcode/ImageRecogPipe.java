@@ -37,8 +37,11 @@ public class ImageRecogPipe extends OpenCvPipeline {
         Imgproc.cvtColor(input,mat,Imgproc.COLOR_RGB2HSV);
         Scalar lowHSV = new Scalar(10,100,20);
         Scalar highHSV = new Scalar(25,255,255);
+//        Scalar B_lowHSV = new Scalar(110,50,50);
+//        Scalar B_highHSV =new Scalar(130,255,255);
 
         Core.inRange(mat,lowHSV,highHSV,mat);
+
 
         //Creating the rectangles defined above
         Mat middle = mat.submat(Middle);
