@@ -81,6 +81,7 @@ public class EPIC_TeleOp extends LinearOpMode {
         double clawPower = lefty/10;
         boolean lifted = false;
         double level = 0;
+        double correctionFactor = 1.444;
         //double needPos = clawPower+claw.arm.getPosition();
         claw.new_frontLeftTarget = 0;
 
@@ -195,30 +196,34 @@ public class EPIC_TeleOp extends LinearOpMode {
 
                 //spinner.setPower(0);
             }
-
+            double distance = 0;
             if(x) {
-                spinner.setPower(0.76);
-                sleep(200);
-                spinner.setPower(.8);
-                sleep(200);
-                spinner.setPower(.85);
-                sleep(300);
-                spinner.setPower(.95);
-                sleep(300);
-                spinner.setPower(1);
-                sleep(400);
+                distance = 30 * correctionFactor;
+                wheels.encoderDrive(0.8,distance,distance,-distance,-distance,3);
+                distance = 10*correctionFactor;
+                wheels.encoderDrive(0.5,-distance,-distance,-distance,-distance,2);
+//                spinner.setPower(0.76);
+//                sleep(200);
+//                spinner.setPower(.8);
+//                sleep(200);
+//                spinner.setPower(.85);
+//                sleep(300);
+//                spinner.setPower(.95);
+//                sleep(300);
+//                spinner.setPower(1);
+//                sleep(400);
             }
             else if(b) {
-                spinner.setPower(-0.76);
-                sleep(200);
-                spinner.setPower(-0.8);
-                sleep(200);
-                spinner.setPower(-0.85);
-                sleep(400);
-                spinner.setPower(-0.95);
-                sleep(200);
-                spinner.setPower(-1);
-                sleep(500);
+//                spinner.setPower(-0.76);
+//                sleep(200);
+//                spinner.setPower(-0.8);
+//                sleep(200);
+//                spinner.setPower(-0.85);
+//                sleep(400);
+//                spinner.setPower(-0.95);
+//                sleep(200);
+//                spinner.setPower(-1);
+//                sleep(500);
             }
             else {
                 //wheels.move(lefty,righty,-leftx,rightx);
