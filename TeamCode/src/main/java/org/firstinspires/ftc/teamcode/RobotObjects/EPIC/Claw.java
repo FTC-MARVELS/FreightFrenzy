@@ -25,8 +25,8 @@ public class Claw {
     public double finger2Init = 0.3;
     public double armMin = 0.0;
     public double armMax = 0.5;
-    public double finger1Min = 0.2;
-    public double finger2Min = 0.2;
+    public double finger1Min = 0.1;
+    public double finger2Min = 0.1;
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
@@ -66,6 +66,8 @@ public class Claw {
         clawBucket2.setPosition(bucket1Min);
         //arm = hardwareMap.get(DcMotorEx.class,"arm");
         //arm.setDirection(DcMotor.Direction.REVERSE);
+        armLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        armRight.setDirection(DcMotorEx.Direction.REVERSE);
 
         armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

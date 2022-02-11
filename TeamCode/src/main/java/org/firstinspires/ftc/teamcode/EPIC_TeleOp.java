@@ -69,7 +69,7 @@ public class EPIC_TeleOp extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
         wheels.initialize();
         //wheels.rightErrorAdjustment = 0.93;//1;
-        Spinner spinner = new Spinner(hardwareMap);
+       Spinner spinner = new Spinner(hardwareMap);
         wheels.telemetry = telemetry;
         wheels.parent = this;
         wheels.leftErrorAdjustment = 0.8;
@@ -159,11 +159,10 @@ public class EPIC_TeleOp extends LinearOpMode {
             else if(a2)
             {
                 claw.clawBucket1.setPosition(claw.clawBucket1.getPosition()+0.01);
-                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()+0.01);
+                claw.clawBucket2.setPosition(claw.clawBucket2.getPosition()+0.01);}
                 //claw.grab();
-            }
-            //else if(x)
-                //spinner.setPower(carouselPower);
+//            }else if(x)
+//                spinner.setPower(carouselPower);
             else if(b2) {
                 //spinner.setPower(-carouselPower);
                 claw.clawBucket1.setPosition(claw.clawBucket1.getPosition() - 0.01);
@@ -198,32 +197,28 @@ public class EPIC_TeleOp extends LinearOpMode {
             }
             double distance = 0;
             if(x) {
-                distance = 30 * correctionFactor;
-                wheels.encoderDrive(0.8,distance,distance,-distance,-distance,3);
-                distance = 10*correctionFactor;
-                wheels.encoderDrive(0.5,-distance,-distance,-distance,-distance,2);
-//                spinner.setPower(0.76);
-//                sleep(200);
-//                spinner.setPower(.8);
-//                sleep(200);
-//                spinner.setPower(.85);
-//                sleep(300);
-//                spinner.setPower(.95);
-//                sleep(300);
-//                spinner.setPower(1);
-//                sleep(400);
+                spinner.setPower(0.76);
+                sleep(200);
+                spinner.setPower(.8);
+                sleep(200);
+                spinner.setPower(.85);
+                sleep(300);
+                spinner.setPower(.95);
+                sleep(300);
+                spinner.setPower(1);
+                sleep(400);
             }
             else if(b) {
-//                spinner.setPower(-0.76);
-//                sleep(200);
-//                spinner.setPower(-0.8);
-//                sleep(200);
-//                spinner.setPower(-0.85);
-//                sleep(400);
-//                spinner.setPower(-0.95);
-//                sleep(200);
-//                spinner.setPower(-1);
-//                sleep(500);
+                spinner.setPower(-0.76);
+                sleep(200);
+                spinner.setPower(-0.8);
+                sleep(200);
+                spinner.setPower(-0.85);
+                sleep(400);
+                spinner.setPower(-0.95);
+                sleep(200);
+                spinner.setPower(-1);
+                sleep(500);
             }
             else {
                 //wheels.move(lefty,righty,-leftx,rightx);
