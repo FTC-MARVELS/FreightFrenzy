@@ -7,6 +7,7 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Range;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -19,8 +20,6 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
-
 @TeleOp(name = "EPIC_TeleOp")
 public class EPIC_TeleOp extends LinearOpMode {
     //Configuration used: EPIC4Wheel

@@ -23,13 +23,13 @@ public class ImageRecogPipe extends OpenCvPipeline {
     private Location location;
     //Defining rectangles
     static final Rect Middle = new Rect(
-            new Point(47, 45),
-            new Point(120, 75));
+            new Point(32, 105),
+            new Point(98, 210));
     //Defining rectangles
     static final Rect Right = new Rect(
-            new Point(140, 35),
-            new Point(200, 75));
-    static final double PERCENT_COLOR_THRESHOLD = 0.1;
+            new Point(155, 105),
+            new Point(210, 210));
+    static final double PERCENT_COLOR_THRESHOLD = 0.3;
     public ImageRecogPipe(Telemetry t) {telemetry = t;}
 
     @Override
@@ -60,11 +60,11 @@ public class ImageRecogPipe extends OpenCvPipeline {
         telemetry.addData("Middle percentage", Math.round(middleValue * 100) + "%");
 
 
-        boolean onRight = rightValue >PERCENT_COLOR_THRESHOLD;
-        boolean onMiddle = middleValue>PERCENT_COLOR_THRESHOLD;
+        boolean onRight = rightValue >middleValue;
+        boolean onMiddle = middleValue>rightValue;
 
         if (onRight){
-            correctlocation = 1;
+            correctlocation = 3;
             telemetry.addData("LOCATION!:","RIGHT");
 
         }
@@ -73,7 +73,7 @@ public class ImageRecogPipe extends OpenCvPipeline {
             telemetry.addData("LOCATION!:","MIDDLE");
         }
         else{
-            correctlocation = 3;
+            correctlocation = 1;
             telemetry.addData("LOCATION!:","LEFT");
         }
         telemetry.update();

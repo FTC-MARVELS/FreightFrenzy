@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.tfrec.classification.Classifier;
 import org.openftc.easyopencv.OpenCvCamera;
 
 import java.util.List;
-
+@Disabled
 @Autonomous(name="EPIC_RED_LEFT_Autonomous", group="Robot19587")
 public class EPIC_RED_LEFT_Autonomous extends LinearOpMode {
     //Configuration used: 6wheelConfig

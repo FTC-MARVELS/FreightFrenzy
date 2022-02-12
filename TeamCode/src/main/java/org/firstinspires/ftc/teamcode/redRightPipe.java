@@ -23,12 +23,12 @@ public class redRightPipe extends OpenCvPipeline {
     private Location location;
     //Defining rectangles
     static final Rect Left = new Rect(
-            new Point(85, 45),
-            new Point(128, 95));
+            new Point(85, 80),
+            new Point(128, 180));
     //Defining rectangles
     static final Rect Middle = new Rect(
-            new Point(202, 40),
-            new Point(250, 90));
+            new Point(202, 80),
+            new Point(250, 170));
     static final double PERCENT_COLOR_THRESHOLD = 0.1;
     public redRightPipe(Telemetry t) {telemetry = t;}
 

@@ -60,7 +60,7 @@ public class newAutonblueRight extends LinearOpMode {
         claw.lift(detector.correctlocation);
         sleep(700);
         correctionFactor = 1.444;//.4;
-        distance = 3.5;
+        distance = 4.8;
         distance = distance * correctionFactor;
         //Forward
         mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
@@ -69,7 +69,7 @@ public class newAutonblueRight extends LinearOpMode {
         sleep(200);
         //Right
         mecanum.encoderDrive(0.4,distance,-distance,-distance,distance,2);
-        distance = 8.25;
+        distance = 9;
         //Left turn
         mecanum.encoderDrive(0.3,-distance,-distance,distance,distance,2);
         //Backward

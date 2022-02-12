@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -17,7 +18,7 @@ import org.firstinspires.ftc.teamcode.RobotObjects.Spinner;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
+@Disabled
 
 @TeleOp(name = "EPIC_TeleOp_Testwheels")
 public class EPIC_TeleOp_TestWheels extends LinearOpMode {

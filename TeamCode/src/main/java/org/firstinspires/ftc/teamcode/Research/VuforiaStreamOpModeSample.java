@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Research;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.R;
 
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-
+@Disabled
 @Autonomous
 public class VuforiaStreamOpModeSample extends LinearOpMode {
 
