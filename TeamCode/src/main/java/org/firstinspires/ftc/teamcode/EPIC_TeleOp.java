@@ -71,8 +71,8 @@ public class EPIC_TeleOp extends LinearOpMode {
        Spinner spinner = new Spinner(hardwareMap);
         wheels.telemetry = telemetry;
         wheels.parent = this;
-        wheels.leftErrorAdjustment = 0.8;
-        wheels.rightErrorAdjustment = 0.72;
+        wheels.leftErrorAdjustment = 1;
+        wheels.rightErrorAdjustment = 0.8;
         double wheelPower = 0.6;
         double carouselPower = 0.7;
         claw.parent = this;
@@ -139,8 +139,8 @@ public class EPIC_TeleOp extends LinearOpMode {
             }
             else if(y) {
 
-                wheels.leftErrorAdjustment = 0.8;
-                wheels.rightErrorAdjustment = 0.72;
+                wheels.leftErrorAdjustment = 1;
+                wheels.rightErrorAdjustment = 0.92;
             }
             else if(a) {
                 wheels.leftErrorAdjustment = 0.5;//wheels.leftErrorAdjustment - 0.05;

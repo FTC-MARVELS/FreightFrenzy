@@ -25,8 +25,8 @@ public class Claw {
     public double finger2Init = 0.3;
     public double armMin = 0.0;
     public double armMax = 0.5;
-    public double finger1Min = 0.1;
-    public double finger2Min = 0.1;
+    public double finger1Min = 0;
+    public double finger2Min = 0;
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
@@ -45,6 +45,7 @@ public class Claw {
     //public double bucket1Max = 0.7;
     //public double bucket2Max = -0.7;
     public double liftPower = -0.2;
+    public double spinpower = 0.8;
     public LinearOpMode parent;
     public Telemetry telemetry;
     public double pos = 0.0;
@@ -131,8 +132,8 @@ public class Claw {
         //arm.setTargetPosition(arm.getCurrentPosition() + position);
 
         if(position==0){
-            armLeft.setPower(0.2);
-            armRight.setPower(0.2);
+            armLeft.setPower(0.3);
+            armRight.setPower(0.3);
             parent.sleep(200);
         }
         else

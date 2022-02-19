@@ -69,13 +69,13 @@ public class newAutonredLeft extends LinearOpMode {
             distance = 27;
             sleep(2000);
             if (detector.correctlocation==3){
-                claw.lift(1);
+                claw.lift(3);
             }
             else if (detector.correctlocation==2){
                 claw.lift(2);
             }
             else if (detector.correctlocation==1){
-                claw.lift(3);
+                claw.lift(1);
             }
 
 //        claw.lift(3);
