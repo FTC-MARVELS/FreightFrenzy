@@ -30,8 +30,8 @@ public class Claw {
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
-    public double bucket1Min = 0.865;
-    public double bucket2Min = 0.865;
+    public double bucket1Min = 0.83055;
+    public double bucket2Min = 0.83055;
     //Level 1
     public double bucket1Level1 = 0.58;
     public double bucket2Level1 = 0.58;
@@ -45,7 +45,7 @@ public class Claw {
     //public double bucket1Max = 0.7;
     //public double bucket2Max = -0.7;
     public double liftPower = -0.2;
-    public double spinpower = 0.8;
+    public double rotatePower = 0.4;
     public LinearOpMode parent;
     public Telemetry telemetry;
     public double pos = 0.0;
@@ -59,6 +59,8 @@ public class Claw {
         clawBucket2 = hardwareMap.get(Servo.class,"bucket2");
         armLeft = hardwareMap.get(DcMotorEx.class,"armLeft");
         armRight = hardwareMap.get(DcMotorEx.class,"armRight");
+//        rotatearm = hardwareMap.get(DcMotorEx.class,"rotatearm");
+//        extendingarm = hardwareMap.get(DcMotorEx.class,"extendingarm");
         clawFinger2.setDirection(Servo.Direction.REVERSE);
         clawBucket2.setDirection(Servo.Direction.REVERSE);
         clawFinger1.setPosition(finger1Min);
@@ -72,17 +74,29 @@ public class Claw {
 
         armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rotatearm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        extendingarm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rotatearm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        extendingarm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        rotatearm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        extendingarm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rotatearm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        extendingarm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         armLeft.setTargetPosition(0);
         armRight.setTargetPosition(0);
+//        extendingarm.setTargetPosition(0);
+//        rotatearm.setTargetPosition(0);
         armLeft.setPower(0.2);
         armRight.setPower(0.2);
+//        rotatearm.setPower(0.2);
+//        extendingarm.setPower(0.2);
         //liftMotor = hardwareMap.get(DcMotorEx.class,"Lift");
 
     }
@@ -112,6 +126,7 @@ public class Claw {
             bucket2pos = bucket2Level3;
 
         }
+
 
         new_frontLeftTarget = position;
         if(level!=0) {

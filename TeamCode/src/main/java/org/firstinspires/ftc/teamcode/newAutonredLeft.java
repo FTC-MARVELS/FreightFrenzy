@@ -82,13 +82,13 @@ public class newAutonredLeft extends LinearOpMode {
             sleep(500);
             correctionFactor = 1.444;//.4;
             distance = distance * correctionFactor;
-            distance = 7.6;
+            distance = 7.9;
             //Forward
-            mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
+            mecanum.encoderDrive(0.4,distance,distance,distance,distance,3);
             distance = levelDistance * correctionFactor;
             distance = 33;
             //Left
-            mecanum.encoderDrive(0.4,-distance,distance,distance,-distance,2);
+            mecanum.encoderDrive(0.3,-distance,distance,distance,-distance,3);
             spinner.setPower(-spinnerPower);
             sleep(3000);
             spinner.setPower(0);
@@ -102,16 +102,16 @@ public class newAutonredLeft extends LinearOpMode {
             distance = 14.9;
             mecanum.encoderDrive(0.4,distance,distance,-distance,-distance,2);
             //Forward
-            distance = 22.8;
-            mecanum.encoderDrive(0.4,distance,distance,distance,distance,2);
+            distance = 23;
+            mecanum.encoderDrive(0.4,distance,distance,distance,distance,3);
             claw.release();
-            sleep(100);
+            sleep(800);
             //Backwards
             distance = 31;
             mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
             claw.lift(0);
             //Left
-            distance = 19.6;
+            distance = 18.6;
             mecanum.encoderDrive(0.4,distance,-distance,-distance,distance,2);
 
         }

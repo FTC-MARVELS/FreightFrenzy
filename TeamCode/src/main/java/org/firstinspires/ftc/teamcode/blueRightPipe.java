@@ -55,7 +55,7 @@ public class blueRightPipe extends OpenCvPipeline {
         boolean onMiddle = middleValue>PERCENT_COLOR_THRESHOLD;
 
         if (onLeft){
-            correctlocation = 3;
+            correctlocation = 1;
             telemetry.addData("LOCATION!:","LEFT");
 
         }
@@ -64,7 +64,7 @@ public class blueRightPipe extends OpenCvPipeline {
             telemetry.addData("LOCATION!:","MIDDLE");
         }
         else{
-            correctlocation = 1;
+            correctlocation = 3;
             telemetry.addData("LOCATION!:","RIGHT");
         }
         telemetry.update();
