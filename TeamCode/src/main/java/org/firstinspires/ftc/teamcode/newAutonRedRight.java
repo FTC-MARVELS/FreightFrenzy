@@ -88,8 +88,8 @@ public class newAutonRedRight extends LinearOpMode {
         distance = 21;
         mecanum.encoderDrive(speed,-distance,-distance,-distance,-distance,2);
         claw.lift(0);
-        distance = 11.9 * correctionFactor;
         //Right turn
+        distance = 11 * correctionFactor;
         mecanum.encoderDrive(speed,distance,distance,-distance,-distance,2);
         distance = 39 * correctionFactor;
         //Forward
