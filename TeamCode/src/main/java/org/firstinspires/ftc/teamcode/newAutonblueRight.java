@@ -73,7 +73,7 @@ public class newAutonblueRight extends LinearOpMode {
         //Left turn
         mecanum.encoderDrive(0.3,-distance,-distance,distance,distance,2);
         //Backward
-        distance = 1.7;
+        distance = 4;
         mecanum.encoderDrive(0.3,-distance,-distance,-distance,-distance,2);
         spinner.setPower(spinnerPower);
         sleep(3700);

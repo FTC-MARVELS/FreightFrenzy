@@ -19,7 +19,6 @@ public class Claw {
     public DcMotorEx armLeft;
     public DcMotorEx armRight;
     //public DcMotorEx liftMotor;
-
     public double armInit = 0.0;
     public double finger1Init = 0.3;
     public double finger2Init = 0.3;
@@ -30,17 +29,17 @@ public class Claw {
     public double finger1Max = 0.7;
     public double finger2Max = -0.7;
     //0 position
-    public double bucket1Min = 0.865;
-    public double bucket2Min = 0.865;
+    public double bucket1Min = 0.653888888888889;
+    public double bucket2Min = 0.653888888888889;
     //Level 1
-    public double bucket1Level1 = 0.58;
-    public double bucket2Level1 = 0.58;
+    public double bucket1Level1 = 0.39833333;
+    public double bucket2Level1 = 0.40055555;
     //Level 2
-    public double bucket1Level2 = 0.26;
-    public double bucket2Level2 = 0.26;
+    public double bucket1Level2 = 0.0;
+    public double bucket2Level2 = 0.0;
     //Level 3
-    public double bucket1Level3 = 0.2;
-    public double bucket2Level3 = 0.2;
+    public double bucket1Level3 = 0.0;
+    public double bucket2Level3 = 0.0;
 
     //public double bucket1Max = 0.7;
     //public double bucket2Max = -0.7;
@@ -101,13 +100,13 @@ public class Claw {
 
         }
         else if(level == 2){
-            position = 260;
+            position = 240;
             bucket1pos = bucket1Level2;
             bucket2pos = bucket2Level2;
 
         }
         else if(level == 3){
-            position = 380;
+            position = 340;
             bucket1pos = bucket1Level3;
             bucket2pos = bucket2Level3;
 
@@ -171,8 +170,14 @@ public class Claw {
             armRight.setPower(speed);
             parent.sleep(100);
         }
-        else if(new_frontLeftTarget<0)
-            new_frontLeftTarget =0;
+        else if(new_frontLeftTarget<0) {
+
+
+            new_frontLeftTarget = 0;
+
+            armLeft.setTargetPosition(20);
+            armRight.setTargetPosition(20);
+        }
         else if(new_frontLeftTarget > limit)
             new_frontLeftTarget = limit;
             //}
