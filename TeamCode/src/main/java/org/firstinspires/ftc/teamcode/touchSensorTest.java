@@ -23,6 +23,7 @@ public class touchSensorTest extends LinearOpMode {
         servo = hardwareMap.get(Servo.class, "servo");
         touch = hardwareMap.get(TouchSensor.class, "Touch");
         waitForStart();
+        //revert test two
         while (opModeIsActive()) {
          if(touch.isPressed()) {
              servo.setPosition(0);
